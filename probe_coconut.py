@@ -18,7 +18,7 @@ except ImportError:
 Outputs = namedtuple("Outputs", ["loss", "inputs_embeds", "logits", "probes"])
 MAX_N_LATENT = 8
 
-
+scale_factor = 50.0
 
 class Coconut(nn.Module):
 
@@ -200,14 +200,16 @@ class Coconut(nn.Module):
                 ]
 
                 if self.decoupling_mode == "residual":
-                    alpha = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
+                    alpha_raw = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
+                    alpha = torch.tanh(alpha_raw)
                     final_h = raw_h * (1 + alpha)
                     # [PROBE] 记录 Alpha 值
                     batch_probe_data["alpha"].append(alpha.mean().detach()) # 记录均值
                 elif self.decoupling_mode == "normalized":
                     alpha = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
                     norm = torch.norm(raw_h, p=2, dim=-1, keepdim=True) + 1e-6
-                    final_h = (raw_h / norm) * alpha
+                    final_h = (raw_h / norm) * alpha * scale_factor
+                    # final_h = (raw_h / norm) * alpha
                     batch_probe_data["alpha"].append(alpha.mean().detach())
                 else:
                     final_h = raw_h
