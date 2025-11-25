@@ -42,7 +42,7 @@ class Coconut(nn.Module):
 
         # [NEW] 稀疏性惩罚系数 (L1 Loss Weight)
         # 强迫模型只在少数关键步骤使用高 Alpha (实现二值化/降维效果)
-        self.sparsity_weight = 0.05 
+        self.sparsity_weight = 0.002 
 
         # [NEW] Normalized 模式的基准缩放因子
         # 既然 Transformer 喜欢 ~50 的模长，我们就手动给它
@@ -220,7 +220,7 @@ class Coconut(nn.Module):
                     norm = torch.norm(raw_h, p=2, dim=-1, keepdim=True) + 1e-6
                     
                     # 注意：这里我们不加 Tanh，允许 alpha 变大变小，完全由 L1 Loss 约束
-                    final_h = (raw_h / norm) * alpha * self.norm_scale_factor
+                    final_h = (raw_h / norm) * (1 + alpha) * self.norm_scale_factor
                     
                     batch_probe_data["alpha"].append(alpha.abs().mean().detach())
 
