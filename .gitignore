@@ -1,0 +1,9 @@
+# 忽略任意目录下的checkpoint_x文件（x为任意数字/字符）
+checkpoints/**/checkpoint_*
+
+# 忽略根目录下的data文件夹及其中所有内容
+data/
+
+wandb/
+
+YOUR_PATH_TO_SAVE_THE_MODEL/

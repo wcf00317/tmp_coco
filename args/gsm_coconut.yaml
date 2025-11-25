@@ -1,12 +1,13 @@
 # need 4 gpus
 
-project: coconut
-save_path: YOUR_PATH_TO_SAVE_THE_MODEL
-name: gsm-coconut
+project: test
+save_path: ./checkpoints/gsm-coconut
+name: gsm-normalized-probe
 
 only_eval: False
 
 coconut: True
+decoupling_mode: "normalized"
 cot: False
 no_thoughts: False
 no_cot: False
@@ -19,7 +20,7 @@ pad_latent_to_max: True
 save_only_improve: False
 uniform_prob: 0.0
 model_id: openai-community/gpt2
-load_model_path: YOUR_PATH_TO_COT_CHECKPOINT
+load_model_path: None
 seed: 0
 resume: 3
 bf16: False

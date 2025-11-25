@@ -6,6 +6,8 @@ import torch.nn as nn
 from torch.nn import CrossEntropyLoss
 from collections import namedtuple
 from transformers.models.gpt2 import GPT2LMHeadModel
+import torch.nn.functional as F # [NEW] 需要用到 F.cosine_similarity
+import logging  # [NEW] 引入 logging
 
 # [NEW] 引入 DynamicCache 以适配 transformers >= 4.38
 try:
@@ -13,20 +15,22 @@ try:
 except ImportError:
     DynamicCache = None
 
-Outputs = namedtuple("Outputs", ["loss", "inputs_embeds", "logits"])
+Outputs = namedtuple("Outputs", ["loss", "inputs_embeds", "logits", "probes"])
 MAX_N_LATENT = 8
+
 
 
 class Coconut(nn.Module):
 
     def __init__(
-        self,
-        base_causallm,
-        latent_token_id,
-        start_latent_id,
-        end_latent_id,
-        eos_token_id,
-    ):
+            self,
+            base_causallm,
+            latent_token_id,
+            start_latent_id,
+            end_latent_id,
+            eos_token_id,
+            decoupling_mode="original",  # [NEW] 新增模式参数
+        ):
 
         super(Coconut, self).__init__()
         self.gen_forward_cnt = 0
@@ -35,6 +39,7 @@ class Coconut(nn.Module):
         self.eos_token_id = eos_token_id
         self.start_latent_id = start_latent_id
         self.end_latent_id = end_latent_id
+        self.decoupling_mode = decoupling_mode # [NEW] 保存模式
 
         # tested with GPT2 and Llama3
         if isinstance(self.base_causallm, GPT2LMHeadModel):
@@ -42,6 +47,17 @@ class Coconut(nn.Module):
         else:
             self.embedding = self.base_causallm.get_input_embeddings()
 
+        # [NEW] 初始化 Intensity Predictor (如果模式需要)
+        # 支持: 'residual' (1+alpha), 'normalized' (direction+scale)
+        if self.decoupling_mode in ["residual", "normalized"]:
+            hidden_size = self.embedding.weight.shape[1]
+            self.scale_mlp = nn.Sequential(
+                nn.Linear(hidden_size, hidden_size // 4),
+                nn.ReLU(),
+                nn.Linear(hidden_size // 4, 1)
+            )
+            print(f"Coconut initialized with decoupling mode: {self.decoupling_mode}")
+        
     def forward(self, input_ids, attention_mask, labels, position_ids, **kwargs):
 
         logits = []
@@ -66,6 +82,13 @@ class Coconut(nn.Module):
 
         kv_cache = None
 
+        batch_probe_data = {
+            "alpha": [],
+            "norm": [],
+            "cosine": []
+        }
+        # 用于计算余弦相似度的缓存: {batch_idx: last_thought_vector}
+        last_thoughts_cache = {}
         for pass_idx in range(max_n_latents):
 
             if kv_cache == None:
@@ -138,6 +161,10 @@ class Coconut(nn.Module):
             else:
                 kv_cache = outputs.past_key_values
 
+            intensity_scales = None
+            if self.decoupling_mode in ["residual", "normalized"]:
+                intensity_scales = self.scale_mlp(hidden_states)
+            
             # feedback the continuous thoughts to the input_embeds
 
             # first decide the positions to feedback
@@ -157,14 +184,51 @@ class Coconut(nn.Module):
                 for batch_idx in range(inputs_embeds.shape[0])
             ]
 
-            # replace some of them with continuous thoughts
+            # # replace some of them with continuous thoughts
+            # for idx_pair in filling_indices:
+            #     batch_idx, token_idx = idx_pair
+
+            #     # replace it with the preceding last hidden states
+            #     tensor_list[batch_idx][token_idx] = hidden_states[
+            #         batch_idx, token_idx - 1 - hidden_states_offset, :
+            #     ]
             for idx_pair in filling_indices:
                 batch_idx, token_idx = idx_pair
 
-                # replace it with the preceding last hidden states
-                tensor_list[batch_idx][token_idx] = hidden_states[
+                raw_h = hidden_states[
                     batch_idx, token_idx - 1 - hidden_states_offset, :
                 ]
+
+                if self.decoupling_mode == "residual":
+                    alpha = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
+                    final_h = raw_h * (1 + alpha)
+                    # [PROBE] 记录 Alpha 值
+                    batch_probe_data["alpha"].append(alpha.mean().detach()) # 记录均值
+                elif self.decoupling_mode == "normalized":
+                    alpha = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
+                    norm = torch.norm(raw_h, p=2, dim=-1, keepdim=True) + 1e-6
+                    final_h = (raw_h / norm) * alpha
+                    batch_probe_data["alpha"].append(alpha.mean().detach())
+                else:
+                    final_h = raw_h
+                    batch_probe_data["alpha"].append(torch.tensor(0.0, device=raw_h.device))
+
+                # [PROBE] 记录 Norm (模长)
+                # 监测是否发生 Over-smoothing (模长过小) 或 极值聚焦 (模长变大)
+                current_norm = torch.norm(final_h, p=2).detach()
+                batch_probe_data["norm"].append(current_norm)
+
+                # [PROBE] 记录 Cosine Similarity (思维跳跃度)
+                # 监测思维是“原地打转”(Sim ~ 1.0) 还是“有效跳跃”(Sim < 1.0)
+                if batch_idx in last_thoughts_cache:
+                    prev_h = last_thoughts_cache[batch_idx]
+                    cos_sim = F.cosine_similarity(final_h, prev_h, dim=0).detach()
+                    batch_probe_data["cosine"].append(cos_sim)
+                
+                # 更新缓存
+                last_thoughts_cache[batch_idx] = final_h.detach()
+
+                tensor_list[batch_idx][token_idx] = final_h
 
             # assemble the new inputs_embeds
             inputs_embeds = torch.stack(
@@ -214,8 +278,18 @@ class Coconut(nn.Module):
         loss = loss_fct(
             shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1)
         )
+        def safe_mean(k):
+            if len(batch_probe_data[k]) > 0:
+                return torch.stack(batch_probe_data[k]).mean()
+            return torch.tensor(0.0, device=self.embedding.weight.device)
 
-        return Outputs(loss=loss, inputs_embeds=inputs_embeds, logits=logits)
+        final_probes = {
+            "probe/avg_alpha": safe_mean("alpha"),
+            "probe/avg_norm": safe_mean("norm"),
+            "probe/avg_cosine": safe_mean("cosine")
+        }
+
+        return Outputs(loss=loss, inputs_embeds=inputs_embeds, logits=logits, probes=final_probes)
 
     def train(self):
         self.base_causallm.train()

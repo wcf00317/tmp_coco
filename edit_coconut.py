@@ -20,13 +20,14 @@ MAX_N_LATENT = 8
 class Coconut(nn.Module):
 
     def __init__(
-        self,
-        base_causallm,
-        latent_token_id,
-        start_latent_id,
-        end_latent_id,
-        eos_token_id,
-    ):
+            self,
+            base_causallm,
+            latent_token_id,
+            start_latent_id,
+            end_latent_id,
+            eos_token_id,
+            decoupling_mode="original",  # [NEW] 新增模式参数
+        ):
 
         super(Coconut, self).__init__()
         self.gen_forward_cnt = 0
@@ -35,6 +36,7 @@ class Coconut(nn.Module):
         self.eos_token_id = eos_token_id
         self.start_latent_id = start_latent_id
         self.end_latent_id = end_latent_id
+        self.decoupling_mode = decoupling_mode # [NEW] 保存模式
 
         # tested with GPT2 and Llama3
         if isinstance(self.base_causallm, GPT2LMHeadModel):
@@ -42,6 +44,17 @@ class Coconut(nn.Module):
         else:
             self.embedding = self.base_causallm.get_input_embeddings()
 
+        # [NEW] 初始化 Intensity Predictor (如果模式需要)
+        # 支持: 'residual' (1+alpha), 'normalized' (direction+scale)
+        if self.decoupling_mode in ["residual", "normalized"]:
+            hidden_size = self.embedding.weight.shape[1]
+            self.scale_mlp = nn.Sequential(
+                nn.Linear(hidden_size, hidden_size // 4),
+                nn.ReLU(),
+                nn.Linear(hidden_size // 4, 1)
+            )
+            print(f"Coconut initialized with decoupling mode: {self.decoupling_mode}")
+        
     def forward(self, input_ids, attention_mask, labels, position_ids, **kwargs):
 
         logits = []
@@ -138,6 +151,10 @@ class Coconut(nn.Module):
             else:
                 kv_cache = outputs.past_key_values
 
+            intensity_scales = None
+            if self.decoupling_mode in ["residual", "normalized"]:
+                intensity_scales = self.scale_mlp(hidden_states)
+            
             # feedback the continuous thoughts to the input_embeds
 
             # first decide the positions to feedback
@@ -157,14 +174,39 @@ class Coconut(nn.Module):
                 for batch_idx in range(inputs_embeds.shape[0])
             ]
 
-            # replace some of them with continuous thoughts
+            # # replace some of them with continuous thoughts
+            # for idx_pair in filling_indices:
+            #     batch_idx, token_idx = idx_pair
+
+            #     # replace it with the preceding last hidden states
+            #     tensor_list[batch_idx][token_idx] = hidden_states[
+            #         batch_idx, token_idx - 1 - hidden_states_offset, :
+            #     ]
             for idx_pair in filling_indices:
                 batch_idx, token_idx = idx_pair
 
-                # replace it with the preceding last hidden states
-                tensor_list[batch_idx][token_idx] = hidden_states[
+                raw_h = hidden_states[
                     batch_idx, token_idx - 1 - hidden_states_offset, :
                 ]
+
+                # [NEW] 根据模式应用不同的公式
+                if self.decoupling_mode == "residual":
+                    # 公式: h * (1 + alpha)
+                    alpha = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
+                    final_h = raw_h * (1 + alpha)
+                    
+                elif self.decoupling_mode == "normalized":
+                    # 公式: (h / ||h||) * alpha
+                    # 注意：这里的 scale_mlp 输出可能需要取绝对值或 softplus 保证为正，或者让它自然学习符号
+                    alpha = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
+                    norm = torch.norm(raw_h, p=2, dim=-1, keepdim=True) + 1e-6
+                    final_h = (raw_h / norm) * alpha
+                    
+                else: 
+                    # 默认: original
+                    final_h = raw_h
+
+                tensor_list[batch_idx][token_idx] = final_h
 
             # assemble the new inputs_embeds
             inputs_embeds = torch.stack(
