@@ -290,7 +290,7 @@ def eval_cot_model(model_path, base_model_id, dataset, tokenizer):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--coconut_path", type=str, default="/mnt/bn/rai/zout/coconut/checkpoints/gsm-coconut/gsm-normalized-probe-update/checkpoint_8", help="Path to Coconut trained checkpoint")
+    parser.add_argument("--coconut_path", type=str, default="/mnt/bn/rai/zout/coconut/checkpoints/gsm-coconut/gsm-original-probe/checkpoint_25", help="Path to Coconut trained checkpoint")
     parser.add_argument("--cot_path", type=str, default="/mnt/bn/rai/zout/coconut/YOUR_PATH_TO_SAVE_THE_MODEL/gsm-cot/checkpoint_16", help="Path to Standard CoT trained checkpoint")
     parser.add_argument("--data_path", type=str, default="/mnt/bn/rai/zout/coconut/data/gsm_test.json")
     parser.add_argument("--base_model_id", type=str, default="openai-community/gpt2")
@@ -343,7 +343,7 @@ def main():
     plt.title("Activation Kurtosis Distribution: Mature CoT vs Coconut")
     plt.xlabel("Kurtosis Value per Sample")
     plt.legend()
-    plt.savefig("dual_model_comparison.png")
+    plt.savefig("original_dual_model_comparison.png")
     print("\nSaved comparison plot to 'dual_model_comparison.png'")
     
     # Failure Analysis Check
