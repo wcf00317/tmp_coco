@@ -42,11 +42,11 @@ class Coconut(nn.Module):
 
         # [NEW] 稀疏性惩罚系数 (L1 Loss Weight)
         # 强迫模型只在少数关键步骤使用高 Alpha (实现二值化/降维效果)
-        self.sparsity_weight = 0.002 
+        self.sparsity_weight = 0.002/20
 
         # [NEW] Normalized 模式的基准缩放因子
-        # 既然 Transformer 喜欢 ~50 的模长，我们就手动给它
-        self.norm_scale_factor = 50.0
+
+        # self.norm_scale_factor = nn.Parameter(torch.tensor([80.0]))
 
         # tested with GPT2 and Llama3
         if isinstance(self.base_causallm, GPT2LMHeadModel):
@@ -57,17 +57,27 @@ class Coconut(nn.Module):
         # [NEW] 初始化 Intensity Predictor (MLP)
         if self.decoupling_mode in ["residual", "normalized"]:
             hidden_size = self.embedding.weight.shape[1]
-            # 轻量级 MLP: h -> alpha
-            # 瓶颈结构 (hidden // 4) 有助于进一步压缩信息
+
+            # 1. 定义 MLP
             self.scale_mlp = nn.Sequential(
                 nn.Linear(hidden_size, hidden_size // 4),
                 nn.ReLU(),
                 nn.Linear(hidden_size // 4, 1)
             )
-            print(f"Coconut initialized with mode: {self.decoupling_mode}")
-            print(f"Sparsity Penalty Weight: {self.sparsity_weight}")
+
+            # 2. [关键] 最后一层零初始化 (Zero-Init)
+            # 确保初始状态下 alpha/gate 输出严格为 0
+            # 这样训练开始时，Residual 模式等同于 Original，Normalized 模式等同于 Base Scale
+            nn.init.zeros_(self.scale_mlp[-1].weight)
+            nn.init.zeros_(self.scale_mlp[-1].bias)
+
+            # 3. [关键] Normalized 模式的可学习基准 (Learnable Base)
+            # 不再硬编码 50.0，初始化为 80.0 (经验舒适区)，允许梯度调整
             if self.decoupling_mode == "normalized":
-                print(f"Hard Scale Factor: {self.norm_scale_factor}")
+                self.base_scale = nn.Parameter(torch.tensor([80.0]))
+
+            print(
+                f"Mode: {self.decoupling_mode} | Zero-Init: ON | Base Scale: {'Learnable' if hasattr(self, 'base_scale') else 'N/A'}")
 
     def forward(self, input_ids, attention_mask, labels, position_ids, **kwargs):
 
@@ -170,10 +180,14 @@ class Coconut(nn.Module):
             # [Logic] 计算 Intensity (Alpha)
             intensity_scales = None
             if self.decoupling_mode in ["residual", "normalized"]:
-                # MLP 预测原始 alpha
-                intensity_scales = self.scale_mlp(hidden_states)
-                
-                # [Reg] 收集用于 L1 Loss (保留梯度)
+                # [关键] 针对 Normalized 模式，必须切断“模长反馈回路”
+                # 如果是 Normalized 模式，输入给 MLP 的必须是归一化后的向量 (Direction)
+                # 否则 input norm 越大 -> MLP output 越大 -> next input norm 更大 (爆炸/死锁)
+                mlp_input = hidden_states
+                if self.decoupling_mode == "normalized":
+                    mlp_input = F.normalize(hidden_states, p=2, dim=-1).detach()  # Detach 甚至可以更彻底切断梯度，这里先只做 Normalize
+
+                intensity_scales = self.scale_mlp(mlp_input)
                 all_alpha_tensors.append(intensity_scales)
 
             # feedback logic
@@ -201,28 +215,37 @@ class Coconut(nn.Module):
 
                 # 2. 应用解耦与门控机制
                 if self.decoupling_mode == "residual":
-                    # [Fix] Tanh Gating: 限制范围在 [-1, 1]
-                    # e_t = h * (1 + tanh(alpha))
-                    # 范围: [0, 2h]。alpha < 0 时缩小(Sink)，alpha > 0 时放大(Highlight)
+                    # [修复 Residual]
+                    # 1. Zero-Init 保证了初始 alpha=0
+                    # 2. 增加阻尼系数 (0.1)，防止复利效应导致的指数爆炸
                     alpha_raw = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
-                    alpha = torch.tanh(alpha_raw)
-                    
+
+                    # 限制范围 [-0.1, 0.1]，既保留了非线性，又很安全
+                    alpha = 0.1 * torch.tanh(alpha_raw)
+
                     final_h = raw_h * (1 + alpha)
-                    
-                    # 记录 Probe (绝对值均值，看活跃度)
+
                     batch_probe_data["alpha"].append(alpha.abs().mean().detach())
 
                 elif self.decoupling_mode == "normalized":
-                    # [Fix] Hard Scaling: 强制乘 50
-                    # e_t = 50 * alpha * (h / ||h||)
-                    # alpha 直接作为系数，不再归一化到 1
-                    alpha = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
-                    norm = torch.norm(raw_h, p=2, dim=-1, keepdim=True) + 1e-6
-                    
-                    # 注意：这里我们不加 Tanh，允许 alpha 变大变小，完全由 L1 Loss 约束
-                    final_h = (raw_h / norm) * (1 + alpha) * self.norm_scale_factor
-                    
-                    batch_probe_data["alpha"].append(alpha.abs().mean().detach())
+                    # [修复 Normalized]
+                    # 1. 之前 MLP 输入已经是 normalize 过的了，所以这里 alpha 纯粹由“语义”决定
+                    # 2. 使用 base_scale * exp(alpha) 实现绝对控制
+                    gate = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
+
+                    # 计算方向
+                    norm_val = torch.norm(raw_h, p=2, dim=-1, keepdim=True) + 1e-6
+                    direction = raw_h / norm_val
+
+                    # 计算最终模长
+                    # 初始状态 gate=0 -> scale = base_scale (80.0)
+                    # gate > 0 -> 放大; gate < 0 -> 缩小
+                    # exp 保证了 scale 永远为正
+                    scale = self.base_scale * torch.exp(gate)
+
+                    final_h = direction * scale
+
+                    batch_probe_data["alpha"].append(gate.abs().mean().detach())
 
                 else:
                     # Original

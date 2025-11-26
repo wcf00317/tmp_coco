@@ -2,12 +2,12 @@
 
 project: test
 save_path: ./checkpoints/gsm-coconut
-name: gsm-original-probe-update
+name: gsm-residual-probe-update_III
 
 only_eval: False
 
 coconut: True
-decoupling_mode: "original"
+decoupling_mode: "residual"
 cot: False
 no_thoughts: False
 no_cot: False
@@ -27,7 +27,7 @@ bf16: False
 train_path: data/gsm_train.json
 val_path: data/gsm_valid.json
 reset_optimizer: True
-batch_size_training: 64
+batch_size_training: 32
 debug: False
 gradient_accumulation_steps: 1
 num_epochs: 25

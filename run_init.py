@@ -432,7 +432,7 @@ def worker(rank, world_size, args):
                     optimizer.zero_grad()
                     pbar.update(1)
 
-                if rank == 0:
+                if rank == 0 and step % 100 == 0:
                     current_loss = loss.detach().float().item() * configs.gradient_accumulation_steps
                     
                     # 构建日志字典
