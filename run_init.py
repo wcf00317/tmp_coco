@@ -420,7 +420,9 @@ def worker(rank, world_size, args):
                     key: batch[key].to(rank) for key in batch.keys() if key != "idx"
                 }
 
-                outputs = parallel_model(**batch)
+                is_probe_step = (total_train_steps % 1000 == 0)
+
+                outputs = parallel_model(**batch, compute_probes=is_probe_step)
 
                 loss = outputs.loss / configs.gradient_accumulation_steps
                 loss.backward()
@@ -432,7 +434,7 @@ def worker(rank, world_size, args):
                     optimizer.zero_grad()
                     pbar.update(1)
 
-                if rank == 0 and step % 100 == 0:
+                if rank == 0 and (step % 100 == 0 or step == len(train_dataloader) - 1):
                     current_loss = loss.detach().float().item() * configs.gradient_accumulation_steps
                     
                     # 构建日志字典
@@ -448,6 +450,8 @@ def worker(rank, world_size, args):
                             val = v.item() if isinstance(v, torch.Tensor) else v
                             # 简化 key 名字，去掉 'probe/' 前缀方便阅读
                             key_name = k.replace("probe/", "")
+                            if "rank" in key_name and val == 0: continue
+                            if "entropy" in key_name and val == 0: continue
                             log_data[key_name] = round(val, 4) if isinstance(val, float) else val
 
                     # 只有在梯度累积步或者每N步打印一次，防止刷屏太快
@@ -480,7 +484,8 @@ def worker(rank, world_size, args):
 
             # val loss
             total_loss = 0
-
+            val_probes_accum = {}
+            val_steps = 0
             with torch.no_grad():
                 parallel_model.module.eval()
                 for step, batch in enumerate(valid_loss_dataloader):
@@ -489,14 +494,34 @@ def worker(rank, world_size, args):
                         key: batch[key].to(rank) for key in batch.keys() if key != "idx"
                     }
 
-                    outputs = parallel_model(**batch)
+                    outputs = parallel_model(**batch, compute_probes=True)
                     loss = outputs.loss
                     dist.all_reduce(loss, op=dist.ReduceOp.SUM)
                     total_loss += loss.item() / world_size
+                if hasattr(outputs, "probes") and outputs.probes is not None:
+                    # 我们只在 rank 0 统计即可，作为近似参考
+                    if rank == 0:
+                        for k, v in outputs.probes.items():
+                            val = v.item() if isinstance(v, torch.Tensor) else v
+                            # 跳过 0 值 (避免未计算的情况)
+                            if "rank" in k and val == 0: continue
+                            if "entropy" in k and val == 0: continue
+
+                            if k not in val_probes_accum:
+                                val_probes_accum[k] = 0.0
+                            val_probes_accum[k] += val
+                        val_steps += 1
 
                 if rank == 0:
                     eval_loss = total_loss / len(valid_loss_dataloader)
                     logger.info(f"Evaluation Loss (Epoch {epoch+1}): {eval_loss}")
+                    if val_steps > 0:
+                        avg_val_probes = {
+                            k: round(v / val_steps, 4)
+                            for k, v in val_probes_accum.items()
+                        }
+                        # 格式化输出，方便查看
+                        logger.info(f"Eval Probes (Epoch {epoch + 1}): {json.dumps(avg_val_probes)}")
 
         # val generation accuracy
         total_length = len(valid_gen_dataloader)
