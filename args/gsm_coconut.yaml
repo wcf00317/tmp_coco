@@ -2,7 +2,7 @@
 
 project: test
 save_path: ./checkpoints/gsm-coconut
-name: gsm-residual-probe-update_III
+name: gsm-residual-probe-update_weight_0
 
 only_eval: False
 

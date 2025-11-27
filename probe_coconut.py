@@ -42,7 +42,7 @@ class Coconut(nn.Module):
 
         # [NEW] 稀疏性惩罚系数 (L1 Loss Weight)
         # 强迫模型只在少数关键步骤使用高 Alpha (实现二值化/降维效果)
-        self.sparsity_weight = 0.002/20
+        self.sparsity_weight = 0
 
         # [NEW] Normalized 模式的基准缩放因子
 
