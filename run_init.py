@@ -1,9 +1,13 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+
 import torch
 import torch.distributed
 import torch.optim as optim
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-import wandb
+# [修改] 移除 wandb
+# import wandb
 
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
@@ -21,7 +25,7 @@ from dataset import (
     MyCollator,
 )
 
-import logging  # [NEW] 引入 logging
+import logging
 from tqdm import tqdm
 from copy import copy
 import itertools
@@ -33,44 +37,39 @@ import argparse
 import functools
 from utils import Config, set_seed
 import torch.multiprocessing as mp
+
+
 def setup_logger(save_dir, rank):
-    # 只有 Rank 0 需要记录日志，其他进程只打印 Error 或静默
     logger = logging.getLogger(f"coconut_rank_{rank}")
     logger.setLevel(logging.INFO)
-    logger.propagate = False  # 防止重复打印
+    logger.propagate = False
 
     if rank == 0:
-        # 1. 格式器
         formatter = logging.Formatter(
-            fmt="[%(asctime)s] %(message)s", 
+            fmt="[%(asctime)s] %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S"
         )
-
-        # 2. 文件处理器 (写入 .log 文件)
         log_file = os.path.join(save_dir, "training_log.txt")
         file_handler = logging.FileHandler(log_file, mode="a")
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
 
-        # 3. 控制台处理器 (输出到命令行)
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setFormatter(formatter)
         logger.addHandler(console_handler)
-    
+
     return logger
-# --- 核心修改：将 main 改为 worker ---
+
+
 def worker(rank, world_size, args):
-    # 1. 设置环境变量（欺骗后续代码和库，让它们以为是 torchrun 启动的）
     os.environ["RANK"] = str(rank)
     os.environ["LOCAL_RANK"] = str(rank)
     os.environ["WORLD_SIZE"] = str(world_size)
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = "29500" # 这里其实用不到，因为我们用了 FileStore
+    os.environ["MASTER_PORT"] = "29500"
 
     torch.cuda.set_device(rank)
 
-    # 2. 使用本地文件初始化 (FileStore)，彻底避开网络端口 EADDRINUSE 问题
-    # 使用 /tmp 下的文件，并加上 UID 防止冲突
     init_file = "/tmp/coconut_dist_lock_fixed"
     if os.name == 'nt':
         init_method = f"file:///{init_file}"
@@ -94,9 +93,7 @@ def worker(rank, world_size, args):
             world_size=world_size,
             rank=rank
         )
-    
-    # 3. 以下是原始 run.py 的完整业务逻辑
-    # load the configuration file
+
     with open(args.config_file) as f:
         config_dict = yaml.safe_load(f)
 
@@ -117,13 +114,7 @@ def worker(rank, world_size, args):
     torch.distributed.barrier()
     cur_ckpts = os.listdir(save_dir)
 
-    # check if the job is preempted and resumed.
-
     if len(cur_ckpts) > 0 and not configs.only_eval:
-        # if there are previous checkpoints, and only_eval is False
-        # it means the previous run was preempted and the program is restarted.
-        # need to find the latest checkpoint and resume from that.
-
         if rank == 0:
             print(
                 f"Warning: found previous run and gonna resume from that. the inputted `resume` argument is ignored!"
@@ -132,7 +123,6 @@ def worker(rank, world_size, args):
         checkpoints = [f for f in cur_ckpts if f.startswith("checkpoint_")]
         checkpoints.sort(key=lambda x: int(x.split("_")[1]))
 
-        # Get the last item in the sorted list
         latest_checkpoint = checkpoints[-1] if checkpoints else None
         if latest_checkpoint:
             configs.resume = int(latest_checkpoint.split("_")[1])
@@ -142,12 +132,10 @@ def worker(rank, world_size, args):
             print(f"Loading from previous run epoch_{configs.resume}!")
 
     elif configs.resume != 0:
-        # by setting `resume`, we can skip a few epoches at the beginning.
         if configs.load_model_path == "None":
             print(
                 f"Warning: you want to skip the first {configs.resume} but you are not loading any existing checkpoint!"
             )
-            # not an intended use case at this point
         print(
             f"Loading from {configs.load_model_path} and skip the first {configs.resume} epochs"
         )
@@ -170,41 +158,32 @@ def worker(rank, world_size, args):
         )
 
         if configs.coconut and not any(
-            [k.startswith("base_causallm") for k in saved_weights.keys()]
+                [k.startswith("base_causallm") for k in saved_weights.keys()]
         ):
-            # we are loading a base model into coconut model
-            # e.g., for GSM8k, we used a SFTed model to skip the stage 0
             loaded = True
             print(model.load_state_dict(saved_weights, strict=False))
 
         elif not configs.coconut and any(
-            [k.startswith("base_causallm") for k in saved_weights.keys()]
+                [k.startswith("base_causallm") for k in saved_weights.keys()]
         ):
             raise ValueError("Cannot load coconut model weights into a causallm model")
 
         elif configs.coconut and any(
-            [k.startswith("base_causallm") for k in saved_weights.keys()]
+                [k.startswith("base_causallm") for k in saved_weights.keys()]
         ):
-            # loading from preempted run
-            # will handle later
             pass
 
         else:
-            # resume or evaluate sft model
             loaded = True
             print(model.load_state_dict(saved_weights, strict=False))
 
     if not (configs.cot or configs.no_thoughts or configs.no_cot):
-        # if we need new tokens, initialize their embeddings and lm heads
         model.resize_token_embeddings(len(tokenizer))
         embeddings = model.get_input_embeddings()
         target_id = tokenizer.convert_tokens_to_ids("<<")
-        # initialize the new token embeddings with a known token
-        # it helps stablize the training
         for token_id in [latent_id, start_id, end_id]:
-            target_embedding = embeddings.weight.data[target_id] 
+            target_embedding = embeddings.weight.data[target_id]
             embeddings.weight.data[token_id] = target_embedding
-            # The input embeddings and lm heads are tied in GPT2. So the code below is not necessary
             lm_head = model.lm_head
             lm_head.weight.data[token_id] = lm_head.weight.data[target_id]
 
@@ -233,18 +212,15 @@ def worker(rank, world_size, args):
     llama_auto_wrap_policy = functools.partial(
         transformer_auto_wrap_policy,
         transformer_layer_cls={
-            # GPT2Block,       # for GPT2, we don't need to shard layers (it becomes DDP)
-            LlamaDecoderLayer  # only shard llama's layers.
+            LlamaDecoderLayer
         },
     )
 
     if configs.bf16:
         model.to(torch.bfloat16)
 
-    # if only eval, use ddp (to avoid bugs in fsdp)
     if configs.only_eval:
         parallel_model = DDP(model, device_ids=[rank])
-
     else:
         parallel_model = FSDP(
             model, auto_wrap_policy=llama_auto_wrap_policy, device_id=rank
@@ -255,7 +231,6 @@ def worker(rank, world_size, args):
     if rank == 0:
         print(parallel_model)
 
-    # prepare the ground truth answer and cot for evaluation
     question_val = [d["question"] for d in json.load(open(configs.val_path))]
     answers_val = [
         d["answer"].replace(",", "").strip() for d in json.load(open(configs.val_path))
@@ -278,18 +253,10 @@ def worker(rank, world_size, args):
 
     total_train_steps = 0
 
-    if not configs.debug and not configs.only_eval and rank == 0:
-        wandb_run = None
-        # wandb_run = wandb.init(project=configs.project, name=configs.name)
-        # wandb_run.config.update(configs, allow_val_change=True)
-        # text_table = wandb.Table(columns=["step", "text"])
-
-    else:
-        wandb_run = None
+    # [修改] 移除了 wandb 初始化逻辑
 
     if configs.reset_optimizer:
         optimizer = None
-
     else:
         optimizer = optim.AdamW(
             parallel_model.parameters(),
@@ -348,9 +315,6 @@ def worker(rank, world_size, args):
                 sampler=DistributedSampler(dataset_train, shuffle=True),
             )
 
-            # the sampler is deterministic even if shuffle is set to True
-            # so we have shuffled the dataset when it's constructed (at every epoch).
-
             dataset_loss_val = get_cot_latent_dataset(
                 scheduled_stage,
                 base_dataset_valid,
@@ -385,90 +349,68 @@ def worker(rank, world_size, args):
             total_length = len(train_dataloader) // configs.gradient_accumulation_steps
             pbar = tqdm(
                 colour="blue",
-                desc=f"Training Epoch: {epoch+1}",
+                desc=f"Training Epoch: {epoch + 1}",
                 total=total_length,
                 dynamic_ncols=True,
             )
 
             for step, batch in enumerate(train_dataloader):
 
-                if step == 0 and wandb_run and rank == 0:
-                    print("logging training data")
-                    cur_bs = len(batch["input_ids"])
-                    text_str = ""
-                    for data_idx in range(cur_bs):
-                        for token_idx in range(len(batch["input_ids"][data_idx])):
-                            text_str += (
-                                str(batch["input_ids"][data_idx][token_idx].item())
-                                + " "
-                                + str(batch["labels"][data_idx][token_idx].item())
-                                + " "
-                                + tokenizer.decode(
-                                    batch["input_ids"][data_idx][token_idx]
-                                )
-                                + "\n"
-                            )
-                        text_str += "====" * 10 + "\n"
-                    text_table.add_data(total_train_steps, text_str)
-                    # copy the table due to a bug in wandb
-                    # https://github.com/wandb/wandb/issues/2981
-
-                    wandb_run.log({"data_table": copy(text_table)})
+                # [修改] 移除了 text_table 填充代码
 
                 total_train_steps += 1
                 batch = {
                     key: batch[key].to(rank) for key in batch.keys() if key != "idx"
                 }
 
+                # [新增] 计算开关：每 1000 步计算一次 Rank/Entropy
                 is_probe_step = (total_train_steps % 1000 == 0)
 
+                # [修改] 传入参数
                 outputs = parallel_model(**batch, compute_probes=is_probe_step)
 
                 loss = outputs.loss / configs.gradient_accumulation_steps
                 loss.backward()
 
                 if (step + 1) % configs.gradient_accumulation_steps == 0 or step == len(
-                    train_dataloader
+                        train_dataloader
                 ) - 1:
                     optimizer.step()
                     optimizer.zero_grad()
                     pbar.update(1)
 
-                if rank == 0 and (step % 100 == 0 or step == len(train_dataloader) - 1):
+                # [修改] 如果是 probe step 也强制打印，否则看不到结果
+                if rank == 0 and (step % 100 == 0 or step == len(train_dataloader) - 1 or is_probe_step):
                     current_loss = loss.detach().float().item() * configs.gradient_accumulation_steps
-                    
-                    # 构建日志字典
+
                     log_data = {
                         "epoch": epoch + 1,
                         "step": total_train_steps,
                         "loss": round(current_loss, 4)
                     }
 
-                    # 如果有 Probe 数据，合并进来
                     if hasattr(outputs, "probes") and outputs.probes is not None:
                         for k, v in outputs.probes.items():
                             val = v.item() if isinstance(v, torch.Tensor) else v
-                            # 简化 key 名字，去掉 'probe/' 前缀方便阅读
                             key_name = k.replace("probe/", "")
-                            if "rank" in key_name and val == 0: continue
-                            if "entropy" in key_name and val == 0: continue
+                            # 跳过 0 值 (Rank/Entropy 在非采样步是 0)
+                            if ("rank" in key_name or "entropy" in key_name) and val == 0: continue
+
                             log_data[key_name] = round(val, 4) if isinstance(val, float) else val
 
-                    # 只有在梯度累积步或者每N步打印一次，防止刷屏太快
-                    # 这里为了实时性，每一步都打，或者你可以加 if step % 10 == 0:
                     logger.info(json.dumps(log_data))
 
                 pbar.set_description(
-                    f"Training Epoch: {epoch+1}/{configs.num_epochs}, batch {step}/{len(train_dataloader)} "
+                    f"Training Epoch: {epoch + 1}/{configs.num_epochs}, batch {step}/{len(train_dataloader)} "
                     f"completed (loss: {round(float(loss.detach().float() * configs.gradient_accumulation_steps), 4)}"
                 )
             pbar.close()
             dist.barrier()
 
             if (
-                not configs.save_only_improve
-                and not configs.debug
-                and not configs.only_eval
+                    not configs.save_only_improve
+                    and not configs.debug
+                    and not configs.only_eval
             ):
                 states = parallel_model.state_dict()
                 if rank == 0:
@@ -484,8 +426,11 @@ def worker(rank, world_size, args):
 
             # val loss
             total_loss = 0
+
+            # [新增] 验证集指标累积
             val_probes_accum = {}
             val_steps = 0
+
             with torch.no_grad():
                 parallel_model.module.eval()
                 for step, batch in enumerate(valid_loss_dataloader):
@@ -494,33 +439,30 @@ def worker(rank, world_size, args):
                         key: batch[key].to(rank) for key in batch.keys() if key != "idx"
                     }
 
+                    # [修改] 验证集全程开启 Probes
                     outputs = parallel_model(**batch, compute_probes=True)
                     loss = outputs.loss
                     dist.all_reduce(loss, op=dist.ReduceOp.SUM)
                     total_loss += loss.item() / world_size
-                if hasattr(outputs, "probes") and outputs.probes is not None:
-                    # 我们只在 rank 0 统计即可，作为近似参考
-                    if rank == 0:
-                        for k, v in outputs.probes.items():
-                            val = v.item() if isinstance(v, torch.Tensor) else v
-                            # 跳过 0 值 (避免未计算的情况)
-                            if "rank" in k and val == 0: continue
-                            if "entropy" in k and val == 0: continue
 
-                            if k not in val_probes_accum:
-                                val_probes_accum[k] = 0.0
-                            val_probes_accum[k] += val
-                        val_steps += 1
+                    # [新增] 缩进正确的 Probe 统计
+                    if hasattr(outputs, "probes") and outputs.probes is not None:
+                        if rank == 0:
+                            for k, v in outputs.probes.items():
+                                val = v.item() if isinstance(v, torch.Tensor) else v
+                                if ("rank" in k or "entropy" in k) and val == 0: continue
+
+                                if k not in val_probes_accum: val_probes_accum[k] = 0.0
+                                val_probes_accum[k] += val
+                            val_steps += 1
 
                 if rank == 0:
                     eval_loss = total_loss / len(valid_loss_dataloader)
-                    logger.info(f"Evaluation Loss (Epoch {epoch+1}): {eval_loss}")
+                    logger.info(f"Evaluation Loss (Epoch {epoch + 1}): {eval_loss}")
+
+                    # [新增] 打印平均验证集 Probe
                     if val_steps > 0:
-                        avg_val_probes = {
-                            k: round(v / val_steps, 4)
-                            for k, v in val_probes_accum.items()
-                        }
-                        # 格式化输出，方便查看
+                        avg_val_probes = {k: round(v / val_steps, 4) for k, v in val_probes_accum.items()}
                         logger.info(f"Eval Probes (Epoch {epoch + 1}): {json.dumps(avg_val_probes)}")
 
         # val generation accuracy
@@ -545,7 +487,6 @@ def worker(rank, world_size, args):
                     for k, v in batch.items()
                     if v != None and k not in ["idx", "position_ids"]
                 }
-                # https://github.com/huggingface/transformers/issues/32492
 
                 assert len(batch["input_ids"]) == 1
                 answer = answers_val[test_idx.cpu().item()]
@@ -554,7 +495,6 @@ def worker(rank, world_size, args):
 
                 total += 1
 
-                # synced_gpus=True in FSDP mode, as we need to keep # forward pass the same on each device
                 outputs = parallel_model.module.generate(
                     **batch,
                     max_new_tokens=max_new_tokens,
@@ -579,7 +519,6 @@ def worker(rank, world_size, args):
                 )
 
             pbar.close()
-            # print(f"Device {rank}: Cor={cor}, CoT={cor_cot}, Total={total}")
 
         dist.all_reduce(cor_cot, op=dist.ReduceOp.SUM)
         dist.all_reduce(cor, op=dist.ReduceOp.SUM)
@@ -589,8 +528,8 @@ def worker(rank, world_size, args):
         cor = cor.item()
         total = total.item()
         if rank == 0:
-            logger.info(f"Accuracy on validation set: {cor} / {total} = {cor/total}")
-            logger.info(f"CoT match on validation set: {cor_cot} / {total} = {cor_cot/total}")
+            logger.info(f"Accuracy on validation set: {cor} / {total} = {cor / total}")
+            logger.info(f"CoT match on validation set: {cor_cot} / {total} = {cor_cot / total}")
         sys.stdout.flush()
 
         if rank == 0:
@@ -601,16 +540,16 @@ def worker(rank, world_size, args):
 
         dist.barrier()
         if (
-            cor / total > best_acc
-            and configs.save_only_improve
-            and not configs.debug
-            and not configs.only_eval
+                cor / total > best_acc
+                and configs.save_only_improve
+                and not configs.debug
+                and not configs.only_eval
         ):
             states = parallel_model.state_dict()
 
             if rank == 0:
                 torch.save(states, os.path.join(save_dir, f"checkpoint_{epoch + 1}"))
-                logger.info(f"New best model saved (Acc: {acc})")
+                logger.info(f"New best model saved (Acc: {cor / total})")
 
             best_acc = cor / total
 
@@ -618,23 +557,18 @@ def worker(rank, world_size, args):
             del states
             gc.collect()
             torch.cuda.empty_cache()
-    
-    # 4. 训练结束，销毁进程组，避免报错
+
     dist.destroy_process_group()
 
 
 if __name__ == "__main__":
-    # 参数解析
     parser = argparse.ArgumentParser(description="coconut")
     parser.add_argument("config_file")
-    # 使用 parse_known_args 避免传入多余参数报错
     args, unknown = parser.parse_known_args()
 
-    # 自动检测 GPU 数量
     world_size = torch.cuda.device_count()
     print(f"Detected {world_size} GPUs. Using FileStore for init.")
-    
-    # 清理旧的锁文件（如果有）
+
     lock_path = "/tmp/coconut_dist_lock_fixed"
     if os.path.exists(lock_path):
         try:
@@ -643,5 +577,4 @@ if __name__ == "__main__":
         except:
             pass
 
-    # 启动多进程
     mp.spawn(worker, args=(world_size, args), nprocs=world_size)
