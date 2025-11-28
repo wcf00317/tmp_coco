@@ -529,3 +529,240 @@
 [2025-11-28 02:53:37] {"epoch": 16, "step": 38057, "loss": 0.5824, "avg_alpha": 1.3251, "avg_norm": 21.1979, "avg_cosine": 0.5413, "reg_loss": 0.3643}
 [2025-11-28 02:59:20] {"epoch": 16, "step": 38157, "loss": 0.4055, "avg_alpha": 1.3726, "avg_norm": 20.3985, "avg_cosine": 0.4468, "reg_loss": 0.398}
 [2025-11-28 03:05:06] {"epoch": 16, "step": 38257, "loss": 0.2883, "avg_alpha": 1.2886, "avg_norm": 22.1013, "avg_cosine": 0.5309, "reg_loss": 0.3597}
+[2025-11-28 03:10:51] {"epoch": 16, "step": 38357, "loss": 0.4622, "avg_alpha": 1.3518, "avg_norm": 20.8723, "avg_cosine": 0.4684, "reg_loss": 0.3256}
+[2025-11-28 03:16:41] {"epoch": 16, "step": 38457, "loss": 0.3516, "avg_alpha": 1.3325, "avg_norm": 21.4479, "avg_cosine": 0.4514, "reg_loss": 0.3293}
+[2025-11-28 03:22:29] {"epoch": 16, "step": 38557, "loss": 0.4593, "avg_alpha": 1.2964, "avg_norm": 22.0813, "avg_cosine": 0.5455, "reg_loss": 0.403}
+[2025-11-28 03:28:19] {"epoch": 16, "step": 38657, "loss": 0.6987, "avg_alpha": 1.2878, "avg_norm": 21.9441, "avg_cosine": 0.5586, "reg_loss": 0.3731}
+[2025-11-28 03:33:57] {"epoch": 16, "step": 38757, "loss": 0.4298, "avg_alpha": 1.1683, "avg_norm": 24.5232, "avg_cosine": 0.6237, "reg_loss": 0.3179}
+[2025-11-28 03:41:49] {"epoch": 16, "step": 38857, "loss": 0.5091, "avg_alpha": 1.3078, "avg_norm": 21.5831, "avg_cosine": 0.5119, "reg_loss": 0.2861}
+[2025-11-28 03:51:23] {"epoch": 16, "step": 38957, "loss": 0.5507, "avg_alpha": 1.3505, "avg_norm": 20.5562, "avg_cosine": 0.5872, "reg_loss": 0.4787}
+[2025-11-28 04:01:12] {"epoch": 16, "step": 39057, "loss": 0.3507, "avg_alpha": 1.34, "avg_norm": 21.0615, "avg_cosine": 0.4572, "reg_loss": 0.484}
+[2025-11-28 04:10:50] {"epoch": 16, "step": 39157, "loss": 0.4639, "avg_alpha": 1.3319, "avg_norm": 21.2387, "avg_cosine": 0.5609, "reg_loss": 0.3896}
+[2025-11-28 04:11:59] Checkpoint saved: checkpoint_16
+[2025-11-28 04:12:19] Evaluation Loss (Epoch 16): 1.2112640142440796
+[2025-11-28 04:12:28] [Example] Pred: 400 | GT: 300
+[2025-11-28 04:12:28] [Example] Pred: 360 | GT: 240
+[2025-11-28 04:12:28] [Example] Pred: 21 | GT: 25
+[2025-11-28 04:12:29] [Example] Pred: 10 | GT: 10
+[2025-11-28 04:12:29] [Example] Pred: 35 | GT: 45
+[2025-11-28 04:13:22] Accuracy on validation set: 142 / 500 = 0.284
+[2025-11-28 04:13:22] CoT match on validation set: 0 / 500 = 0.0
+[2025-11-28 04:13:22] {'eval/acc': 0.284, 'eval/cot_em': 0.0}
+[2025-11-28 04:14:02] {"epoch": 17, "step": 39170, "loss": 0.3544, "avg_alpha": 1.2974, "avg_norm": 21.624, "avg_cosine": 0.5266, "reg_loss": 0.3158}
+[2025-11-28 04:19:49] {"epoch": 17, "step": 39270, "loss": 0.5532, "avg_alpha": 1.3854, "avg_norm": 20.0033, "avg_cosine": 0.4661, "reg_loss": 0.4355}
+[2025-11-28 04:25:39] {"epoch": 17, "step": 39370, "loss": 0.4428, "avg_alpha": 1.3, "avg_norm": 21.7065, "avg_cosine": 0.5684, "reg_loss": 0.3877}
+[2025-11-28 04:31:26] {"epoch": 17, "step": 39470, "loss": 0.3098, "avg_alpha": 1.3486, "avg_norm": 20.7983, "avg_cosine": 0.4955, "reg_loss": 0.3232}
+[2025-11-28 04:37:11] {"epoch": 17, "step": 39570, "loss": 0.2859, "avg_alpha": 1.2926, "avg_norm": 21.9273, "avg_cosine": 0.5377, "reg_loss": 0.3775}
+[2025-11-28 04:43:00] {"epoch": 17, "step": 39670, "loss": 0.2583, "avg_alpha": 1.3176, "avg_norm": 21.6108, "avg_cosine": 0.5644, "reg_loss": 0.3813}
+[2025-11-28 04:48:46] {"epoch": 17, "step": 39770, "loss": 0.4478, "avg_alpha": 1.3984, "avg_norm": 19.7679, "avg_cosine": 0.4956, "reg_loss": 0.3131}
+[2025-11-28 04:54:28] {"epoch": 17, "step": 39870, "loss": 0.537, "avg_alpha": 1.3575, "avg_norm": 20.4027, "avg_cosine": 0.5269, "reg_loss": 0.3822}
+[2025-11-28 05:00:16] {"epoch": 17, "step": 39970, "loss": 0.2243, "avg_alpha": 1.3303, "avg_norm": 21.2695, "avg_cosine": 0.482, "reg_loss": 0.3712}
+[2025-11-28 05:06:03] {"epoch": 17, "step": 40070, "loss": 0.2516, "avg_alpha": 1.3596, "avg_norm": 20.6232, "avg_cosine": 0.4746, "reg_loss": 0.3935}
+[2025-11-28 05:11:47] {"epoch": 17, "step": 40170, "loss": 0.396, "avg_alpha": 1.2564, "avg_norm": 22.6515, "avg_cosine": 0.5342, "reg_loss": 0.3636}
+[2025-11-28 05:17:32] {"epoch": 17, "step": 40270, "loss": 0.3428, "avg_alpha": 1.3103, "avg_norm": 21.7682, "avg_cosine": 0.492, "reg_loss": 0.4193}
+[2025-11-28 05:23:17] {"epoch": 17, "step": 40370, "loss": 0.3914, "avg_alpha": 1.3532, "avg_norm": 20.8231, "avg_cosine": 0.4909, "reg_loss": 0.4225}
+[2025-11-28 05:29:06] {"epoch": 17, "step": 40470, "loss": 0.384, "avg_alpha": 1.3252, "avg_norm": 21.1535, "avg_cosine": 0.447, "reg_loss": 0.4174}
+[2025-11-28 05:34:54] {"epoch": 17, "step": 40570, "loss": 0.4643, "avg_alpha": 1.2755, "avg_norm": 22.3313, "avg_cosine": 0.4214, "reg_loss": 0.4156}
+[2025-11-28 05:40:39] {"epoch": 17, "step": 40670, "loss": 0.4665, "avg_alpha": 1.3073, "avg_norm": 21.7572, "avg_cosine": 0.5199, "reg_loss": 0.3913}
+[2025-11-28 05:46:25] {"epoch": 17, "step": 40770, "loss": 0.3839, "avg_alpha": 1.2817, "avg_norm": 22.3052, "avg_cosine": 0.4629, "reg_loss": 0.321}
+[2025-11-28 05:52:14] {"epoch": 17, "step": 40870, "loss": 0.6656, "avg_alpha": 1.2893, "avg_norm": 22.0129, "avg_cosine": 0.5261, "reg_loss": 0.44}
+[2025-11-28 05:58:01] {"epoch": 17, "step": 40970, "loss": 0.5176, "avg_alpha": 1.3053, "avg_norm": 21.596, "avg_cosine": 0.5159, "reg_loss": 0.3773}
+[2025-11-28 06:03:45] {"epoch": 17, "step": 41070, "loss": 0.4931, "avg_alpha": 1.3678, "avg_norm": 20.4438, "avg_cosine": 0.4043, "reg_loss": 0.3305}
+[2025-11-28 06:09:27] {"epoch": 17, "step": 41170, "loss": 0.3741, "avg_alpha": 1.3227, "avg_norm": 21.2094, "avg_cosine": 0.5706, "reg_loss": 0.4212}
+[2025-11-28 06:15:10] {"epoch": 17, "step": 41270, "loss": 0.4796, "avg_alpha": 1.3872, "avg_norm": 19.947, "avg_cosine": 0.4838, "reg_loss": 0.4084}
+[2025-11-28 06:21:00] {"epoch": 17, "step": 41370, "loss": 0.2807, "avg_alpha": 1.3312, "avg_norm": 21.2288, "avg_cosine": 0.5739, "reg_loss": 0.3692}
+[2025-11-28 06:26:43] {"epoch": 17, "step": 41470, "loss": 0.6002, "avg_alpha": 1.2259, "avg_norm": 23.5202, "avg_cosine": 0.5161, "reg_loss": 0.3136}
+[2025-11-28 06:32:26] {"epoch": 17, "step": 41570, "loss": 0.334, "avg_alpha": 1.2387, "avg_norm": 22.9619, "avg_cosine": 0.5445, "reg_loss": 0.4373}
+[2025-11-28 06:38:12] {"epoch": 17, "step": 41670, "loss": 0.4437, "avg_alpha": 1.3521, "avg_norm": 20.6637, "avg_cosine": 0.4618, "reg_loss": 0.4108}
+[2025-11-28 06:43:56] {"epoch": 17, "step": 41770, "loss": 0.4981, "avg_alpha": 1.333, "avg_norm": 21.1468, "avg_cosine": 0.5238, "reg_loss": 0.474}
+[2025-11-28 06:50:58] {"epoch": 17, "step": 41870, "loss": 0.4779, "avg_alpha": 1.2106, "avg_norm": 23.5654, "avg_cosine": 0.5543, "reg_loss": 0.3556}
+[2025-11-28 07:00:37] {"epoch": 17, "step": 41970, "loss": 0.3588, "avg_alpha": 1.2101, "avg_norm": 23.8199, "avg_cosine": 0.5546, "reg_loss": 0.3367}
+[2025-11-28 07:10:17] {"epoch": 17, "step": 42070, "loss": 0.5455, "avg_alpha": 1.271, "avg_norm": 22.4578, "avg_cosine": 0.4664, "reg_loss": 0.2867}
+[2025-11-28 07:19:45] {"epoch": 17, "step": 42170, "loss": 0.5469, "avg_alpha": 1.3113, "avg_norm": 21.2611, "avg_cosine": 0.5705, "reg_loss": 0.3684}
+[2025-11-28 07:20:57] Checkpoint saved: checkpoint_17
+[2025-11-28 07:21:16] Evaluation Loss (Epoch 17): 1.2155039012432098
+[2025-11-28 07:21:24] [Example] Pred: 200 | GT: 300
+[2025-11-28 07:21:24] [Example] Pred: 240 | GT: 240
+[2025-11-28 07:21:25] [Example] Pred: 21 | GT: 25
+[2025-11-28 07:21:25] [Example] Pred: 10 | GT: 10
+[2025-11-28 07:21:25] [Example] Pred: 45 | GT: 45
+[2025-11-28 07:22:18] Accuracy on validation set: 154 / 500 = 0.308
+[2025-11-28 07:22:18] CoT match on validation set: 0 / 500 = 0.0
+[2025-11-28 07:22:18] {'eval/acc': 0.308, 'eval/cot_em': 0.0}
+[2025-11-28 07:22:54] {"epoch": 18, "step": 42183, "loss": 0.2904, "avg_alpha": 1.2417, "avg_norm": 22.8265, "avg_cosine": 0.5892, "reg_loss": 0.3983}
+[2025-11-28 07:28:36] {"epoch": 18, "step": 42283, "loss": 0.4665, "avg_alpha": 1.2937, "avg_norm": 21.7447, "avg_cosine": 0.5252, "reg_loss": 0.4163}
+[2025-11-28 07:34:21] {"epoch": 18, "step": 42383, "loss": 0.3589, "avg_alpha": 1.2521, "avg_norm": 22.5843, "avg_cosine": 0.5494, "reg_loss": 0.3163}
+[2025-11-28 07:40:06] {"epoch": 18, "step": 42483, "loss": 0.3901, "avg_alpha": 1.2897, "avg_norm": 21.6869, "avg_cosine": 0.4928, "reg_loss": 0.3892}
+[2025-11-28 07:45:50] {"epoch": 18, "step": 42583, "loss": 0.4246, "avg_alpha": 1.3318, "avg_norm": 21.1214, "avg_cosine": 0.4171, "reg_loss": 0.3373}
+[2025-11-28 07:51:35] {"epoch": 18, "step": 42683, "loss": 0.4414, "avg_alpha": 1.3688, "avg_norm": 20.1871, "avg_cosine": 0.4898, "reg_loss": 0.4323}
+[2025-11-28 07:57:18] {"epoch": 18, "step": 42783, "loss": 0.3501, "avg_alpha": 1.2601, "avg_norm": 22.5108, "avg_cosine": 0.5003, "reg_loss": 0.3861}
+[2025-11-28 08:02:59] {"epoch": 18, "step": 42883, "loss": 0.3244, "avg_alpha": 1.2885, "avg_norm": 21.8328, "avg_cosine": 0.5618, "reg_loss": 0.3874}
+[2025-11-28 08:08:41] {"epoch": 18, "step": 42983, "loss": 0.3882, "avg_alpha": 1.3219, "avg_norm": 21.1705, "avg_cosine": 0.5107, "reg_loss": 0.3742}
+[2025-11-28 08:14:23] {"epoch": 18, "step": 43083, "loss": 0.3437, "avg_alpha": 1.3386, "avg_norm": 20.6751, "avg_cosine": 0.5337, "reg_loss": 0.4011}
+[2025-11-28 08:20:05] {"epoch": 18, "step": 43183, "loss": 0.2859, "avg_alpha": 1.3378, "avg_norm": 20.9827, "avg_cosine": 0.4816, "reg_loss": 0.4835}
+[2025-11-28 08:25:49] {"epoch": 18, "step": 43283, "loss": 0.3377, "avg_alpha": 1.3609, "avg_norm": 20.4874, "avg_cosine": 0.475, "reg_loss": 0.4268}
+[2025-11-28 08:31:33] {"epoch": 18, "step": 43383, "loss": 0.1369, "avg_alpha": 1.2682, "avg_norm": 22.3411, "avg_cosine": 0.5338, "reg_loss": 0.4027}
+[2025-11-28 08:37:15] {"epoch": 18, "step": 43483, "loss": 0.4076, "avg_alpha": 1.2909, "avg_norm": 21.8926, "avg_cosine": 0.5622, "reg_loss": 0.3882}
+[2025-11-28 08:42:57] {"epoch": 18, "step": 43583, "loss": 0.4517, "avg_alpha": 1.3634, "avg_norm": 20.434, "avg_cosine": 0.5247, "reg_loss": 0.435}
+[2025-11-28 08:48:44] {"epoch": 18, "step": 43683, "loss": 0.4627, "avg_alpha": 1.3212, "avg_norm": 21.061, "avg_cosine": 0.5299, "reg_loss": 0.3326}
+[2025-11-28 08:54:27] {"epoch": 18, "step": 43783, "loss": 0.2288, "avg_alpha": 1.3566, "avg_norm": 20.5562, "avg_cosine": 0.4902, "reg_loss": 0.4753}
+[2025-11-28 09:00:09] {"epoch": 18, "step": 43883, "loss": 0.3936, "avg_alpha": 1.2228, "avg_norm": 23.3045, "avg_cosine": 0.5112, "reg_loss": 0.4312}
+[2025-11-28 09:05:51] {"epoch": 18, "step": 43983, "loss": 0.3409, "avg_alpha": 1.277, "avg_norm": 22.0423, "avg_cosine": 0.5632, "reg_loss": 0.3355}
+[2025-11-28 09:11:31] {"epoch": 18, "step": 44083, "loss": 0.2252, "avg_alpha": 1.3107, "avg_norm": 21.2649, "avg_cosine": 0.515, "reg_loss": 0.3238}
+[2025-11-28 09:17:09] {"epoch": 18, "step": 44183, "loss": 0.529, "avg_alpha": 1.3141, "avg_norm": 21.4309, "avg_cosine": 0.5385, "reg_loss": 0.324}
+[2025-11-28 09:22:45] {"epoch": 18, "step": 44283, "loss": 0.3143, "avg_alpha": 1.3626, "avg_norm": 20.3806, "avg_cosine": 0.5452, "reg_loss": 0.3121}
+[2025-11-28 09:28:25] {"epoch": 18, "step": 44383, "loss": 0.4364, "avg_alpha": 1.3039, "avg_norm": 21.7155, "avg_cosine": 0.482, "reg_loss": 0.2551}
+[2025-11-28 09:34:06] {"epoch": 18, "step": 44483, "loss": 0.2914, "avg_alpha": 1.3319, "avg_norm": 21.1899, "avg_cosine": 0.4931, "reg_loss": 0.4134}
+[2025-11-28 09:39:47] {"epoch": 18, "step": 44583, "loss": 0.5033, "avg_alpha": 1.3376, "avg_norm": 21.0061, "avg_cosine": 0.4838, "reg_loss": 0.2553}
+[2025-11-28 09:45:29] {"epoch": 18, "step": 44683, "loss": 0.4179, "avg_alpha": 1.3094, "avg_norm": 21.663, "avg_cosine": 0.5961, "reg_loss": 0.3738}
+[2025-11-28 09:51:10] {"epoch": 18, "step": 44783, "loss": 0.2886, "avg_alpha": 1.3851, "avg_norm": 19.7598, "avg_cosine": 0.6043, "reg_loss": 0.4671}
+[2025-11-28 09:55:20] {"epoch": 18, "step": 44883, "loss": 0.3244, "avg_alpha": 1.3062, "avg_norm": 21.5463, "avg_cosine": 0.5979, "reg_loss": 0.3848}
+[2025-11-28 09:58:36] {"epoch": 18, "step": 44983, "loss": 0.251, "avg_alpha": 1.3254, "avg_norm": 21.3106, "avg_cosine": 0.5696, "reg_loss": 0.5289}
+[2025-11-28 10:01:55] {"epoch": 18, "step": 45083, "loss": 0.3481, "avg_alpha": 1.3322, "avg_norm": 21.08, "avg_cosine": 0.5584, "reg_loss": 0.3783}
+[2025-11-28 10:05:08] {"epoch": 18, "step": 45183, "loss": 0.3636, "avg_alpha": 1.3202, "avg_norm": 21.2461, "avg_cosine": 0.4989, "reg_loss": 0.3425}
+[2025-11-28 10:05:35] Checkpoint saved: checkpoint_18
+[2025-11-28 10:05:46] Evaluation Loss (Epoch 18): 1.3098364174365997
+[2025-11-28 10:05:54] [Example] Pred: 400 | GT: 300
+[2025-11-28 10:05:54] [Example] Pred: 240 | GT: 240
+[2025-11-28 10:05:54] [Example] Pred: 22 | GT: 25
+[2025-11-28 10:05:55] [Example] Pred: 10 | GT: 10
+[2025-11-28 10:05:55] [Example] Pred: 45 | GT: 45
+[2025-11-28 10:06:47] Accuracy on validation set: 159 / 500 = 0.318
+[2025-11-28 10:06:47] CoT match on validation set: 0 / 500 = 0.0
+[2025-11-28 10:06:47] {'eval/acc': 0.318, 'eval/cot_em': 0.0}
+[2025-11-28 10:07:20] {"epoch": 19, "step": 45196, "loss": 0.5752, "avg_alpha": 1.32, "avg_norm": 21.3186, "avg_cosine": 0.5767, "reg_loss": 0.4387}
+[2025-11-28 10:10:31] {"epoch": 19, "step": 45296, "loss": 0.3601, "avg_alpha": 1.3219, "avg_norm": 21.1325, "avg_cosine": 0.4374, "reg_loss": 0.4597}
+[2025-11-28 10:13:47] {"epoch": 19, "step": 45396, "loss": 0.3862, "avg_alpha": 1.3425, "avg_norm": 20.5888, "avg_cosine": 0.3843, "reg_loss": 0.3188}
+[2025-11-28 10:17:00] {"epoch": 19, "step": 45496, "loss": 0.2325, "avg_alpha": 1.3327, "avg_norm": 20.8545, "avg_cosine": 0.5057, "reg_loss": 0.3239}
+[2025-11-28 10:20:14] {"epoch": 19, "step": 45596, "loss": 0.1391, "avg_alpha": 1.3513, "avg_norm": 20.3835, "avg_cosine": 0.5991, "reg_loss": 0.3517}
+[2025-11-28 10:23:23] {"epoch": 19, "step": 45696, "loss": 0.2883, "avg_alpha": 1.3181, "avg_norm": 21.379, "avg_cosine": 0.4621, "reg_loss": 0.3707}
+[2025-11-28 10:26:37] {"epoch": 19, "step": 45796, "loss": 0.2555, "avg_alpha": 1.3838, "avg_norm": 19.8996, "avg_cosine": 0.4784, "reg_loss": 0.3959}
+[2025-11-28 10:29:49] {"epoch": 19, "step": 45896, "loss": 0.3967, "avg_alpha": 1.2631, "avg_norm": 22.4465, "avg_cosine": 0.5815, "reg_loss": 0.412}
+[2025-11-28 10:33:01] {"epoch": 19, "step": 45996, "loss": 0.4961, "avg_alpha": 1.3306, "avg_norm": 20.9233, "avg_cosine": 0.5169, "reg_loss": 0.3444}
+[2025-11-28 10:36:11] {"epoch": 19, "step": 46096, "loss": 0.3464, "avg_alpha": 1.3189, "avg_norm": 21.3199, "avg_cosine": 0.5165, "reg_loss": 0.3867}
+[2025-11-28 10:39:28] {"epoch": 19, "step": 46196, "loss": 0.4512, "avg_alpha": 1.3823, "avg_norm": 20.1333, "avg_cosine": 0.4684, "reg_loss": 0.4159}
+[2025-11-28 10:42:40] {"epoch": 19, "step": 46296, "loss": 0.446, "avg_alpha": 1.3202, "avg_norm": 21.1268, "avg_cosine": 0.5631, "reg_loss": 0.3472}
+[2025-11-28 10:45:49] {"epoch": 19, "step": 46396, "loss": 0.5387, "avg_alpha": 1.3379, "avg_norm": 20.8376, "avg_cosine": 0.5285, "reg_loss": 0.4105}
+[2025-11-28 10:49:03] {"epoch": 19, "step": 46496, "loss": 0.3497, "avg_alpha": 1.3151, "avg_norm": 21.2944, "avg_cosine": 0.5241, "reg_loss": 0.3487}
+[2025-11-28 10:52:32] {"epoch": 19, "step": 46596, "loss": 0.3083, "avg_alpha": 1.2949, "avg_norm": 21.9826, "avg_cosine": 0.562, "reg_loss": 0.2521}
+[2025-11-28 10:57:48] {"epoch": 19, "step": 46696, "loss": 0.3355, "avg_alpha": 1.2727, "avg_norm": 22.0957, "avg_cosine": 0.5791, "reg_loss": 0.3064}
+[2025-11-28 11:03:12] {"epoch": 19, "step": 46796, "loss": 0.2845, "avg_alpha": 1.3183, "avg_norm": 21.2113, "avg_cosine": 0.4793, "reg_loss": 0.3517}
+[2025-11-28 11:08:13] {"epoch": 19, "step": 46896, "loss": 0.3865, "avg_alpha": 1.2898, "avg_norm": 21.8535, "avg_cosine": 0.6328, "reg_loss": 0.3517}
+[2025-11-28 11:13:18] {"epoch": 19, "step": 46996, "loss": 0.5386, "avg_alpha": 1.3141, "avg_norm": 21.1273, "avg_cosine": 0.4521, "reg_loss": 0.2786}
+[2025-11-28 11:18:13] {"epoch": 19, "step": 47096, "loss": 0.2045, "avg_alpha": 1.2125, "avg_norm": 23.6574, "avg_cosine": 0.5984, "reg_loss": 0.2766}
+[2025-11-28 11:22:01] {"epoch": 19, "step": 47196, "loss": 0.252, "avg_alpha": 1.2778, "avg_norm": 21.8873, "avg_cosine": 0.4816, "reg_loss": 0.3786}
+[2025-11-28 11:25:09] {"epoch": 19, "step": 47296, "loss": 0.3456, "avg_alpha": 1.322, "avg_norm": 21.1211, "avg_cosine": 0.5783, "reg_loss": 0.3245}
+[2025-11-28 11:28:23] {"epoch": 19, "step": 47396, "loss": 0.2602, "avg_alpha": 1.3835, "avg_norm": 19.8506, "avg_cosine": 0.4021, "reg_loss": 0.4932}
+[2025-11-28 11:31:32] {"epoch": 19, "step": 47496, "loss": 0.4455, "avg_alpha": 1.3509, "avg_norm": 20.4397, "avg_cosine": 0.5538, "reg_loss": 0.2998}
+[2025-11-28 11:34:41] {"epoch": 19, "step": 47596, "loss": 0.3927, "avg_alpha": 1.2962, "avg_norm": 21.662, "avg_cosine": 0.5523, "reg_loss": 0.3947}
+[2025-11-28 11:37:50] {"epoch": 19, "step": 47696, "loss": 0.4599, "avg_alpha": 1.3763, "avg_norm": 19.9681, "avg_cosine": 0.4434, "reg_loss": 0.4189}
+[2025-11-28 11:41:00] {"epoch": 19, "step": 47796, "loss": 0.3339, "avg_alpha": 1.3512, "avg_norm": 20.434, "avg_cosine": 0.5465, "reg_loss": 0.3509}
+[2025-11-28 11:44:07] {"epoch": 19, "step": 47896, "loss": 0.6447, "avg_alpha": 1.2916, "avg_norm": 21.5427, "avg_cosine": 0.4894, "reg_loss": 0.3246}
+[2025-11-28 11:47:16] {"epoch": 19, "step": 47996, "loss": 0.4836, "avg_alpha": 1.32, "avg_norm": 21.0499, "avg_cosine": 0.5449, "reg_loss": 0.2138}
+[2025-11-28 11:50:31] {"epoch": 19, "step": 48096, "loss": 0.2247, "avg_alpha": 1.3321, "avg_norm": 20.9699, "avg_cosine": 0.5705, "reg_loss": 0.4217}
+[2025-11-28 11:53:41] {"epoch": 19, "step": 48196, "loss": 0.5061, "avg_alpha": 1.3602, "avg_norm": 20.3176, "avg_cosine": 0.5104, "reg_loss": 0.3161}
+[2025-11-28 11:54:07] Checkpoint saved: checkpoint_19
+[2025-11-28 11:54:16] Evaluation Loss (Epoch 19): 1.3156574070453644
+[2025-11-28 11:54:23] [Example] Pred: 300 | GT: 300
+[2025-11-28 11:54:24] [Example] Pred: 360 | GT: 240
+[2025-11-28 11:54:24] [Example] Pred: 22 | GT: 25
+[2025-11-28 11:54:24] [Example] Pred: 10 | GT: 10
+[2025-11-28 11:54:25] [Example] Pred: 45 | GT: 45
+[2025-11-28 11:55:13] Accuracy on validation set: 157 / 500 = 0.314
+[2025-11-28 11:55:13] CoT match on validation set: 0 / 500 = 0.0
+[2025-11-28 11:55:13] {'eval/acc': 0.314, 'eval/cot_em': 0.0}
+[2025-11-28 11:55:45] {"epoch": 20, "step": 48209, "loss": 0.2029, "avg_alpha": 1.3418, "avg_norm": 20.9129, "avg_cosine": 0.5969, "reg_loss": 0.4476}
+[2025-11-28 11:58:49] {"epoch": 20, "step": 48309, "loss": 0.1665, "avg_alpha": 1.3387, "avg_norm": 20.8754, "avg_cosine": 0.5521, "reg_loss": 0.3642}
+[2025-11-28 12:01:58] {"epoch": 20, "step": 48409, "loss": 0.3103, "avg_alpha": 1.3029, "avg_norm": 21.5284, "avg_cosine": 0.5115, "reg_loss": 0.3836}
+[2025-11-28 12:05:09] {"epoch": 20, "step": 48509, "loss": 0.2307, "avg_alpha": 1.304, "avg_norm": 21.4997, "avg_cosine": 0.4478, "reg_loss": 0.4117}
+[2025-11-28 12:08:19] {"epoch": 20, "step": 48609, "loss": 0.3523, "avg_alpha": 1.3608, "avg_norm": 20.3475, "avg_cosine": 0.5514, "reg_loss": 0.4422}
+[2025-11-28 12:11:32] {"epoch": 20, "step": 48709, "loss": 0.2744, "avg_alpha": 1.3898, "avg_norm": 19.8081, "avg_cosine": 0.4775, "reg_loss": 0.3315}
+[2025-11-28 12:14:45] {"epoch": 20, "step": 48809, "loss": 0.3437, "avg_alpha": 1.269, "avg_norm": 22.1407, "avg_cosine": 0.5473, "reg_loss": 0.3743}
+[2025-11-28 12:18:01] {"epoch": 20, "step": 48909, "loss": 0.167, "avg_alpha": 1.3226, "avg_norm": 21.1111, "avg_cosine": 0.5034, "reg_loss": 0.3669}
+[2025-11-28 12:21:17] {"epoch": 20, "step": 49009, "loss": 0.2567, "avg_alpha": 1.3613, "avg_norm": 20.315, "avg_cosine": 0.5734, "reg_loss": 0.4354}
+[2025-11-28 12:24:33] {"epoch": 20, "step": 49109, "loss": 0.1737, "avg_alpha": 1.3177, "avg_norm": 21.2146, "avg_cosine": 0.5829, "reg_loss": 0.2996}
+[2025-11-28 12:27:49] {"epoch": 20, "step": 49209, "loss": 0.3529, "avg_alpha": 1.2839, "avg_norm": 22.0546, "avg_cosine": 0.5255, "reg_loss": 0.3773}
+[2025-11-28 12:31:03] {"epoch": 20, "step": 49309, "loss": 0.2884, "avg_alpha": 1.3065, "avg_norm": 21.3519, "avg_cosine": 0.4534, "reg_loss": 0.4192}
+[2025-11-28 12:34:14] {"epoch": 20, "step": 49409, "loss": 0.3979, "avg_alpha": 1.3093, "avg_norm": 21.3376, "avg_cosine": 0.5017, "reg_loss": 0.3811}
+[2025-11-28 12:37:25] {"epoch": 20, "step": 49509, "loss": 0.3176, "avg_alpha": 1.2939, "avg_norm": 21.6565, "avg_cosine": 0.5192, "reg_loss": 0.3562}
+[2025-11-28 12:40:41] {"epoch": 20, "step": 49609, "loss": 0.3345, "avg_alpha": 1.3265, "avg_norm": 20.7352, "avg_cosine": 0.5101, "reg_loss": 0.4237}
+[2025-11-28 12:43:55] {"epoch": 20, "step": 49709, "loss": 0.3379, "avg_alpha": 1.3865, "avg_norm": 19.7605, "avg_cosine": 0.4816, "reg_loss": 0.3839}
+[2025-11-28 12:47:03] {"epoch": 20, "step": 49809, "loss": 0.5942, "avg_alpha": 1.2512, "avg_norm": 22.5963, "avg_cosine": 0.5178, "reg_loss": 0.3654}
+[2025-11-28 12:50:17] {"epoch": 20, "step": 49909, "loss": 0.4203, "avg_alpha": 1.261, "avg_norm": 22.3314, "avg_cosine": 0.604, "reg_loss": 0.3183}
+[2025-11-28 12:53:31] {"epoch": 20, "step": 50009, "loss": 0.2964, "avg_alpha": 1.3348, "avg_norm": 20.713, "avg_cosine": 0.52, "reg_loss": 0.3349}
+[2025-11-28 12:56:46] {"epoch": 20, "step": 50109, "loss": 0.3367, "avg_alpha": 1.3619, "avg_norm": 20.2858, "avg_cosine": 0.4888, "reg_loss": 0.3908}
+[2025-11-28 12:59:56] {"epoch": 20, "step": 50209, "loss": 0.5168, "avg_alpha": 1.3331, "avg_norm": 20.7588, "avg_cosine": 0.4905, "reg_loss": 0.4212}
+[2025-11-28 13:03:10] {"epoch": 20, "step": 50309, "loss": 0.4814, "avg_alpha": 1.3272, "avg_norm": 20.7342, "avg_cosine": 0.5202, "reg_loss": 0.3562}
+[2025-11-28 13:06:21] {"epoch": 20, "step": 50409, "loss": 0.3859, "avg_alpha": 1.3611, "avg_norm": 20.23, "avg_cosine": 0.5009, "reg_loss": 0.3965}
+[2025-11-28 13:09:34] {"epoch": 20, "step": 50509, "loss": 0.231, "avg_alpha": 1.3331, "avg_norm": 21.0274, "avg_cosine": 0.5365, "reg_loss": 0.2896}
+[2025-11-28 13:12:45] {"epoch": 20, "step": 50609, "loss": 0.399, "avg_alpha": 1.3065, "avg_norm": 21.2536, "avg_cosine": 0.541, "reg_loss": 0.4076}
+[2025-11-28 13:15:57] {"epoch": 20, "step": 50709, "loss": 0.3224, "avg_alpha": 1.3471, "avg_norm": 20.2321, "avg_cosine": 0.4569, "reg_loss": 0.3242}
+[2025-11-28 13:19:10] {"epoch": 20, "step": 50809, "loss": 0.2811, "avg_alpha": 1.3473, "avg_norm": 20.2066, "avg_cosine": 0.5836, "reg_loss": 0.2624}
+[2025-11-28 13:22:21] {"epoch": 20, "step": 50909, "loss": 0.2369, "avg_alpha": 1.3415, "avg_norm": 20.7128, "avg_cosine": 0.5367, "reg_loss": 0.2859}
+[2025-11-28 13:25:33] {"epoch": 20, "step": 51009, "loss": 0.2748, "avg_alpha": 1.3023, "avg_norm": 21.4702, "avg_cosine": 0.5193, "reg_loss": 0.2923}
+[2025-11-28 13:28:47] {"epoch": 20, "step": 51109, "loss": 0.3338, "avg_alpha": 1.3077, "avg_norm": 21.3758, "avg_cosine": 0.6345, "reg_loss": 0.3368}
+[2025-11-28 13:31:57] {"epoch": 20, "step": 51209, "loss": 0.469, "avg_alpha": 1.252, "avg_norm": 22.5584, "avg_cosine": 0.5558, "reg_loss": 0.3927}
+[2025-11-28 13:32:24] Checkpoint saved: checkpoint_20
+[2025-11-28 13:32:33] Evaluation Loss (Epoch 20): 1.3609067797660828
+[2025-11-28 13:32:40] [Example] Pred: 400 | GT: 300
+[2025-11-28 13:32:41] [Example] Pred: 360 | GT: 240
+[2025-11-28 13:32:41] [Example] Pred: 22 | GT: 25
+[2025-11-28 13:32:41] [Example] Pred: 10 | GT: 10
+[2025-11-28 13:32:42] [Example] Pred: 45 | GT: 45
+[2025-11-28 13:33:31] Accuracy on validation set: 160 / 500 = 0.32
+[2025-11-28 13:33:31] CoT match on validation set: 0 / 500 = 0.0
+[2025-11-28 13:33:31] {'eval/acc': 0.32, 'eval/cot_em': 0.0}
+[2025-11-28 13:34:02] {"epoch": 21, "step": 51222, "loss": 0.4368, "avg_alpha": 1.277, "avg_norm": 21.9137, "avg_cosine": 0.5943, "reg_loss": 0.3179}
+[2025-11-28 13:37:11] {"epoch": 21, "step": 51322, "loss": 0.3759, "avg_alpha": 1.3355, "avg_norm": 20.7292, "avg_cosine": 0.5485, "reg_loss": 0.3281}
+[2025-11-28 13:40:23] {"epoch": 21, "step": 51422, "loss": 0.275, "avg_alpha": 1.3096, "avg_norm": 21.3659, "avg_cosine": 0.5662, "reg_loss": 0.2681}
+[2025-11-28 13:43:33] {"epoch": 21, "step": 51522, "loss": 0.2711, "avg_alpha": 1.2979, "avg_norm": 21.4351, "avg_cosine": 0.497, "reg_loss": 0.2483}
+[2025-11-28 13:46:43] {"epoch": 21, "step": 51622, "loss": 0.4196, "avg_alpha": 1.2778, "avg_norm": 22.0108, "avg_cosine": 0.486, "reg_loss": 0.3713}
+[2025-11-28 13:49:53] {"epoch": 21, "step": 51722, "loss": 0.4116, "avg_alpha": 1.2613, "avg_norm": 22.197, "avg_cosine": 0.538, "reg_loss": 0.3802}
+[2025-11-28 13:53:03] {"epoch": 21, "step": 51822, "loss": 0.2813, "avg_alpha": 1.2895, "avg_norm": 21.3405, "avg_cosine": 0.5592, "reg_loss": 0.413}
+[2025-11-28 13:56:16] {"epoch": 21, "step": 51922, "loss": 0.2457, "avg_alpha": 1.2413, "avg_norm": 22.8091, "avg_cosine": 0.4549, "reg_loss": 0.3241}
+[2025-11-28 13:59:26] {"epoch": 21, "step": 52022, "loss": 0.3236, "avg_alpha": 1.2206, "avg_norm": 23.1591, "avg_cosine": 0.5755, "reg_loss": 0.3052}
+[2025-11-28 14:02:34] {"epoch": 21, "step": 52122, "loss": 0.2085, "avg_alpha": 1.225, "avg_norm": 23.1142, "avg_cosine": 0.5492, "reg_loss": 0.3008}
+[2025-11-28 14:05:47] {"epoch": 21, "step": 52222, "loss": 0.3786, "avg_alpha": 1.3153, "avg_norm": 21.1729, "avg_cosine": 0.5117, "reg_loss": 0.2635}
+[2025-11-28 14:08:54] {"epoch": 21, "step": 52322, "loss": 0.1447, "avg_alpha": 1.2193, "avg_norm": 23.1292, "avg_cosine": 0.6104, "reg_loss": 0.3524}
+[2025-11-28 14:12:09] {"epoch": 21, "step": 52422, "loss": 0.3734, "avg_alpha": 1.258, "avg_norm": 22.2973, "avg_cosine": 0.5578, "reg_loss": 0.3002}
+[2025-11-28 14:15:23] {"epoch": 21, "step": 52522, "loss": 0.415, "avg_alpha": 1.2851, "avg_norm": 21.7825, "avg_cosine": 0.5197, "reg_loss": 0.4055}
+[2025-11-28 14:18:37] {"epoch": 21, "step": 52622, "loss": 0.195, "avg_alpha": 1.3061, "avg_norm": 21.2711, "avg_cosine": 0.533, "reg_loss": 0.3611}
+[2025-11-28 14:21:46] {"epoch": 21, "step": 52722, "loss": 0.1664, "avg_alpha": 1.2973, "avg_norm": 21.3707, "avg_cosine": 0.5527, "reg_loss": 0.3523}
+[2025-11-28 14:24:55] {"epoch": 21, "step": 52822, "loss": 0.3184, "avg_alpha": 1.3388, "avg_norm": 20.4718, "avg_cosine": 0.465, "reg_loss": 0.2863}
+[2025-11-28 14:28:11] {"epoch": 21, "step": 52922, "loss": 0.2434, "avg_alpha": 1.3961, "avg_norm": 19.7066, "avg_cosine": 0.5397, "reg_loss": 0.4057}
+[2025-11-28 14:31:21] {"epoch": 21, "step": 53022, "loss": 0.4486, "avg_alpha": 1.3668, "avg_norm": 20.0058, "avg_cosine": 0.4801, "reg_loss": 0.3021}
+[2025-11-28 14:34:35] {"epoch": 21, "step": 53122, "loss": 0.2327, "avg_alpha": 1.3134, "avg_norm": 21.1853, "avg_cosine": 0.6155, "reg_loss": 0.3813}
+[2025-11-28 14:37:46] {"epoch": 21, "step": 53222, "loss": 0.2056, "avg_alpha": 1.3208, "avg_norm": 21.0592, "avg_cosine": 0.5583, "reg_loss": 0.4374}
+[2025-11-28 14:41:01] {"epoch": 21, "step": 53322, "loss": 0.2032, "avg_alpha": 1.3519, "avg_norm": 20.2968, "avg_cosine": 0.503, "reg_loss": 0.4064}
+[2025-11-28 14:44:14] {"epoch": 21, "step": 53422, "loss": 0.2458, "avg_alpha": 1.3067, "avg_norm": 21.2863, "avg_cosine": 0.5459, "reg_loss": 0.3806}
+[2025-11-28 14:47:28] {"epoch": 21, "step": 53522, "loss": 0.223, "avg_alpha": 1.3396, "avg_norm": 20.6561, "avg_cosine": 0.5403, "reg_loss": 0.3582}
+[2025-11-28 14:50:39] {"epoch": 21, "step": 53622, "loss": 0.2962, "avg_alpha": 1.341, "avg_norm": 20.5606, "avg_cosine": 0.4853, "reg_loss": 0.2258}
+[2025-11-28 14:53:52] {"epoch": 21, "step": 53722, "loss": 0.3498, "avg_alpha": 1.244, "avg_norm": 22.7205, "avg_cosine": 0.6193, "reg_loss": 0.295}
+[2025-11-28 14:57:06] {"epoch": 21, "step": 53822, "loss": 0.2809, "avg_alpha": 1.3594, "avg_norm": 20.0167, "avg_cosine": 0.5615, "reg_loss": 0.2538}
+[2025-11-28 15:00:18] {"epoch": 21, "step": 53922, "loss": 0.2103, "avg_alpha": 1.3173, "avg_norm": 20.9808, "avg_cosine": 0.535, "reg_loss": 0.3413}
+[2025-11-28 15:03:37] {"epoch": 21, "step": 54022, "loss": 0.3072, "avg_alpha": 1.3613, "avg_norm": 20.1231, "avg_cosine": 0.5292, "reg_loss": 0.3481}
+[2025-11-28 15:06:47] {"epoch": 21, "step": 54122, "loss": 0.3559, "avg_alpha": 1.2268, "avg_norm": 22.9484, "avg_cosine": 0.5919, "reg_loss": 0.2836}
+[2025-11-28 15:10:01] {"epoch": 21, "step": 54222, "loss": 0.2225, "avg_alpha": 1.2706, "avg_norm": 22.0153, "avg_cosine": 0.5375, "reg_loss": 0.3728}
+[2025-11-28 15:10:27] Checkpoint saved: checkpoint_21
+[2025-11-28 15:10:36] Evaluation Loss (Epoch 21): 1.4633547067642212
+[2025-11-28 15:10:43] [Example] Pred: 400 | GT: 300
+[2025-11-28 15:10:43] [Example] Pred: 240 | GT: 240
+[2025-11-28 15:10:44] [Example] Pred: 25 | GT: 25
+[2025-11-28 15:10:44] [Example] Pred: 10 | GT: 10
+[2025-11-28 15:10:44] [Example] Pred: 35 | GT: 45
+[2025-11-28 15:11:34] Accuracy on validation set: 150 / 500 = 0.3
+[2025-11-28 15:11:34] CoT match on validation set: 0 / 500 = 0.0
+[2025-11-28 15:11:34] {'eval/acc': 0.3, 'eval/cot_em': 0.0}
+[2025-11-28 15:12:06] {"epoch": 22, "step": 54235, "loss": 0.144, "avg_alpha": 1.3846, "avg_norm": 19.609, "avg_cosine": 0.4642, "reg_loss": 0.3633}
+[2025-11-28 15:15:14] {"epoch": 22, "step": 54335, "loss": 0.1376, "avg_alpha": 1.3136, "avg_norm": 21.0178, "avg_cosine": 0.5835, "reg_loss": 0.3835}
+[2025-11-28 15:18:27] {"epoch": 22, "step": 54435, "loss": 0.4343, "avg_alpha": 1.3203, "avg_norm": 20.9065, "avg_cosine": 0.5322, "reg_loss": 0.3719}
+[2025-11-28 15:21:41] {"epoch": 22, "step": 54535, "loss": 0.2704, "avg_alpha": 1.3428, "avg_norm": 20.3388, "avg_cosine": 0.5345, "reg_loss": 0.2982}
+[2025-11-28 15:24:56] {"epoch": 22, "step": 54635, "loss": 0.248, "avg_alpha": 1.3148, "avg_norm": 20.9276, "avg_cosine": 0.4926, "reg_loss": 0.4094}
+[2025-11-28 15:28:10] {"epoch": 22, "step": 54735, "loss": 0.2711, "avg_alpha": 1.3604, "avg_norm": 20.0776, "avg_cosine": 0.5583, "reg_loss": 0.4044}
+[2025-11-28 15:31:21] {"epoch": 22, "step": 54835, "loss": 0.2006, "avg_alpha": 1.3268, "avg_norm": 20.6649, "avg_cosine": 0.5468, "reg_loss": 0.3939}
+[2025-11-28 15:34:33] {"epoch": 22, "step": 54935, "loss": 0.3064, "avg_alpha": 1.2988, "avg_norm": 21.3903, "avg_cosine": 0.5836, "reg_loss": 0.2874}
+[2025-11-28 15:37:45] {"epoch": 22, "step": 55035, "loss": 0.2827, "avg_alpha": 1.3287, "avg_norm": 20.8469, "avg_cosine": 0.5347, "reg_loss": 0.3242}
+[2025-11-28 15:40:57] {"epoch": 22, "step": 55135, "loss": 0.2426, "avg_alpha": 1.3092, "avg_norm": 21.2252, "avg_cosine": 0.5543, "reg_loss": 0.3167}
+[2025-11-28 15:45:59] {"epoch": 22, "step": 55235, "loss": 0.3511, "avg_alpha": 1.3869, "avg_norm": 19.6006, "avg_cosine": 0.4376, "reg_loss": 0.4091}
+[2025-11-28 15:51:23] {"epoch": 22, "step": 55335, "loss": 0.3085, "avg_alpha": 1.3363, "avg_norm": 20.4263, "avg_cosine": 0.5842, "reg_loss": 0.3516}
+[2025-11-28 15:56:46] {"epoch": 22, "step": 55435, "loss": 0.4264, "avg_alpha": 1.3501, "avg_norm": 20.2206, "avg_cosine": 0.4776, "reg_loss": 0.3865}

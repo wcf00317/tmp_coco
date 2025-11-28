@@ -1,0 +1,22 @@
+[2025-11-28 10:51:42] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-residual-probe-night_1128', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'residual', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 2, 'epochs_per_stage': 3, 'max_latent_stage': 3, 'pad_latent_to_max': True, 'save_only_improve': False, 'uniform_prob': 0.0, 'model_id': 'openai-community/gpt2', 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'bf16': False, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'batch_size_training': 32, 'debug': False, 'gradient_accumulation_steps': 1, 'num_epochs': 25, 'lr': 0.0001, 'weight_decay': 0.01}
+[2025-11-28 10:51:42] Save Directory: ./checkpoints/gsm-coconut/gsm-residual-probe-night_1128
+[2025-11-28 10:51:50] Initializing Coconut with mode: residual
+[2025-11-28 10:51:50] Running FSDP on rank = 0
+[2025-11-28 10:53:11] {"epoch": 4, "step": 1, "loss": 6.5008, "avg_alpha": 0.0, "avg_norm": 263.035, "avg_cosine": 0.9821, "reg_loss": 0.0}
+[2025-11-28 10:55:50] {"epoch": 4, "step": 101, "loss": 1.1587, "avg_alpha": 0.1691, "avg_norm": 417.7671, "avg_cosine": 0.9792, "reg_loss": 0.0}
+[2025-11-28 10:58:30] {"epoch": 4, "step": 201, "loss": 1.0559, "avg_alpha": 0.0763, "avg_norm": 380.1225, "avg_cosine": 0.9827, "reg_loss": 0.0}
+[2025-11-28 11:01:19] {"epoch": 4, "step": 301, "loss": 1.0482, "avg_alpha": 0.0215, "avg_norm": 329.6997, "avg_cosine": 0.9856, "reg_loss": 0.0}
+[2025-11-28 11:03:52] {"epoch": 4, "step": 401, "loss": 0.9242, "avg_alpha": 0.0472, "avg_norm": 299.6769, "avg_cosine": 0.9733, "reg_loss": 0.0}
+[2025-11-28 11:06:27] {"epoch": 4, "step": 501, "loss": 1.048, "avg_alpha": 0.0575, "avg_norm": 313.598, "avg_cosine": 0.9845, "reg_loss": 0.0}
+[2025-11-28 11:09:14] {"epoch": 4, "step": 601, "loss": 0.8183, "avg_alpha": 0.0949, "avg_norm": 291.0887, "avg_cosine": 0.9786, "reg_loss": 0.0}
+[2025-11-28 11:11:56] {"epoch": 4, "step": 701, "loss": 0.8645, "avg_alpha": 0.0851, "avg_norm": 287.9014, "avg_cosine": 0.9829, "reg_loss": 0.0}
+[2025-11-28 11:14:37] {"epoch": 4, "step": 801, "loss": 0.8834, "avg_alpha": 0.0361, "avg_norm": 310.5502, "avg_cosine": 0.9855, "reg_loss": 0.0}
+[2025-11-28 11:17:10] {"epoch": 4, "step": 901, "loss": 0.7899, "avg_alpha": 0.0847, "avg_norm": 294.961, "avg_cosine": 0.988, "reg_loss": 0.0}
+[2025-11-28 15:51:33] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-residual-probe-night_1128', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'residual', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 2, 'epochs_per_stage': 3, 'max_latent_stage': 3, 'pad_latent_to_max': True, 'save_only_improve': False, 'uniform_prob': 0.0, 'model_id': 'openai-community/gpt2', 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'bf16': False, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'batch_size_training': 32, 'debug': False, 'gradient_accumulation_steps': 1, 'num_epochs': 25, 'lr': 0.0001, 'weight_decay': 0.01}
+[2025-11-28 15:51:33] Save Directory: ./checkpoints/gsm-coconut/gsm-residual-probe-night_1128
+[2025-11-28 15:51:40] Initializing Coconut with mode: residual
+[2025-11-28 15:51:40] Running FSDP on rank = 0
+[2025-11-28 15:53:00] {"epoch": 4, "step": 1, "loss": 6.5008, "avg_alpha": 0.0, "avg_norm": 263.035, "avg_cosine": 0.9821, "reg_loss": 0.0}
+[2025-11-28 15:54:28] {"epoch": 4, "step": 101, "loss": 1.1567, "avg_alpha": 0.1571, "avg_norm": 410.1953, "avg_cosine": 0.9792, "reg_loss": 0.0}
+[2025-11-28 15:55:58] {"epoch": 4, "step": 201, "loss": 1.0554, "avg_alpha": 0.0668, "avg_norm": 375.6035, "avg_cosine": 0.9827, "reg_loss": 0.0}
+[2025-11-28 15:57:26] {"epoch": 4, "step": 301, "loss": 1.0487, "avg_alpha": 0.0484, "avg_norm": 318.2039, "avg_cosine": 0.9854, "reg_loss": 0.0}

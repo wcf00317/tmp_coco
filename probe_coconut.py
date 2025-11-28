@@ -156,17 +156,19 @@ class Coconut(nn.Module):
 
             # [NEW] 计算 Rank 和 Entropy (只在 compute_probes=True 时)
             if compute_probes and outputs.attentions is not None:
-                # 取最后一层的 Attention Matrix
-                last_attn = outputs.attentions[-1]
+                # 过滤掉为 None 的层，只保留真正的 attention tensor
+                attn_layers = [a for a in outputs.attentions if a is not None]
 
-                ent = MetricCalculator.compute_entropy(last_attn)
-                rank_val = MetricCalculator.compute_effective_rank(last_attn)
+                if len(attn_layers) > 0:
+                    last_attn = attn_layers[-1]
 
-                if "entropy" not in advanced_metrics: advanced_metrics["entropy"] = []
-                if "rank" not in advanced_metrics: advanced_metrics["rank"] = []
+                    ent = MetricCalculator.compute_entropy(last_attn)
+                    rank_val = MetricCalculator.compute_effective_rank(last_attn)
 
-                advanced_metrics["entropy"].append(ent)
-                advanced_metrics["rank"].append(rank_val)
+                    if ent is not None:
+                        advanced_metrics.setdefault("entropy", []).append(ent)
+                    if rank_val is not None:
+                        advanced_metrics.setdefault("rank", []).append(rank_val)
 
             next_compute_range = (next_compute_range[1],
                                   (input_ids.shape[1] if pass_idx + 1 >= max_n_latents else next_compute_range[1] + 1))

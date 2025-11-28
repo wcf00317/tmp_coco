@@ -1,0 +1,24 @@
+[2025-11-28 10:52:13] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-normalized-probe-night_1128', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'normalized', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 2, 'epochs_per_stage': 3, 'max_latent_stage': 3, 'pad_latent_to_max': True, 'save_only_improve': False, 'uniform_prob': 0.0, 'model_id': 'openai-community/gpt2', 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'bf16': False, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'batch_size_training': 32, 'debug': False, 'gradient_accumulation_steps': 1, 'num_epochs': 25, 'lr': 0.0001, 'weight_decay': 0.01}
+[2025-11-28 10:52:13] Save Directory: ./checkpoints/gsm-coconut/gsm-normalized-probe-night_1128
+[2025-11-28 10:52:20] Initializing Coconut with mode: normalized
+[2025-11-28 10:52:20] Running FSDP on rank = 0
+[2025-11-28 10:53:44] {"epoch": 4, "step": 1, "loss": 6.8236, "avg_alpha": 0.0, "avg_norm": 80.0, "avg_cosine": 0.9682, "reg_loss": 0.0}
+[2025-11-28 10:55:14] {"epoch": 4, "step": 101, "loss": 1.1653, "avg_alpha": 0.0104, "avg_norm": 79.1618, "avg_cosine": 0.9774, "reg_loss": 0.0}
+[2025-11-28 10:56:49] {"epoch": 4, "step": 201, "loss": 1.0672, "avg_alpha": 0.0318, "avg_norm": 77.4763, "avg_cosine": 0.9708, "reg_loss": 0.0}
+[2025-11-28 10:58:17] {"epoch": 4, "step": 301, "loss": 1.0428, "avg_alpha": 0.045, "avg_norm": 76.4518, "avg_cosine": 0.9824, "reg_loss": 0.0}
+[2025-11-28 10:59:46] {"epoch": 4, "step": 401, "loss": 0.9216, "avg_alpha": 0.0584, "avg_norm": 75.4292, "avg_cosine": 0.9777, "reg_loss": 0.0}
+[2025-11-28 11:01:16] {"epoch": 4, "step": 501, "loss": 1.0426, "avg_alpha": 0.0753, "avg_norm": 74.1572, "avg_cosine": 0.9791, "reg_loss": 0.0}
+[2025-11-28 11:02:45] {"epoch": 4, "step": 601, "loss": 0.8232, "avg_alpha": 0.0789, "avg_norm": 73.8821, "avg_cosine": 0.9773, "reg_loss": 0.0}
+[2025-11-28 11:04:19] {"epoch": 4, "step": 701, "loss": 0.8758, "avg_alpha": 0.1062, "avg_norm": 71.8807, "avg_cosine": 0.9739, "reg_loss": 0.0}
+[2025-11-28 11:05:52] {"epoch": 4, "step": 801, "loss": 0.8938, "avg_alpha": 0.1185, "avg_norm": 70.9978, "avg_cosine": 0.9781, "reg_loss": 0.0}
+[2025-11-28 11:07:25] {"epoch": 4, "step": 901, "loss": 0.788, "avg_alpha": 0.1232, "avg_norm": 70.6595, "avg_cosine": 0.98, "reg_loss": 0.0}
+[2025-11-28 15:41:31] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-normalized-probe-night_1128', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'normalized', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 2, 'epochs_per_stage': 3, 'max_latent_stage': 3, 'pad_latent_to_max': True, 'save_only_improve': False, 'uniform_prob': 0.0, 'model_id': 'openai-community/gpt2', 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'bf16': False, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'batch_size_training': 32, 'debug': False, 'gradient_accumulation_steps': 1, 'num_epochs': 25, 'lr': 0.0001, 'weight_decay': 0.01}
+[2025-11-28 15:41:31] Save Directory: ./checkpoints/gsm-coconut/gsm-normalized-probe-night_1128
+[2025-11-28 15:41:39] Initializing Coconut with mode: normalized
+[2025-11-28 15:41:39] Running FSDP on rank = 0
+[2025-11-28 15:43:03] {"epoch": 4, "step": 1, "loss": 6.8236, "avg_alpha": 0.0, "avg_norm": 80.0, "avg_cosine": 0.9682, "reg_loss": 0.0}
+[2025-11-28 15:45:39] {"epoch": 4, "step": 101, "loss": 1.1632, "avg_alpha": 0.0108, "avg_norm": 79.1308, "avg_cosine": 0.9785, "reg_loss": 0.0}
+[2025-11-28 15:48:25] {"epoch": 4, "step": 201, "loss": 1.0709, "avg_alpha": 0.0282, "avg_norm": 77.7537, "avg_cosine": 0.9726, "reg_loss": 0.0}
+[2025-11-28 15:51:16] {"epoch": 4, "step": 301, "loss": 1.043, "avg_alpha": 0.0422, "avg_norm": 76.6706, "avg_cosine": 0.9847, "reg_loss": 0.0}
+[2025-11-28 15:54:04] {"epoch": 4, "step": 401, "loss": 0.9209, "avg_alpha": 0.0576, "avg_norm": 75.487, "avg_cosine": 0.9767, "reg_loss": 0.0}
+[2025-11-28 15:56:50] {"epoch": 4, "step": 501, "loss": 1.0439, "avg_alpha": 0.0699, "avg_norm": 74.5557, "avg_cosine": 0.9781, "reg_loss": 0.0}
