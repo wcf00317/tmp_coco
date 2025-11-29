@@ -514,3 +514,34 @@
 [2025-11-29 12:20:31] {"epoch": 14, "step": 32431, "loss": 0.4824, "avg_alpha": 1.3233, "avg_norm": 21.0658, "avg_cosine": 0.8211, "reg_loss": 0.0}
 [2025-11-29 12:23:43] {"epoch": 14, "step": 32531, "loss": 0.5758, "avg_alpha": 1.4102, "avg_norm": 19.6082, "avg_cosine": 0.8167, "reg_loss": 0.0}
 [2025-11-29 12:27:00] {"epoch": 14, "step": 32631, "loss": 0.4743, "avg_alpha": 1.2916, "avg_norm": 21.9176, "avg_cosine": 0.8123, "reg_loss": 0.0}
+[2025-11-29 12:30:19] {"epoch": 14, "step": 32731, "loss": 0.6059, "avg_alpha": 1.3286, "avg_norm": 21.0464, "avg_cosine": 0.8155, "reg_loss": 0.0}
+[2025-11-29 12:33:39] {"epoch": 14, "step": 32831, "loss": 0.6308, "avg_alpha": 1.3699, "avg_norm": 20.2546, "avg_cosine": 0.7824, "reg_loss": 0.0}
+[2025-11-29 12:37:00] {"epoch": 14, "step": 32931, "loss": 0.3803, "avg_alpha": 1.4275, "avg_norm": 19.102, "avg_cosine": 0.7701, "reg_loss": 0.0}
+[2025-11-29 12:39:19] {"epoch": 14, "step": 33000, "loss": 0.3732, "avg_alpha": 1.3903, "avg_norm": 19.6981, "avg_cosine": 0.7439, "reg_loss": 0.0}
+[2025-11-29 12:40:21] {"epoch": 14, "step": 33031, "loss": 0.3752, "avg_alpha": 1.3973, "avg_norm": 19.6735, "avg_cosine": 0.7874, "reg_loss": 0.0}
+[2025-11-29 12:43:42] {"epoch": 14, "step": 33131, "loss": 0.7887, "avg_alpha": 1.5152, "avg_norm": 17.6726, "avg_cosine": 0.7201, "reg_loss": 0.0}
+[2025-11-29 12:44:06] {"epoch": 14, "step": 33143, "loss": 0.5761, "avg_alpha": 1.4741, "avg_norm": 18.5553, "avg_cosine": 0.7393, "reg_loss": 0.0}
+[2025-11-29 12:44:09] Checkpoint saved: checkpoint_14
+[2025-11-29 12:44:19] Evaluation Loss (Epoch 14): 1.2136728167533875
+[2025-11-29 12:44:19] Eval Probes (Epoch 14): {"probe/avg_alpha": 1.4808, "probe/avg_norm": 18.1909, "probe/avg_cosine": 0.8301, "probe/reg_loss": 0.0}
+[2025-11-29 12:44:25] [Example] Pred: 400 | GT: 300
+[2025-11-29 12:44:26] [Example] Pred: 480 | GT: 240
+[2025-11-29 12:44:26] [Example] Pred: 21 | GT: 25
+[2025-11-29 12:44:26] [Example] Pred: 10 | GT: 10
+[2025-11-29 12:44:27] [Example] Pred: 45 | GT: 45
+[2025-11-29 12:45:17] Accuracy on validation set: 141 / 500 = 0.282
+[2025-11-29 12:45:17] CoT match on validation set: 0 / 500 = 0.0
+[2025-11-29 12:45:17] {'eval/acc': 0.282, 'eval/cot_em': 0.0}
+[2025-11-29 12:45:50] {"epoch": 15, "step": 33144, "loss": 0.575, "avg_alpha": 1.4854, "avg_norm": 18.1126, "avg_cosine": 0.6965, "reg_loss": 0.0}
+[2025-11-29 12:49:06] {"epoch": 15, "step": 33244, "loss": 0.6406, "avg_alpha": 1.4247, "avg_norm": 19.2008, "avg_cosine": 0.7549, "reg_loss": 0.0}
+[2025-11-29 12:52:28] {"epoch": 15, "step": 33344, "loss": 0.5498, "avg_alpha": 1.4343, "avg_norm": 18.8295, "avg_cosine": 0.741, "reg_loss": 0.0}
+[2025-11-29 12:57:02] {"epoch": 15, "step": 33444, "loss": 0.4305, "avg_alpha": 1.3576, "avg_norm": 20.4718, "avg_cosine": 0.8268, "reg_loss": 0.0}
+[2025-11-29 13:02:27] {"epoch": 15, "step": 33544, "loss": 0.6768, "avg_alpha": 1.4503, "avg_norm": 18.7523, "avg_cosine": 0.7273, "reg_loss": 0.0}
+[2025-11-29 13:07:53] {"epoch": 15, "step": 33644, "loss": 0.598, "avg_alpha": 1.456, "avg_norm": 18.4051, "avg_cosine": 0.7659, "reg_loss": 0.0}
+[2025-11-29 13:13:06] {"epoch": 15, "step": 33744, "loss": 0.588, "avg_alpha": 1.4352, "avg_norm": 18.9844, "avg_cosine": 0.7376, "reg_loss": 0.0}
+[2025-11-29 13:18:21] {"epoch": 15, "step": 33844, "loss": 0.8022, "avg_alpha": 1.3778, "avg_norm": 19.9358, "avg_cosine": 0.8189, "reg_loss": 0.0}
+[2025-11-29 13:23:29] {"epoch": 15, "step": 33944, "loss": 0.5317, "avg_alpha": 1.4086, "avg_norm": 19.4726, "avg_cosine": 0.7666, "reg_loss": 0.0}
+[2025-11-29 13:26:30] {"epoch": 15, "step": 34000, "loss": 0.5257, "avg_alpha": 1.3609, "avg_norm": 20.1442, "avg_cosine": 0.8349, "reg_loss": 0.0}
+[2025-11-29 13:28:53] {"epoch": 15, "step": 34044, "loss": 0.7968, "avg_alpha": 1.3964, "avg_norm": 19.466, "avg_cosine": 0.7656, "reg_loss": 0.0}
+[2025-11-29 13:33:59] {"epoch": 15, "step": 34144, "loss": 0.4873, "avg_alpha": 1.3921, "avg_norm": 19.6317, "avg_cosine": 0.7334, "reg_loss": 0.0}
+[2025-11-29 13:39:30] {"epoch": 15, "step": 34244, "loss": 0.5429, "avg_alpha": 1.4131, "avg_norm": 19.2953, "avg_cosine": 0.8367, "reg_loss": 0.0}
