@@ -21,38 +21,51 @@ MAX_N_LATENT = 8
 class MetricCalculator:
     @staticmethod
     def compute_entropy(attention_matrix):
-        """计算注意力分布的熵 (Shannon Entropy)"""
-        # H(p) = -sum(p * log(p))
-        # attention_matrix: (Batch, Heads, Seq, Seq)
-        # 加 1e-9 防止 log(0)
-        entropy = -torch.sum(attention_matrix * torch.log(attention_matrix + 1e-9), dim=-1)
-        return entropy.mean()
+        """计算注意力分布的熵"""
+        try:
+            # 1. 检查输入是否含 NaN
+            if torch.isnan(attention_matrix).any():
+                print("[Metric Error] Attention matrix contains NaN!")
+                return torch.tensor(0.0, device=attention_matrix.device)
+
+            # H(p) = -sum(p * log(p))
+            entropy = -torch.sum(attention_matrix * torch.log(attention_matrix + 1e-9), dim=-1)
+            return entropy.mean()
+        except Exception as e:
+            print(f"[Metric Error] Entropy failed: {e}")
+            return torch.tensor(0.0, device=attention_matrix.device)
 
     @staticmethod
     def compute_effective_rank(attention_matrix):
-        """计算注意力矩阵的有效秩 (Effective Rank)"""
+        """计算注意力矩阵的有效秩"""
         try:
-            # 转换为 float32 保证 SVD 数值稳定
+            # 1. 强制转 float32
             matrix = attention_matrix.float()
 
-            # 计算奇异值 (SVD)
-            s = torch.linalg.svdvals(matrix)  # [B, H, min(S, S)]
+            # 2. 检查输入是否正常
+            if torch.isnan(matrix).any() or torch.isinf(matrix).any():
+                print(f"[Metric Error] Matrix has NaN/Inf! Max val: {matrix.max().item()}")
+                return torch.tensor(0.0, device=attention_matrix.device)
 
-            # 归一化奇异值
+            # 3. 计算奇异值
+            s = torch.linalg.svdvals(matrix)
+
+            # 4. 归一化
             s_sum = s.sum(dim=-1, keepdim=True)
+            # 防止除以 0
             p = s / (s_sum + 1e-9)
 
-            # 计算奇异值分布的熵
+            # 5. 计算熵
             entropy = -torch.sum(p * torch.log(p + 1e-9), dim=-1)
 
-            # 有效秩 = exp(entropy)
+            # 6. 有效秩
             er = torch.exp(entropy)
             return er.mean()
-        except Exception:
-            # 遇到计算错误（如梯度爆炸导致的NaN）时返回0，避免训练中断
-            print(f"[Metric Error] SVD Failed: {e}")
-            return torch.tensor(0.0, device=attention_matrix.device)
 
+        except Exception as e:
+            # [关键] 打印具体的报错信息！！！
+            print(f"[Metric Error] Rank Calculation Failed: {e}")
+            return torch.tensor(0.0, device=attention_matrix.device)
 
 # =========================================================
 
