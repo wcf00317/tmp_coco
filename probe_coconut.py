@@ -50,6 +50,7 @@ class MetricCalculator:
             return er.mean()
         except Exception:
             # 遇到计算错误（如梯度爆炸导致的NaN）时返回0，避免训练中断
+            print(f"[Metric Error] SVD Failed: {e}")
             return torch.tensor(0.0, device=attention_matrix.device)
 
 
@@ -155,6 +156,9 @@ class Coconut(nn.Module):
             logits.append(outputs.logits)
 
             # [NEW] 计算 Rank 和 Entropy (只在 compute_probes=True 时)
+            if compute_probes and outputs.attentions is None:
+                # 如果开了开关但没拿到 attention，打印警告！
+                print(f"[Warning] Step {pass_idx}: output_attentions is None! Check model config.")
             if compute_probes and outputs.attentions is not None:
                 # 过滤掉为 None 的层，只保留真正的 attention tensor
                 attn_layers = [a for a in outputs.attentions if a is not None]

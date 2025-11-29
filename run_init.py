@@ -394,7 +394,7 @@ def worker(rank, world_size, args):
                             val = v.item() if isinstance(v, torch.Tensor) else v
                             key_name = k.replace("probe/", "")
                             # 跳过 0 值 (Rank/Entropy 在非采样步是 0)
-                            if ("rank" in key_name or "entropy" in key_name) and val == 0: continue
+                            #if ("rank" in key_name or "entropy" in key_name) and val == 0: continue
 
                             log_data[key_name] = round(val, 4) if isinstance(val, float) else val
 
