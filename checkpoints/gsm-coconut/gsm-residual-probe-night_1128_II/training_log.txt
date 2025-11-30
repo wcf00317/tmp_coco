@@ -426,3 +426,4 @@
 [2025-11-29 15:43:13] {"epoch": 18, "step": 21899, "loss": 0.347, "avg_alpha": 0.4551, "avg_norm": 36.276, "avg_cosine": 0.8837, "reg_loss": 0.0}
 [2025-11-29 15:49:50] {"epoch": 18, "step": 21999, "loss": 0.4892, "avg_alpha": 0.4607, "avg_norm": 38.1748, "avg_cosine": 0.8978, "reg_loss": 0.0}
 [2025-11-29 15:49:54] {"epoch": 18, "step": 22000, "loss": 0.3814, "avg_alpha": 0.477, "avg_norm": 34.88, "avg_cosine": 0.885, "reg_loss": 0.0}
+[2025-11-29 15:56:20] {"epoch": 18, "step": 22099, "loss": 0.5724, "avg_alpha": 0.4195, "avg_norm": 37.8713, "avg_cosine": 0.8892, "reg_loss": 0.0}

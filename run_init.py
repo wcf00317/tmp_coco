@@ -140,7 +140,7 @@ def worker(rank, world_size, args):
             f"Loading from {configs.load_model_path} and skip the first {configs.resume} epochs"
         )
 
-    model = AutoModelForCausalLM.from_pretrained(configs.model_id)
+    model = AutoModelForCausalLM.from_pretrained(configs.model_id, attn_implementation="eager")
     tokenizer = AutoTokenizer.from_pretrained(configs.model_id)
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.add_tokens("<|start-latent|>")
