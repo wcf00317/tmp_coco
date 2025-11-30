@@ -24,39 +24,49 @@ MAX_N_LATENT = 8
 class MetricCalculator:
     @staticmethod
     def compute_entropy(attention_matrix):
+        # [诊断] 必须先判空
+        if attention_matrix is None:
+            print("[Metric Error] Input attention_matrix is None!")
+            return torch.tensor(0.0)
+            
         try:
             if torch.isnan(attention_matrix).any():
-                logger.warning("[Metric Warn] Attention matrix contains NaN!")
+                print("[Metric Warn] Attention matrix contains NaN!")
                 return torch.tensor(0.0, device=attention_matrix.device)
 
             entropy = -torch.sum(attention_matrix * torch.log(attention_matrix + 1e-9), dim=-1)
             return entropy.mean()
         except Exception as e:
-            logger.error(f"[Metric Error] Entropy failed: {e}")
-            return torch.tensor(0.0, device=attention_matrix.device)
+            # [诊断] 强制 Print 到控制台
+            print(f"[Metric Error] Entropy failed: {e}")
+            return torch.tensor(0.0)
 
     @staticmethod
     def compute_effective_rank(attention_matrix):
+        if attention_matrix is None:
+            return torch.tensor(0.0)
+
         try:
-            # 1. 强转 float32 (解决 BF16 SVD 报错问题)
+            # 1. 强转 float32
             matrix = attention_matrix.float()
 
             if torch.isnan(matrix).any() or torch.isinf(matrix).any():
-                logger.error(f"[Metric Error] Matrix has NaN/Inf!")
+                print(f"[Metric Error] Matrix has NaN/Inf!")
                 return torch.tensor(0.0, device=attention_matrix.device)
 
             # 2. SVD 计算
-            s = torch.linalg.svdvals(matrix)
-            s_sum = s.sum(dim=-1, keepdim=True)
-            p = s / (s_sum + 1e-9)
-            entropy = -torch.sum(p * torch.log(p + 1e-9), dim=-1)
-            er = torch.exp(entropy)
-            return er.mean()
+            with torch.no_grad():
+                s = torch.linalg.svdvals(matrix)
+                s_sum = s.sum(dim=-1, keepdim=True)
+                p = s / (s_sum + 1e-9)
+                entropy = -torch.sum(p * torch.log(p + 1e-9), dim=-1)
+                er = torch.exp(entropy)
+                return er.mean()
 
-        except Exception as e: # [修复] 加上 as e
-            logger.error(f"[Metric Error] Rank Calculation Failed: {e}") # [修复] 写入日志
-            return torch.tensor(0.0, device=attention_matrix.device)
-# ===============================================
+        except Exception as e:
+            # [诊断] 强制 Print 到控制台
+            print(f"[Metric Error] Rank Calculation Failed: {e}")
+            return torch.tensor(0.0)
 
 class Coconut(nn.Module):
 
