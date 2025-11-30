@@ -157,22 +157,33 @@ class Coconut(nn.Module):
             
             # [诊断逻辑] 为什么是 0.0？
             if compute_probes:
-                if outputs.attentions is None:
-                    # 如果这行出现在日志里，说明模型不支持返回 attention
-                    if torch.distributed.get_rank() == 0:
-                        logger.warning(f"[Probe Fail] Step {pass_idx}: outputs.attentions is None!")
+                # 1. 检查 outputs 本身
+                if outputs is None:
+                    print(f"!!! [Debug] Step {pass_idx}: outputs is None!")
+                
+                # 2. 检查 attentions 字段
+                elif outputs.attentions is None:
+                    print(f"!!! [Debug] Step {pass_idx}: outputs.attentions is None! (Config Issue?)")
+                
+                # 3. 检查 attentions 列表是否全空
                 else:
-                    # 取最后一层 Attention
-                    last_attn = outputs.attentions[-1]
+                    # 过滤掉 None
+                    valid_attentions = [a for a in outputs.attentions if a is not None]
                     
-                    ent = MetricCalculator.compute_entropy(last_attn)
-                    rank_val = MetricCalculator.compute_effective_rank(last_attn)
-                    
-                    if "entropy" not in advanced_metrics: advanced_metrics["entropy"] = []
-                    if "rank" not in advanced_metrics: advanced_metrics["rank"] = []
-                    
-                    advanced_metrics["entropy"].append(ent)
-                    advanced_metrics["rank"].append(rank_val)
+                    if len(valid_attentions) == 0:
+                        print(f"!!! [Debug] Step {pass_idx}: outputs.attentions exists but all layers are None!")
+                    else:
+                        # 一切正常，开始计算
+                        last_attn = valid_attentions[-1]
+                        
+                        with torch.no_grad():
+                            ent = MetricCalculator.compute_entropy(last_attn)
+                            rank_val = MetricCalculator.compute_effective_rank(last_attn)
+                        
+                        if "entropy" not in advanced_metrics: advanced_metrics["entropy"] = []
+                        if "rank" not in advanced_metrics: advanced_metrics["rank"] = []
+                        advanced_metrics["entropy"].append(ent)
+                        advanced_metrics["rank"].append(rank_val)
 
             next_compute_range = (next_compute_range[1], (input_ids.shape[1] if pass_idx + 1 >= max_n_latents else next_compute_range[1] + 1))
             hidden_states = outputs.hidden_states[-1]
