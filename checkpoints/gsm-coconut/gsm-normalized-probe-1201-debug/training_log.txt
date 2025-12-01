@@ -1,0 +1,9 @@
+[2025-12-01 08:09:57] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-normalized-probe-1201-debug', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'normalized', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'save_only_improve': False, 'uniform_prob': 0.0, 'model_id': 'openai-community/gpt2', 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'bf16': False, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'batch_size_training': 32, 'debug': False, 'gradient_accumulation_steps': 1, 'num_epochs': 25, 'lr': 0.0001, 'weight_decay': 0.01}
+[2025-12-01 08:09:57] Save Directory: ./checkpoints/gsm-coconut/gsm-normalized-probe-1201-debug
+[2025-12-01 08:10:05] Initializing Coconut with mode: normalized
+[2025-12-01 08:10:05] Running FSDP on rank = 0
+[2025-12-01 08:11:30] {"epoch": 4, "step": 1, "loss": 7.1895, "avg_alpha": 0.0, "avg_norm": 80.0, "avg_cosine": 0.9738, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 08:14:30] {"epoch": 4, "step": 101, "loss": 1.21, "avg_alpha": 0.0058, "avg_norm": 79.5245, "avg_cosine": 0.9804, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 08:17:33] {"epoch": 4, "step": 201, "loss": 1.0762, "avg_alpha": 0.0136, "avg_norm": 78.8999, "avg_cosine": 0.9748, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 08:20:30] {"epoch": 4, "step": 301, "loss": 1.0351, "avg_alpha": 0.0241, "avg_norm": 78.0694, "avg_cosine": 0.9832, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 08:23:22] {"epoch": 4, "step": 401, "loss": 0.9573, "avg_alpha": 0.0311, "avg_norm": 77.5138, "avg_cosine": 0.9844, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
