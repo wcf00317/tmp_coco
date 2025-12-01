@@ -1,0 +1,38 @@
+project: test
+save_path: ./checkpoints/gsm-coconut
+name: gsm-qwen-original
+
+only_eval: False
+
+# 核心配置
+coconut: True
+decoupling_mode: "original"  # 原始模式
+cot: False
+no_thoughts: False
+no_cot: False
+
+# 难度设置 (加大难度以放大差距)
+c_thought: 4
+epochs_per_stage: 3
+max_latent_stage: 4  # 最多 16 个 latent token
+pad_latent_to_max: True
+
+# 模型与训练参数
+model_id: "Qwen/Qwen2.5-1.5B-Instruct"
+bf16: True  # 必须开启
+lr: !!float "5e-5"  # Qwen 建议较低 LR
+batch_size_training: 8
+gradient_accumulation_steps: 4  # 等效 batch size = 32
+
+# 通用设置
+save_only_improve: False
+uniform_prob: 0.0
+load_model_path: None
+seed: 0
+resume: 0
+train_path: data/gsm_train.json
+val_path: data/gsm_valid.json
+reset_optimizer: True
+debug: False
+num_epochs: 25
+weight_decay: 0.01
