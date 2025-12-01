@@ -21,7 +21,7 @@ pad_latent_to_max: True
 model_id: "meta-llama/Llama-3.2-3B-Instruct"
 bf16: True
 lr: !!float "3e-5"
-batch_size_training: 4
+batch_size_training: 8
 gradient_accumulation_steps: 8
 
 # 通用设置
