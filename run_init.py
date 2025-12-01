@@ -5,10 +5,6 @@ import torch
 import torch.distributed
 import torch.optim as optim
 from transformers import AutoModelForCausalLM, AutoTokenizer
-
-# [修改] 移除 wandb
-# import wandb
-
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
 import torch.distributed as dist
@@ -37,7 +33,11 @@ import argparse
 import functools
 from utils import Config, set_seed
 import torch.multiprocessing as mp
-
+try:
+    from transformers.models.qwen2.modeling_qwen2 import Qwen2DecoderLayer
+except ImportError:
+    # 兼容旧版本 transformers，防止报错
+    Qwen2DecoderLayer = None
 
 def setup_logger(save_dir, rank):
     logger = logging.getLogger(f"coconut_rank_{rank}")
@@ -140,7 +140,7 @@ def worker(rank, world_size, args):
             f"Loading from {configs.load_model_path} and skip the first {configs.resume} epochs"
         )
 
-    model = AutoModelForCausalLM.from_pretrained(configs.model_id, attn_implementation="eager")
+    model = AutoModelForCausalLM.from_pretrained(configs.model_id)
     tokenizer = AutoTokenizer.from_pretrained(configs.model_id)
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.add_tokens("<|start-latent|>")
@@ -209,11 +209,21 @@ def worker(rank, world_size, args):
     print(f"Running FSDP on rank = {rank}, world size = {world_size}")
     model = model.to(rank)
 
+    # [新增/替换] 动态构建 FSDP 包裹策略
+    transformer_layer_cls_set = {
+        LlamaDecoderLayer,
+    }
+
+    # 动态添加 Qwen2
+    if Qwen2DecoderLayer is not None:
+        transformer_layer_cls_set.add(Qwen2DecoderLayer)
+
+    # 如果你也想支持 GPT2 的 FSDP 切分（虽然 GPT2 通常不需要），可以取消下面注释
+    # transformer_layer_cls_set.add(GPT2Block)
+
     llama_auto_wrap_policy = functools.partial(
         transformer_auto_wrap_policy,
-        transformer_layer_cls={
-            LlamaDecoderLayer
-        },
+        transformer_layer_cls=transformer_layer_cls_set,  # 使用上面定义的集合
     )
 
     if configs.bf16:
