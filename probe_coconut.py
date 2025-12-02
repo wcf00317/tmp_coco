@@ -71,13 +71,13 @@ class MetricCalculator:
 class Coconut(nn.Module):
 
     def __init__(
-        self,
-        base_causallm,
-        latent_token_id,
-        start_latent_id,
-        end_latent_id,
-        eos_token_id,
-        decoupling_mode="original", 
+            self,
+            base_causallm,
+            latent_token_id,
+            start_latent_id,
+            end_latent_id,
+            eos_token_id,
+            decoupling_mode="original",
     ):
         super(Coconut, self).__init__()
         self.gen_forward_cnt = 0
@@ -87,9 +87,9 @@ class Coconut(nn.Module):
         self.start_latent_id = start_latent_id
         self.end_latent_id = end_latent_id
         self.decoupling_mode = decoupling_mode
-        self.sparsity_weight = 0.0 
+        self.sparsity_weight = 0.0
         self.norm_scale_factor = 50.0
-        
+
         if isinstance(self.base_causallm, GPT2LMHeadModel):
             self.embedding = self.base_causallm.transformer.get_input_embeddings()
         else:
@@ -102,9 +102,10 @@ class Coconut(nn.Module):
                 nn.ReLU(),
                 nn.Linear(hidden_size // 4, 1)
             )
+            # Zero-Init
             nn.init.zeros_(self.scale_mlp[-1].weight)
             nn.init.zeros_(self.scale_mlp[-1].bias)
-            
+
             if self.decoupling_mode == "normalized":
                 self.base_scale = nn.Parameter(torch.tensor([80.0]))
 
@@ -120,7 +121,7 @@ class Coconut(nn.Module):
             next_compute_range = (0, latent_indices[:, 1].min().item())
 
         kv_cache = None
-        
+
         batch_probe_data = {"alpha": [], "norm": [], "cosine": []}
         all_alpha_tensors = []
         last_thoughts_cache = {}
@@ -129,65 +130,67 @@ class Coconut(nn.Module):
         for pass_idx in range(max_n_latents):
             if kv_cache == None:
                 outputs = self.base_causallm(
-                    inputs_embeds=inputs_embeds[:, next_compute_range[0] : next_compute_range[1], :],
-                    attention_mask=attention_mask[:, next_compute_range[0] : next_compute_range[1]],
-                    position_ids=position_ids[:, next_compute_range[0] : next_compute_range[1]],
+                    inputs_embeds=inputs_embeds[:, next_compute_range[0]: next_compute_range[1], :],
+                    attention_mask=attention_mask[:, next_compute_range[0]: next_compute_range[1]],
+                    position_ids=position_ids[:, next_compute_range[0]: next_compute_range[1]],
                     output_hidden_states=True,
-                    output_attentions=compute_probes, # 传递开关
+                    output_attentions=compute_probes,  # 传递开关
                 )
                 hidden_states_offset = 0
             else:
-                past_key_values_legacy = [(k[:, :, : next_compute_range[0], :], v[:, :, : next_compute_range[0], :]) for k, v in kv_cache]
+                past_key_values_legacy = [(k[:, :, : next_compute_range[0], :], v[:, :, : next_compute_range[0], :]) for
+                                          k, v in kv_cache]
                 if DynamicCache is not None:
                     past_key_values = DynamicCache.from_legacy_cache(past_key_values_legacy)
                 else:
                     past_key_values = past_key_values_legacy
 
                 outputs = self.base_causallm(
-                    inputs_embeds=inputs_embeds[:, next_compute_range[0] : next_compute_range[1], :],
+                    inputs_embeds=inputs_embeds[:, next_compute_range[0]: next_compute_range[1], :],
                     attention_mask=attention_mask[:, : next_compute_range[1]],
-                    position_ids=position_ids[:, next_compute_range[0] : next_compute_range[1]],
+                    position_ids=position_ids[:, next_compute_range[0]: next_compute_range[1]],
                     past_key_values=past_key_values,
                     output_hidden_states=True,
-                    output_attentions=compute_probes, # 传递开关
+                    output_attentions=compute_probes,  # 传递开关
                 )
                 hidden_states_offset = next_compute_range[0]
 
             logits.append(outputs.logits)
-            
-            # [诊断逻辑] 为什么是 0.0？
+
+            # [诊断逻辑]
             if compute_probes:
                 # 1. 检查 outputs 本身
                 if outputs is None:
                     print(f"!!! [Debug] Step {pass_idx}: outputs is None!")
-                
+
                 # 2. 检查 attentions 字段
                 elif outputs.attentions is None:
                     print(f"!!! [Debug] Step {pass_idx}: outputs.attentions is None! (Config Issue?)")
-                
+
                 # 3. 检查 attentions 列表是否全空
                 else:
                     # 过滤掉 None
                     valid_attentions = [a for a in outputs.attentions if a is not None]
-                    
+
                     if len(valid_attentions) == 0:
                         print(f"!!! [Debug] Step {pass_idx}: outputs.attentions exists but all layers are None!")
                     else:
                         # 一切正常，开始计算
                         last_attn = valid_attentions[-1]
-                        
+
                         with torch.no_grad():
                             ent = MetricCalculator.compute_entropy(last_attn)
                             rank_val = MetricCalculator.compute_effective_rank(last_attn)
-                        
+
                         if "entropy" not in advanced_metrics: advanced_metrics["entropy"] = []
                         if "rank" not in advanced_metrics: advanced_metrics["rank"] = []
                         advanced_metrics["entropy"].append(ent)
                         advanced_metrics["rank"].append(rank_val)
 
-            next_compute_range = (next_compute_range[1], (input_ids.shape[1] if pass_idx + 1 >= max_n_latents else next_compute_range[1] + 1))
+            next_compute_range = (next_compute_range[1],
+                                  (input_ids.shape[1] if pass_idx + 1 >= max_n_latents else next_compute_range[1] + 1))
             hidden_states = outputs.hidden_states[-1]
-            
+
             if hasattr(outputs.past_key_values, "to_legacy_cache"):
                 kv_cache = outputs.past_key_values.to_legacy_cache()
             else:
@@ -201,16 +204,19 @@ class Coconut(nn.Module):
                 intensity_scales = self.scale_mlp(mlp_input)
                 all_alpha_tensors.append(intensity_scales)
 
-            filling_indices = [(instance_idx, mask_list[pass_idx]) for instance_idx, mask_list in enumerate(latent_lists) if len(mask_list) > pass_idx]
-            tensor_list = [[inputs_embeds[batch_idx, pos, :] for pos in range(inputs_embeds.shape[1])] for batch_idx in range(inputs_embeds.shape[0])]
+            filling_indices = [(instance_idx, mask_list[pass_idx]) for instance_idx, mask_list in
+                               enumerate(latent_lists) if len(mask_list) > pass_idx]
+            tensor_list = [[inputs_embeds[batch_idx, pos, :] for pos in range(inputs_embeds.shape[1])] for batch_idx in
+                           range(inputs_embeds.shape[0])]
 
             for idx_pair in filling_indices:
                 batch_idx, token_idx = idx_pair
                 raw_h = hidden_states[batch_idx, token_idx - 1 - hidden_states_offset, :]
-                
+
                 if self.decoupling_mode == "residual":
                     alpha_raw = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
-                    alpha = torch.tanh(alpha_raw) 
+                    # [核心修改] 增加 0.05 的缩放系数，防止初始 Alpha 过大导致 OOD
+                    alpha = 0.05 * torch.tanh(alpha_raw)
                     final_h = raw_h * (1 + alpha)
                     batch_probe_data["alpha"].append(alpha.abs().mean().detach())
                 elif self.decoupling_mode == "normalized":
@@ -233,33 +239,35 @@ class Coconut(nn.Module):
                 last_thoughts_cache[batch_idx] = final_h.detach()
                 tensor_list[batch_idx][token_idx] = final_h
 
-            inputs_embeds = torch.stack([torch.stack(tensor_list[batch_idx]) for batch_idx in range(inputs_embeds.shape[0])])
+            inputs_embeds = torch.stack(
+                [torch.stack(tensor_list[batch_idx]) for batch_idx in range(inputs_embeds.shape[0])])
 
         if kv_cache:
-             past_key_values_legacy = [(k[:, :, : next_compute_range[0], :], v[:, :, : next_compute_range[0], :]) for k, v in kv_cache]
-             if DynamicCache is not None:
-                 past_key_values = DynamicCache.from_legacy_cache(past_key_values_legacy)
-             else:
-                 past_key_values = past_key_values_legacy
+            past_key_values_legacy = [(k[:, :, : next_compute_range[0], :], v[:, :, : next_compute_range[0], :]) for
+                                      k, v in kv_cache]
+            if DynamicCache is not None:
+                past_key_values = DynamicCache.from_legacy_cache(past_key_values_legacy)
+            else:
+                past_key_values = past_key_values_legacy
         else:
-             past_key_values = None
+            past_key_values = None
 
         outputs = self.base_causallm(
-            inputs_embeds=inputs_embeds[:, next_compute_range[0] : next_compute_range[1], :],
+            inputs_embeds=inputs_embeds[:, next_compute_range[0]: next_compute_range[1], :],
             attention_mask=attention_mask[:, : next_compute_range[1]],
-            position_ids=position_ids[:, next_compute_range[0] : next_compute_range[1]],
+            position_ids=position_ids[:, next_compute_range[0]: next_compute_range[1]],
             past_key_values=past_key_values,
             output_hidden_states=True,
         )
         logits.append(outputs.logits)
         self.gen_forward_cnt += max_n_latents + 1
         logits = torch.cat(logits, dim=-2)
-        
+
         shift_logits = logits[..., :-1, :].contiguous()
         shift_labels = labels[..., 1:].contiguous()
         loss_fct = CrossEntropyLoss()
         lm_loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
-        
+
         sparsity_loss = torch.tensor(0.0, device=lm_loss.device)
         if len(all_alpha_tensors) > 0 and self.sparsity_weight > 0:
             all_alphas = torch.cat(all_alpha_tensors, dim=1)
@@ -281,7 +289,6 @@ class Coconut(nn.Module):
         }
 
         return Outputs(loss=total_loss, inputs_embeds=inputs_embeds, logits=logits, probes=final_probes)
-
     def train(self): self.base_causallm.train()
     def eval(self): self.base_causallm.eval()
     def generate(self, input_ids, attention_mask, max_new_tokens=16, output_embedding=False, synced_gpus=False, **kwargs):
