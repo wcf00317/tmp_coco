@@ -21,8 +21,8 @@ pad_latent_to_max: True
 model_id: "Qwen/Qwen2.5-1.5B-Instruct"
 bf16: True
 lr: !!float "5e-5"
-batch_size_training: 8
-gradient_accumulation_steps: 4
+batch_size_training: 32
+gradient_accumulation_steps: 1
 
 # 通用设置
 save_only_improve: False

@@ -2,12 +2,12 @@
 
 project: test
 save_path: ./checkpoints/gsm-coconut
-name: gsm-original-probe-1201-debug
+name: gsm-residual-probe-1201-debug
 
 only_eval: False
 
 coconut: True
-decoupling_mode: "original"
+decoupling_mode: "residual"
 cot: False
 no_thoughts: False
 no_cot: False

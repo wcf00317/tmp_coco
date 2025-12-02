@@ -104,3 +104,117 @@
 [2025-12-01 15:28:01] {"epoch": 6, "step": 6227, "loss": 0.3847, "avg_alpha": 0.0, "avg_norm": 169.379, "avg_cosine": 0.9873, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-01 15:33:02] {"epoch": 6, "step": 6327, "loss": 0.4046, "avg_alpha": 0.0, "avg_norm": 180.3637, "avg_cosine": 0.9861, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-01 15:37:57] {"epoch": 6, "step": 6427, "loss": 0.4571, "avg_alpha": 0.0, "avg_norm": 174.6282, "avg_cosine": 0.9869, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 15:42:50] {"epoch": 6, "step": 6527, "loss": 0.3766, "avg_alpha": 0.0, "avg_norm": 161.0371, "avg_cosine": 0.9834, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 15:47:45] {"epoch": 6, "step": 6627, "loss": 0.3606, "avg_alpha": 0.0, "avg_norm": 180.6283, "avg_cosine": 0.9892, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 15:52:43] {"epoch": 6, "step": 6727, "loss": 0.4229, "avg_alpha": 0.0, "avg_norm": 186.4198, "avg_cosine": 0.9903, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 15:57:34] {"epoch": 6, "step": 6827, "loss": 0.3858, "avg_alpha": 0.0, "avg_norm": 184.7357, "avg_cosine": 0.9865, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:02:32] {"epoch": 6, "step": 6927, "loss": 0.3527, "avg_alpha": 0.0, "avg_norm": 169.9283, "avg_cosine": 0.986, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:06:09] {"epoch": 6, "step": 7000, "loss": 0.4984, "avg_alpha": 0.0, "avg_norm": 165.7064, "avg_cosine": 0.9829, "reg_loss": 0.0, "avg_rank": 5.6961, "avg_entropy": 2.2104}
+[2025-12-01 16:07:29] {"epoch": 6, "step": 7027, "loss": 0.2967, "avg_alpha": 0.0, "avg_norm": 163.2026, "avg_cosine": 0.9868, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:12:24] {"epoch": 6, "step": 7127, "loss": 0.3655, "avg_alpha": 0.0, "avg_norm": 155.989, "avg_cosine": 0.9893, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:27:16] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-original-probe-1201-debug', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'save_only_improve': False, 'uniform_prob': 0.0, 'model_id': 'openai-community/gpt2', 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'bf16': False, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'batch_size_training': 32, 'debug': False, 'gradient_accumulation_steps': 1, 'num_epochs': 25, 'lr': 0.0001, 'weight_decay': 0.01}
+[2025-12-01 16:27:16] Save Directory: ./checkpoints/gsm-coconut/gsm-original-probe-1201-debug
+[2025-12-01 16:29:36] Initializing Coconut with mode: original
+[2025-12-01 16:29:36] Running FSDP on rank = 0
+[2025-12-01 16:31:00] {"epoch": 6, "step": 1, "loss": 0.3881, "avg_alpha": 0.0, "avg_norm": 191.6702, "avg_cosine": 0.9833, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:36:05] {"epoch": 6, "step": 101, "loss": 0.3389, "avg_alpha": 0.0, "avg_norm": 175.5862, "avg_cosine": 0.986, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:40:59] {"epoch": 6, "step": 201, "loss": 0.43, "avg_alpha": 0.0, "avg_norm": 173.2793, "avg_cosine": 0.985, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:45:43] {"epoch": 6, "step": 301, "loss": 0.3623, "avg_alpha": 0.0, "avg_norm": 196.8627, "avg_cosine": 0.9884, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:50:30] {"epoch": 6, "step": 401, "loss": 0.3732, "avg_alpha": 0.0, "avg_norm": 183.4397, "avg_cosine": 0.9868, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 16:55:17] {"epoch": 6, "step": 501, "loss": 0.5426, "avg_alpha": 0.0, "avg_norm": 191.3798, "avg_cosine": 0.9863, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:00:02] {"epoch": 6, "step": 601, "loss": 0.4175, "avg_alpha": 0.0, "avg_norm": 188.2563, "avg_cosine": 0.9877, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:04:53] {"epoch": 6, "step": 701, "loss": 0.3321, "avg_alpha": 0.0, "avg_norm": 174.1328, "avg_cosine": 0.9801, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:09:43] {"epoch": 6, "step": 801, "loss": 0.4479, "avg_alpha": 0.0, "avg_norm": 185.583, "avg_cosine": 0.9855, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:14:35] {"epoch": 6, "step": 901, "loss": 0.3327, "avg_alpha": 0.0, "avg_norm": 169.4723, "avg_cosine": 0.9846, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:19:24] {"epoch": 6, "step": 1000, "loss": 0.3689, "avg_alpha": 0.0, "avg_norm": 182.6027, "avg_cosine": 0.9876, "reg_loss": 0.0, "avg_rank": 5.8846, "avg_entropy": 2.2054}
+[2025-12-01 17:19:28] {"epoch": 6, "step": 1001, "loss": 0.2921, "avg_alpha": 0.0, "avg_norm": 179.7233, "avg_cosine": 0.9881, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:26:53] {"epoch": 6, "step": 1101, "loss": 0.3861, "avg_alpha": 0.0, "avg_norm": 166.0991, "avg_cosine": 0.9817, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:34:52] {"epoch": 6, "step": 1201, "loss": 0.3485, "avg_alpha": 0.0, "avg_norm": 179.7328, "avg_cosine": 0.9879, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:43:00] {"epoch": 6, "step": 1301, "loss": 0.3964, "avg_alpha": 0.0, "avg_norm": 178.339, "avg_cosine": 0.989, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:50:59] {"epoch": 6, "step": 1401, "loss": 0.4694, "avg_alpha": 0.0, "avg_norm": 167.8662, "avg_cosine": 0.9833, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 17:58:57] {"epoch": 6, "step": 1501, "loss": 0.4628, "avg_alpha": 0.0, "avg_norm": 178.6571, "avg_cosine": 0.9842, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 18:07:06] {"epoch": 6, "step": 1601, "loss": 0.3575, "avg_alpha": 0.0, "avg_norm": 168.6439, "avg_cosine": 0.9828, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 18:15:09] {"epoch": 6, "step": 1701, "loss": 0.3196, "avg_alpha": 0.0, "avg_norm": 159.7309, "avg_cosine": 0.9804, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 18:23:10] {"epoch": 6, "step": 1801, "loss": 0.3593, "avg_alpha": 0.0, "avg_norm": 175.7684, "avg_cosine": 0.9856, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 18:31:14] {"epoch": 6, "step": 1901, "loss": 0.3425, "avg_alpha": 0.0, "avg_norm": 155.1427, "avg_cosine": 0.9826, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 18:39:13] {"epoch": 6, "step": 2000, "loss": 0.3868, "avg_alpha": 0.0, "avg_norm": 181.0316, "avg_cosine": 0.9867, "reg_loss": 0.0, "avg_rank": 6.7026, "avg_entropy": 2.421}
+[2025-12-01 18:39:17] {"epoch": 6, "step": 2001, "loss": 0.2427, "avg_alpha": 0.0, "avg_norm": 175.2092, "avg_cosine": 0.9845, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 18:47:31] {"epoch": 6, "step": 2101, "loss": 0.3105, "avg_alpha": 0.0, "avg_norm": 162.8457, "avg_cosine": 0.978, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 18:55:44] {"epoch": 6, "step": 2201, "loss": 0.262, "avg_alpha": 0.0, "avg_norm": 172.8395, "avg_cosine": 0.9835, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 19:04:09] {"epoch": 6, "step": 2301, "loss": 0.3529, "avg_alpha": 0.0, "avg_norm": 186.7355, "avg_cosine": 0.989, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 19:12:32] {"epoch": 6, "step": 2401, "loss": 0.3635, "avg_alpha": 0.0, "avg_norm": 171.4074, "avg_cosine": 0.9836, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 19:20:57] {"epoch": 6, "step": 2501, "loss": 0.3542, "avg_alpha": 0.0, "avg_norm": 145.9863, "avg_cosine": 0.9699, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 19:29:24] {"epoch": 6, "step": 2601, "loss": 0.2625, "avg_alpha": 0.0, "avg_norm": 163.2716, "avg_cosine": 0.9841, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 19:37:47] {"epoch": 6, "step": 2701, "loss": 0.4107, "avg_alpha": 0.0, "avg_norm": 169.0847, "avg_cosine": 0.982, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 19:46:07] {"epoch": 6, "step": 2801, "loss": 0.2659, "avg_alpha": 0.0, "avg_norm": 158.7159, "avg_cosine": 0.9754, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 19:54:29] {"epoch": 6, "step": 2901, "loss": 0.327, "avg_alpha": 0.0, "avg_norm": 175.8269, "avg_cosine": 0.9835, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 20:02:49] {"epoch": 6, "step": 3000, "loss": 0.3678, "avg_alpha": 0.0, "avg_norm": 161.2474, "avg_cosine": 0.9798, "reg_loss": 0.0, "avg_rank": 6.054, "avg_entropy": 2.2774}
+[2025-12-01 20:02:54] {"epoch": 6, "step": 3001, "loss": 0.3593, "avg_alpha": 0.0, "avg_norm": 158.804, "avg_cosine": 0.9748, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 20:03:53] {"epoch": 6, "step": 3013, "loss": 0.4444, "avg_alpha": 0.0, "avg_norm": 153.1346, "avg_cosine": 0.9757, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 20:03:58] Checkpoint saved: checkpoint_6
+[2025-12-01 20:04:25] Evaluation Loss (Epoch 6): 0.5606176108121872
+[2025-12-01 20:04:25] Eval Probes (Epoch 6): {"probe/avg_alpha": 0.0, "probe/avg_norm": 161.492, "probe/avg_cosine": 0.9941, "probe/reg_loss": 0.0, "probe/avg_rank": 6.8038, "probe/avg_entropy": 2.5436}
+[2025-12-01 20:04:32] [Example] Pred: 1200 | GT: 300
+[2025-12-01 20:04:33] [Example] Pred: 240 | GT: 240
+[2025-12-01 20:04:34] [Example] Pred: 18.50 | GT: 25
+[2025-12-01 20:04:34] [Example] Pred: 10 | GT: 10
+[2025-12-01 20:04:35] [Example] Pred: 45 | GT: 45
+[2025-12-01 20:05:51] Accuracy on validation set: 122 / 500 = 0.244
+[2025-12-01 20:05:51] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-01 20:05:51] {'eval/acc': 0.244, 'eval/cot_em': 0.0}
+[2025-12-01 20:06:25] {"epoch": 7, "step": 3014, "loss": 1.3275, "avg_alpha": 0.0, "avg_norm": 169.0941, "avg_cosine": 0.9884, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 20:15:49] {"epoch": 7, "step": 3114, "loss": 0.7516, "avg_alpha": 0.0, "avg_norm": 142.8539, "avg_cosine": 0.9842, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 20:25:07] {"epoch": 7, "step": 3214, "loss": 0.7291, "avg_alpha": 0.0, "avg_norm": 124.0923, "avg_cosine": 0.9801, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 20:34:18] {"epoch": 7, "step": 3314, "loss": 0.6545, "avg_alpha": 0.0, "avg_norm": 126.5608, "avg_cosine": 0.9854, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 20:43:32] {"epoch": 7, "step": 3414, "loss": 0.6075, "avg_alpha": 0.0, "avg_norm": 98.7137, "avg_cosine": 0.975, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 20:52:52] {"epoch": 7, "step": 3514, "loss": 0.5454, "avg_alpha": 0.0, "avg_norm": 97.4073, "avg_cosine": 0.9814, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 21:02:06] {"epoch": 7, "step": 3614, "loss": 0.5035, "avg_alpha": 0.0, "avg_norm": 95.8337, "avg_cosine": 0.9785, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 21:11:19] {"epoch": 7, "step": 3714, "loss": 0.6785, "avg_alpha": 0.0, "avg_norm": 93.6933, "avg_cosine": 0.9789, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 21:20:35] {"epoch": 7, "step": 3814, "loss": 0.6301, "avg_alpha": 0.0, "avg_norm": 82.9048, "avg_cosine": 0.969, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 21:29:57] {"epoch": 7, "step": 3914, "loss": 0.4934, "avg_alpha": 0.0, "avg_norm": 79.3253, "avg_cosine": 0.9717, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 21:37:59] {"epoch": 7, "step": 4000, "loss": 0.6887, "avg_alpha": 0.0, "avg_norm": 78.1486, "avg_cosine": 0.975, "reg_loss": 0.0, "avg_rank": 2.8275, "avg_entropy": 2.1674}
+[2025-12-01 21:39:54] {"epoch": 7, "step": 4014, "loss": 0.497, "avg_alpha": 0.0, "avg_norm": 82.1801, "avg_cosine": 0.9713, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 21:49:14] {"epoch": 7, "step": 4114, "loss": 0.4424, "avg_alpha": 0.0, "avg_norm": 89.1884, "avg_cosine": 0.9725, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 21:58:31] {"epoch": 7, "step": 4214, "loss": 0.4776, "avg_alpha": 0.0, "avg_norm": 79.5869, "avg_cosine": 0.9764, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 22:07:48] {"epoch": 7, "step": 4314, "loss": 0.5589, "avg_alpha": 0.0, "avg_norm": 78.7168, "avg_cosine": 0.9564, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 22:17:04] {"epoch": 7, "step": 4414, "loss": 0.5385, "avg_alpha": 0.0, "avg_norm": 76.789, "avg_cosine": 0.9631, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 22:26:15] {"epoch": 7, "step": 4514, "loss": 0.6199, "avg_alpha": 0.0, "avg_norm": 76.3607, "avg_cosine": 0.9519, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 22:35:29] {"epoch": 7, "step": 4614, "loss": 0.4478, "avg_alpha": 0.0, "avg_norm": 82.8024, "avg_cosine": 0.9692, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 22:44:58] {"epoch": 7, "step": 4714, "loss": 0.4441, "avg_alpha": 0.0, "avg_norm": 77.2559, "avg_cosine": 0.9598, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 22:54:28] {"epoch": 7, "step": 4814, "loss": 0.6241, "avg_alpha": 0.0, "avg_norm": 75.6628, "avg_cosine": 0.9403, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 23:03:49] {"epoch": 7, "step": 4914, "loss": 0.6367, "avg_alpha": 0.0, "avg_norm": 72.2077, "avg_cosine": 0.9523, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 23:12:01] {"epoch": 7, "step": 5000, "loss": 0.5057, "avg_alpha": 0.0, "avg_norm": 67.0757, "avg_cosine": 0.9513, "reg_loss": 0.0, "avg_rank": 3.7261, "avg_entropy": 2.1417}
+[2025-12-01 23:13:51] {"epoch": 7, "step": 5014, "loss": 0.9008, "avg_alpha": 0.0, "avg_norm": 69.0213, "avg_cosine": 0.933, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 23:23:13] {"epoch": 7, "step": 5114, "loss": 0.5996, "avg_alpha": 0.0, "avg_norm": 68.9839, "avg_cosine": 0.9459, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 23:32:28] {"epoch": 7, "step": 5214, "loss": 0.5492, "avg_alpha": 0.0, "avg_norm": 64.6462, "avg_cosine": 0.9151, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 23:41:54] {"epoch": 7, "step": 5314, "loss": 0.5517, "avg_alpha": 0.0, "avg_norm": 63.4793, "avg_cosine": 0.8724, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-01 23:51:12] {"epoch": 7, "step": 5414, "loss": 0.6604, "avg_alpha": 0.0, "avg_norm": 66.0199, "avg_cosine": 0.8855, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 00:00:31] {"epoch": 7, "step": 5514, "loss": 0.4795, "avg_alpha": 0.0, "avg_norm": 73.3347, "avg_cosine": 0.9396, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 00:09:51] {"epoch": 7, "step": 5614, "loss": 0.6125, "avg_alpha": 0.0, "avg_norm": 67.1386, "avg_cosine": 0.8893, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 00:19:02] {"epoch": 7, "step": 5714, "loss": 0.5264, "avg_alpha": 0.0, "avg_norm": 68.6587, "avg_cosine": 0.8877, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 00:28:25] {"epoch": 7, "step": 5814, "loss": 0.5329, "avg_alpha": 0.0, "avg_norm": 60.5963, "avg_cosine": 0.8746, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 00:37:38] {"epoch": 7, "step": 5914, "loss": 0.3974, "avg_alpha": 0.0, "avg_norm": 64.7644, "avg_cosine": 0.8646, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 00:45:38] {"epoch": 7, "step": 6000, "loss": 0.5098, "avg_alpha": 0.0, "avg_norm": 75.5386, "avg_cosine": 0.9466, "reg_loss": 0.0, "avg_rank": 4.1116, "avg_entropy": 2.0732}
+[2025-12-02 00:47:30] {"epoch": 7, "step": 6014, "loss": 0.6386, "avg_alpha": 0.0, "avg_norm": 70.5808, "avg_cosine": 0.8958, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 00:48:36] {"epoch": 7, "step": 6026, "loss": 0.523, "avg_alpha": 0.0, "avg_norm": 76.5484, "avg_cosine": 0.9201, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 00:48:41] Checkpoint saved: checkpoint_7
+[2025-12-02 00:49:15] Evaluation Loss (Epoch 7): 0.7154450863599777
+[2025-12-02 00:49:15] Eval Probes (Epoch 7): {"probe/avg_alpha": 0.0, "probe/avg_norm": 67.5166, "probe/avg_cosine": 0.9391, "probe/reg_loss": 0.0, "probe/avg_rank": 3.8357, "probe/avg_entropy": 2.0936}
+[2025-12-02 00:49:22] [Example] Pred: 192.04 | GT: 300
+[2025-12-02 00:49:22] [Example] Pred: 360 | GT: 240
+[2025-12-02 00:49:23] [Example] Pred: 25.50 | GT: 25
+[2025-12-02 00:49:23] [Example] Pred: 10 | GT: 10
+[2025-12-02 00:49:24] [Example] Pred: 45 | GT: 45
+[2025-12-02 00:50:39] Accuracy on validation set: 79 / 500 = 0.158
+[2025-12-02 00:50:39] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-02 00:50:39] {'eval/acc': 0.158, 'eval/cot_em': 0.0}
+[2025-12-02 00:51:15] {"epoch": 8, "step": 6027, "loss": 0.5571, "avg_alpha": 0.0, "avg_norm": 75.692, "avg_cosine": 0.9108, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 01:00:39] {"epoch": 8, "step": 6127, "loss": 0.4578, "avg_alpha": 0.0, "avg_norm": 74.5209, "avg_cosine": 0.9162, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 01:09:42] {"epoch": 8, "step": 6227, "loss": 0.4969, "avg_alpha": 0.0, "avg_norm": 66.6076, "avg_cosine": 0.8816, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 01:19:05] {"epoch": 8, "step": 6327, "loss": 0.4911, "avg_alpha": 0.0, "avg_norm": 65.7401, "avg_cosine": 0.8506, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 01:28:22] {"epoch": 8, "step": 6427, "loss": 0.4493, "avg_alpha": 0.0, "avg_norm": 69.2864, "avg_cosine": 0.8448, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 01:37:21] {"epoch": 8, "step": 6527, "loss": 0.5078, "avg_alpha": 0.0, "avg_norm": 69.8115, "avg_cosine": 0.8743, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 01:46:33] {"epoch": 8, "step": 6627, "loss": 0.4356, "avg_alpha": 0.0, "avg_norm": 70.8421, "avg_cosine": 0.8548, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 01:55:46] {"epoch": 8, "step": 6727, "loss": 0.5227, "avg_alpha": 0.0, "avg_norm": 66.619, "avg_cosine": 0.8471, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 02:05:02] {"epoch": 8, "step": 6827, "loss": 0.4323, "avg_alpha": 0.0, "avg_norm": 64.9174, "avg_cosine": 0.8766, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-02 02:14:19] {"epoch": 8, "step": 6927, "loss": 0.3905, "avg_alpha": 0.0, "avg_norm": 67.4903, "avg_cosine": 0.8959, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
