@@ -1,6 +1,6 @@
 project: test
 save_path: ./checkpoints/gsm-coconut
-name: gsm-qwen-residual
+name: gsm-qwen-residual-1202
 
 only_eval: False
 
