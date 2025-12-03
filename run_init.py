@@ -252,8 +252,12 @@ def worker(rank, world_size, args):
     )
 
     if not configs.only_eval:
+        ratio = getattr(configs, "train_ratio", 1.0)
         base_dataset_train = get_dataset(
-            configs.train_path, tokenizer, max_size=5000 if configs.debug else 100000000
+            configs.train_path,
+            tokenizer,
+            max_size=5000 if configs.debug else 100000000,
+            data_ratio=ratio  # 传入参数
         )
 
     if "gsm" in configs.val_path:
