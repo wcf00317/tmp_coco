@@ -14,7 +14,7 @@ from transformers import PreTrainedTokenizerBase
 from transformers.data.data_collator import pad_without_fast_tokenizer_warning
 
 
-def get_dataset(path, tokenizer, max_size=1000000000):
+def get_dataset(path, tokenizer, max_size=1000000000, data_ratio=1.0):
 
     def tokenize_sample(sample):
 
@@ -37,7 +37,21 @@ def get_dataset(path, tokenizer, max_size=1000000000):
         }
         return sample
 
-    data = json.load(open(path))[:max_size]
+    raw_data = json.load(open(path))
+
+    # 计算需要的数据量
+    limit = len(raw_data)
+    if data_ratio < 1.0:
+        limit = int(limit * data_ratio)
+
+    # 结合 max_size 取最小值
+    final_size = min(max_size, limit)
+    data = raw_data[:final_size]
+
+    if torch.distributed.is_initialized() and torch.distributed.get_rank() == 0:
+        print(f"Loading dataset from {path}: {len(data)} samples (Ratio: {data_ratio}, Original: {len(raw_data)})")
+
+
     data = [{**d, "idx": idx} for idx, d in enumerate(data)]
 
     keys = data[0].keys()
