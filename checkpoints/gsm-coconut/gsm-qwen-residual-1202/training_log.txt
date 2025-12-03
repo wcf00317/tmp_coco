@@ -262,3 +262,5 @@
 [2025-12-03 05:08:44] {"epoch": 9, "step": 17566, "loss": 0.0811, "avg_alpha": 0.0061, "avg_norm": 113.5, "avg_cosine": 0.9805, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-03 05:17:44] {"epoch": 9, "step": 17666, "loss": 0.0713, "avg_alpha": 0.0071, "avg_norm": 118.0, "avg_cosine": 0.9805, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-03 05:26:46] {"epoch": 9, "step": 17766, "loss": 0.1099, "avg_alpha": 0.0098, "avg_norm": 118.0, "avg_cosine": 0.9805, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-03 05:35:44] {"epoch": 9, "step": 17866, "loss": 0.063, "avg_alpha": 0.0094, "avg_norm": 117.5, "avg_cosine": 0.9766, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-03 05:44:51] {"epoch": 9, "step": 17966, "loss": 0.0625, "avg_alpha": 0.0098, "avg_norm": 115.5, "avg_cosine": 0.9766, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}

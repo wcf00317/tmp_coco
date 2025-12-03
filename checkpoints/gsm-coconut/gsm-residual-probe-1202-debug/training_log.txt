@@ -238,3 +238,4 @@
 [2025-12-03 05:24:55] CoT match on validation set: 0 / 500 = 0.0
 [2025-12-03 05:24:55] {'eval/acc': 0.228, 'eval/cot_em': 0.0}
 [2025-12-03 05:25:34] {"epoch": 9, "step": 15066, "loss": 0.4451, "avg_alpha": 0.0472, "avg_norm": 63.3977, "avg_cosine": 0.9352, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-03 05:39:21] {"epoch": 9, "step": 15166, "loss": 0.4826, "avg_alpha": 0.0462, "avg_norm": 56.799, "avg_cosine": 0.9015, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}

@@ -178,3 +178,16 @@
 [2025-12-03 05:17:29] {"epoch": 4, "step": 11540, "loss": 0.0698, "avg_alpha": 0.0021, "avg_norm": 79.5, "avg_cosine": 0.5469, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-03 05:22:20] {"epoch": 4, "step": 11640, "loss": 0.1172, "avg_alpha": 0.0021, "avg_norm": 79.5, "avg_cosine": 0.5664, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-03 05:27:18] {"epoch": 4, "step": 11740, "loss": 0.0781, "avg_alpha": 0.002, "avg_norm": 79.5, "avg_cosine": 0.543, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-03 05:32:08] {"epoch": 4, "step": 11840, "loss": 0.0986, "avg_alpha": 0.002, "avg_norm": 79.5, "avg_cosine": 0.5469, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-03 05:37:02] {"epoch": 4, "step": 11940, "loss": 0.1172, "avg_alpha": 0.002, "avg_norm": 79.5, "avg_cosine": 0.5586, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-03 05:39:57] {"epoch": 4, "step": 12000, "loss": 0.1152, "avg_alpha": 0.0021, "avg_norm": 79.5, "avg_cosine": 0.5391, "reg_loss": 0.0, "avg_rank": 6.4265, "avg_entropy": 2.5781}
+[2025-12-03 05:41:55] {"epoch": 4, "step": 12040, "loss": 0.0938, "avg_alpha": 0.002, "avg_norm": 79.5, "avg_cosine": 0.543, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-03 05:42:29] {"epoch": 4, "step": 12052, "loss": 0.1338, "avg_alpha": 0.002, "avg_norm": 79.5, "avg_cosine": 0.5391, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-03 05:42:38] Checkpoint saved: checkpoint_4
+[2025-12-03 05:42:55] Evaluation Loss (Epoch 4): 0.271484375
+[2025-12-03 05:42:55] Eval Probes (Epoch 4): {"probe/avg_alpha": 0.0021, "probe/avg_norm": 79.5, "probe/avg_cosine": 0.5176, "probe/reg_loss": 0.0, "probe/avg_rank": 7.8002, "probe/avg_entropy": 2.7266}
+[2025-12-03 05:43:05] [Example] Pred: 800 | GT: 300
+[2025-12-03 05:43:09] [Example] Pred: 60 | GT: 240
+[2025-12-03 05:43:13] [Example] Pred: 20 | GT: 25
+[2025-12-03 05:43:17] [Example] Pred: 10 | GT: 10
+[2025-12-03 05:43:21] [Example] Pred: 45 | GT: 45
