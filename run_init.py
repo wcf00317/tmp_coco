@@ -252,7 +252,7 @@ def worker(rank, world_size, args):
     )
 
     if not configs.only_eval:
-        ratio = getattr(configs, "train_ratio", 1.0)
+        ratio = getattr(configs, "train_ratio")
         base_dataset_train = get_dataset(
             configs.train_path,
             tokenizer,
