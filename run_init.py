@@ -85,6 +85,8 @@ def worker(rank, world_size, args):
             world_size=world_size,
             rank=rank
         )
+        if rank == 0:
+            print(">>> Dist backend:", dist.get_backend())
     except Exception as e:
         print(f"[Rank {rank}] NCCL init failed ({e}), trying GLOO...")
         dist.init_process_group(

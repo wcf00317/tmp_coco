@@ -437,3 +437,7 @@
 [2025-12-04 01:37:16] {"epoch": 13, "step": 28318, "loss": 0.6049, "avg_alpha": 0.0437, "avg_norm": 43.4269, "avg_cosine": 0.628, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-04 01:47:48] {"epoch": 13, "step": 28418, "loss": 0.7097, "avg_alpha": 0.047, "avg_norm": 39.763, "avg_cosine": 0.6035, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-04 01:58:15] {"epoch": 13, "step": 28518, "loss": 0.7276, "avg_alpha": 0.046, "avg_norm": 46.7657, "avg_cosine": 0.8465, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:08:52] {"epoch": 13, "step": 28618, "loss": 0.778, "avg_alpha": 0.0467, "avg_norm": 48.1017, "avg_cosine": 0.838, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:19:32] {"epoch": 13, "step": 28718, "loss": 0.5752, "avg_alpha": 0.0484, "avg_norm": 54.6584, "avg_cosine": 0.818, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:30:09] {"epoch": 13, "step": 28818, "loss": 0.6033, "avg_alpha": 0.0466, "avg_norm": 54.6946, "avg_cosine": 0.8118, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:40:53] {"epoch": 13, "step": 28918, "loss": 0.8264, "avg_alpha": 0.0499, "avg_norm": 57.0237, "avg_cosine": 0.8172, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}

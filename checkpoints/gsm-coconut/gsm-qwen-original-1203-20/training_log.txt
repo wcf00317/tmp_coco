@@ -141,3 +141,10 @@
 [2025-12-03 20:12:02] [Example] Pred: 32.75 | GT: 25
 [2025-12-03 20:12:05] [Example] Pred: 10 | GT: 10
 [2025-12-03 20:12:09] [Example] Pred: 45 | GT: 45
+[2025-12-04 02:35:11] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 02:35:11] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 02:35:22] Initializing Coconut with mode: original
+[2025-12-04 02:35:23] Running FSDP on rank = 0
+[2025-12-04 02:36:41] {"epoch": 11, "step": 1, "loss": 0.1943, "avg_alpha": 0.0, "avg_norm": 144.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:42:26] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 02:42:26] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20

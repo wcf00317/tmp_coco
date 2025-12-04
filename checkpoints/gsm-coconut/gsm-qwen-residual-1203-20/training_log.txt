@@ -155,3 +155,14 @@
 [2025-12-03 20:01:48] [Example] Pred: 25.50 | GT: 25
 [2025-12-03 20:01:52] [Example] Pred: 4 | GT: 10
 [2025-12-03 20:01:56] [Example] Pred: 45 | GT: 45
+[2025-12-04 02:10:03] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-residual-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'residual', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 02:10:03] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-residual-1203-20
+[2025-12-04 02:10:15] Initializing Coconut with mode: residual
+[2025-12-04 02:10:17] Running FSDP on rank = 0
+[2025-12-04 02:11:31] {"epoch": 11, "step": 1, "loss": 0.2373, "avg_alpha": 0.0471, "avg_norm": 143.0, "avg_cosine": 0.9883, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:23:06] {"epoch": 11, "step": 101, "loss": 0.3223, "avg_alpha": 0.0479, "avg_norm": 143.0, "avg_cosine": 0.9922, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:34:41] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-residual-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'residual', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 02:34:41] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-residual-1203-20
+[2025-12-04 02:34:53] Initializing Coconut with mode: residual
+[2025-12-04 02:34:54] Running FSDP on rank = 0
+[2025-12-04 02:36:09] {"epoch": 11, "step": 1, "loss": 0.2373, "avg_alpha": 0.0471, "avg_norm": 143.0, "avg_cosine": 0.9883, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
