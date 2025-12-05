@@ -266,13 +266,18 @@ def get_cot_latent_dataset(
             scheduled_stage_to_train = scheduled_stage
 
         if scheduled_stage_to_train > configs.max_latent_stage:
-            n_skip_steps = 10000  # skip all
+            # [修改] 不再粗暴地设置为 10000 (skip all)，而是只跳过被潜变量替换的步数
+            # 这样在后期，模型依然能看到第 5 步及以后的文本 CoT，防止训练崩盘
             if configs.pad_latent_to_max:
                 n_latent_tokens = configs.max_latent_stage
             else:
                 n_latent_tokens = min(
                     len(sample["steps_tokenized"]), configs.max_latent_stage
                 )
+            
+            # 关键修改：保持 skip_steps 和 latent_tokens 的逻辑一致性
+            # 如果我们只生成了 4 个阶段的潜变量，我们就只切掉前 4 步文本
+            n_skip_steps = n_latent_tokens
 
         else:
             n_skip_steps, n_latent_tokens = (

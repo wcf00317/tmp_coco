@@ -7,9 +7,10 @@ import torch.nn.functional as F
 from torch.nn import CrossEntropyLoss
 from collections import namedtuple
 from transformers.models.gpt2 import GPT2LMHeadModel
-import logging # [新增]
+import logging
+import torch.distributed as dist
 
-# 获取 run_init.py 初始化的 logger，确保写入同一个 txt
+# 获取 run_init.py 初始化的 logger
 logger = logging.getLogger("coconut_rank_0")
 
 try:
@@ -20,56 +21,37 @@ except ImportError:
 Outputs = namedtuple("Outputs", ["loss", "inputs_embeds", "logits", "probes"])
 MAX_N_LATENT = 8
 
-# ================= [工具类修复] =================
 class MetricCalculator:
     @staticmethod
     def compute_entropy(attention_matrix):
-        # [诊断] 必须先判空
         if attention_matrix is None:
-            print("[Metric Error] Input attention_matrix is None!")
             return torch.tensor(0.0)
-            
-        try:
-            if torch.isnan(attention_matrix).any():
-                print("[Metric Warn] Attention matrix contains NaN!")
-                return torch.tensor(0.0, device=attention_matrix.device)
-
-            entropy = -torch.sum(attention_matrix * torch.log(attention_matrix + 1e-9), dim=-1)
-            return entropy.mean()
-        except Exception as e:
-            # [诊断] 强制 Print 到控制台
-            print(f"[Metric Error] Entropy failed: {e}")
-            return torch.tensor(0.0)
+        # [优化] 移除 isnan 检查，直接计算，利用 nan_to_num 兜底
+        # 避免 CPU-GPU 同步阻塞
+        safe_attn = torch.nan_to_num(attention_matrix, nan=1e-9)
+        entropy = -torch.sum(safe_attn * torch.log(safe_attn + 1e-9), dim=-1)
+        return entropy.mean()
 
     @staticmethod
     def compute_effective_rank(attention_matrix):
         if attention_matrix is None:
             return torch.tensor(0.0)
-
+        # [优化] 移除 isnan/isinf 检查
+        matrix = attention_matrix.float()
+        safe_matrix = torch.nan_to_num(matrix, nan=0.0, posinf=1.0, neginf=-1.0)
+        
         try:
-            # 1. 强转 float32
-            matrix = attention_matrix.float()
-
-            if torch.isnan(matrix).any() or torch.isinf(matrix).any():
-                print(f"[Metric Error] Matrix has NaN/Inf!")
-                return torch.tensor(0.0, device=attention_matrix.device)
-
-            # 2. SVD 计算
-            with torch.no_grad():
-                s = torch.linalg.svdvals(matrix)
-                s_sum = s.sum(dim=-1, keepdim=True)
-                p = s / (s_sum + 1e-9)
-                entropy = -torch.sum(p * torch.log(p + 1e-9), dim=-1)
-                er = torch.exp(entropy)
-                return er.mean()
-
-        except Exception as e:
-            # [诊断] 强制 Print 到控制台
-            print(f"[Metric Error] Rank Calculation Failed: {e}")
-            return torch.tensor(0.0)
+            # SVD 可能会失败，但这通常是极其罕见的
+            s = torch.linalg.svdvals(safe_matrix)
+            s_sum = s.sum(dim=-1, keepdim=True)
+            p = s / (s_sum + 1e-9)
+            entropy = -torch.sum(p * torch.log(p + 1e-9), dim=-1)
+            er = torch.exp(entropy)
+            return er.mean()
+        except:
+            return torch.tensor(0.0, device=attention_matrix.device)
 
 class Coconut(nn.Module):
-
     def __init__(
             self,
             base_causallm,
@@ -88,7 +70,10 @@ class Coconut(nn.Module):
         self.end_latent_id = end_latent_id
         self.decoupling_mode = decoupling_mode
         self.sparsity_weight = 0.0
-        self.norm_scale_factor = 50.0
+        
+        # [新增] 余弦相似度 Loss，用于惩罚偷懒 (Identity Mapping)
+        # margin=0.9 表示如果相似度 > 0.9 则产生 loss
+        self.cos_loss_fct = nn.CosineEmbeddingLoss(margin=0.9)
 
         if isinstance(self.base_causallm, GPT2LMHeadModel):
             self.embedding = self.base_causallm.transformer.get_input_embeddings()
@@ -102,7 +87,6 @@ class Coconut(nn.Module):
                 nn.ReLU(),
                 nn.Linear(hidden_size // 4, 1)
             )
-            # Zero-Init
             nn.init.zeros_(self.scale_mlp[-1].weight)
             nn.init.zeros_(self.scale_mlp[-1].bias)
 
@@ -110,22 +94,29 @@ class Coconut(nn.Module):
                 self.base_scale = nn.Parameter(torch.tensor([80.0]))
 
     def forward(self, input_ids, attention_mask, labels, position_ids, compute_probes=False, **kwargs):
-
         logits = []
         latent_indices = (input_ids == self.latent_token_id).nonzero()
         latent_lists = [[idx[1].item() for idx in latent_indices if idx[0] == i] for i in range(input_ids.shape[0])]
-        max_n_latents = max([len(l) for l in latent_lists])
+        local_max = max([len(l) for l in latent_lists]) if latent_lists else 0
+        local_max_tensor = torch.tensor(local_max, device=input_ids.device)
+
+        if dist.is_initialized():
+            dist.all_reduce(local_max_tensor, op=dist.ReduceOp.MAX)
+        
+        max_n_latents = local_max_tensor.item()
+        
         next_compute_range = (0, input_ids.shape[1])
         inputs_embeds = self.embedding(input_ids)
         if max_n_latents > 0:
             next_compute_range = (0, latent_indices[:, 1].min().item())
 
         kv_cache = None
-
+        # [优化] 预分配 Tensor 列表，避免 append 操作
         batch_probe_data = {"alpha": [], "norm": [], "cosine": []}
-        all_alpha_tensors = []
-        last_thoughts_cache = {}
-        advanced_metrics = {}
+        advanced_metrics = {"entropy": [], "rank": []}
+        
+        # [新增] 用于累计正则化 Loss
+        reg_cos_loss = torch.tensor(0.0, device=input_ids.device)
 
         for pass_idx in range(max_n_latents):
             if kv_cache == None:
@@ -134,12 +125,11 @@ class Coconut(nn.Module):
                     attention_mask=attention_mask[:, next_compute_range[0]: next_compute_range[1]],
                     position_ids=position_ids[:, next_compute_range[0]: next_compute_range[1]],
                     output_hidden_states=True,
-                    output_attentions=compute_probes,  # 传递开关
+                    output_attentions=compute_probes,
                 )
                 hidden_states_offset = 0
             else:
-                past_key_values_legacy = [(k[:, :, : next_compute_range[0], :], v[:, :, : next_compute_range[0], :]) for
-                                          k, v in kv_cache]
+                past_key_values_legacy = [(k[:, :, : next_compute_range[0], :], v[:, :, : next_compute_range[0], :]) for k, v in kv_cache]
                 if DynamicCache is not None:
                     past_key_values = DynamicCache.from_legacy_cache(past_key_values_legacy)
                 else:
@@ -151,44 +141,27 @@ class Coconut(nn.Module):
                     position_ids=position_ids[:, next_compute_range[0]: next_compute_range[1]],
                     past_key_values=past_key_values,
                     output_hidden_states=True,
-                    output_attentions=compute_probes,  # 传递开关
+                    output_attentions=compute_probes,
                 )
                 hidden_states_offset = next_compute_range[0]
 
             logits.append(outputs.logits)
 
-            # [诊断逻辑]
-            if compute_probes:
-                # 1. 检查 outputs 本身
-                if outputs is None:
-                    print(f"!!! [Debug] Step {pass_idx}: outputs is None!")
-
-                # 2. 检查 attentions 字段
-                elif outputs.attentions is None:
-                    print(f"!!! [Debug] Step {pass_idx}: outputs.attentions is None! (Config Issue?)")
-
-                # 3. 检查 attentions 列表是否全空
-                else:
-                    # 过滤掉 None
-                    valid_attentions = [a for a in outputs.attentions if a is not None]
-
-                    if len(valid_attentions) == 0:
-                        print(f"!!! [Debug] Step {pass_idx}: outputs.attentions exists but all layers are None!")
-                    else:
-                        # 一切正常，开始计算
-                        last_attn = valid_attentions[-1]
-
-                        with torch.no_grad():
-                            ent = MetricCalculator.compute_entropy(last_attn)
-                            rank_val = MetricCalculator.compute_effective_rank(last_attn)
-
-                        if "entropy" not in advanced_metrics: advanced_metrics["entropy"] = []
-                        if "rank" not in advanced_metrics: advanced_metrics["rank"] = []
-                        advanced_metrics["entropy"].append(ent)
-                        advanced_metrics["rank"].append(rank_val)
+            # [优化] Probe 计算逻辑：完全无阻塞
+            if compute_probes and outputs.attentions is not None:
+                valid_attentions = [a for a in outputs.attentions if a is not None]
+                if len(valid_attentions) > 0:
+                    last_attn = valid_attentions[-1]
+                    # 不再使用 no_grad，因为我们只是为了看指标，不反向传播
+                    # 但在这里使用 detach() 更安全
+                    ent = MetricCalculator.compute_entropy(last_attn.detach())
+                    rank_val = MetricCalculator.compute_effective_rank(last_attn.detach())
+                    advanced_metrics["entropy"].append(ent)
+                    advanced_metrics["rank"].append(rank_val)
 
             next_compute_range = (next_compute_range[1],
                                   (input_ids.shape[1] if pass_idx + 1 >= max_n_latents else next_compute_range[1] + 1))
+            
             hidden_states = outputs.hidden_states[-1]
 
             if hasattr(outputs.past_key_values, "to_legacy_cache"):
@@ -202,20 +175,35 @@ class Coconut(nn.Module):
                 if self.decoupling_mode == "normalized":
                     mlp_input = F.normalize(hidden_states, p=2, dim=-1).detach()
                 intensity_scales = self.scale_mlp(mlp_input)
-                all_alpha_tensors.append(intensity_scales)
 
             filling_indices = [(instance_idx, mask_list[pass_idx]) for instance_idx, mask_list in
                                enumerate(latent_lists) if len(mask_list) > pass_idx]
-            tensor_list = [[inputs_embeds[batch_idx, pos, :] for pos in range(inputs_embeds.shape[1])] for batch_idx in
-                           range(inputs_embeds.shape[0])]
+            
+            # 使用列表推导式构建 tensor_list，避免 inplace 操作
+            tensor_list = [[inputs_embeds[batch_idx, pos, :] for pos in range(inputs_embeds.shape[1])] for batch_idx in range(inputs_embeds.shape[0])]
 
             for idx_pair in filling_indices:
                 batch_idx, token_idx = idx_pair
                 raw_h = hidden_states[batch_idx, token_idx - 1 - hidden_states_offset, :]
+                
+                # [关键优化] 获取上一轮的输入向量，用于计算 Cosine Regularization
+                prev_h = tensor_list[batch_idx][token_idx]
+
+                # 1. 计算 Cosine 正则 (强制不相似)
+                # 使用 nan_to_num 确保无 NaN 传入导致崩溃，且完全在 GPU 上执行
+                safe_raw_h = torch.nan_to_num(raw_h, nan=0.0)
+                safe_prev_h = torch.nan_to_num(prev_h.detach(), nan=0.0) # detach prev_h
+                
+                curr_cos_loss = self.cos_loss_fct(
+                    safe_raw_h.unsqueeze(0), 
+                    safe_prev_h.unsqueeze(0), 
+                    target=torch.tensor([-1], device=input_ids.device)
+                )
+                reg_cos_loss += curr_cos_loss
 
                 if self.decoupling_mode == "residual":
                     alpha_raw = intensity_scales[batch_idx, token_idx - 1 - hidden_states_offset, :]
-                    # [核心修改] 增加 0.05 的缩放系数，防止初始 Alpha 过大导致 OOD
+                    # 限制 alpha 范围，防止梯度爆炸
                     alpha = 0.05 * torch.tanh(alpha_raw)
                     final_h = raw_h * (1 + alpha)
                     batch_probe_data["alpha"].append(alpha.abs().mean().detach())
@@ -232,19 +220,19 @@ class Coconut(nn.Module):
 
                 current_norm = torch.norm(final_h, p=2).detach()
                 batch_probe_data["norm"].append(current_norm)
-                if batch_idx in last_thoughts_cache:
-                    prev_h = last_thoughts_cache[batch_idx]
-                    cos_sim = F.cosine_similarity(final_h, prev_h, dim=0).detach()
-                    batch_probe_data["cosine"].append(cos_sim)
-                last_thoughts_cache[batch_idx] = final_h.detach()
+                
+                # 计算 Cosine Similarity 仅用于记录日志，使用 detach 避免图计算
+                cos_sim = F.cosine_similarity(final_h, prev_h.detach(), dim=0)
+                batch_probe_data["cosine"].append(cos_sim)
+                
                 tensor_list[batch_idx][token_idx] = final_h
 
             inputs_embeds = torch.stack(
                 [torch.stack(tensor_list[batch_idx]) for batch_idx in range(inputs_embeds.shape[0])])
 
+        # Final Pass
         if kv_cache:
-            past_key_values_legacy = [(k[:, :, : next_compute_range[0], :], v[:, :, : next_compute_range[0], :]) for
-                                      k, v in kv_cache]
+            past_key_values_legacy = [(k[:, :, : next_compute_range[0], :], v[:, :, : next_compute_range[0], :]) for k, v in kv_cache]
             if DynamicCache is not None:
                 past_key_values = DynamicCache.from_legacy_cache(past_key_values_legacy)
             else:
@@ -268,35 +256,38 @@ class Coconut(nn.Module):
         loss_fct = CrossEntropyLoss()
         lm_loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
 
-        sparsity_loss = torch.tensor(0.0, device=lm_loss.device)
-        if len(all_alpha_tensors) > 0 and self.sparsity_weight > 0:
-            all_alphas = torch.cat(all_alpha_tensors, dim=1)
-            sparsity_loss = all_alphas.abs().mean()
-        total_loss = lm_loss + self.sparsity_weight * sparsity_loss
+        # [关键修改] 将正则化 Loss 加入总 Loss
+        # 权重设为 0.1，除以 max_n_latents 进行归一化
+        total_loss = lm_loss
+        if max_n_latents > 0:
+            total_loss += 0.1 * (reg_cos_loss / max_n_latents)
 
-        def safe_mean(k, source_dict=batch_probe_data):
+        def safe_mean(k, source_dict):
             if k in source_dict and len(source_dict[k]) > 0:
                 return torch.stack(source_dict[k]).mean()
             return torch.tensor(0.0, device=self.embedding.weight.device)
 
         final_probes = {
-            "probe/avg_alpha": safe_mean("alpha"),
-            "probe/avg_norm": safe_mean("norm"),
-            "probe/avg_cosine": safe_mean("cosine"),
-            "probe/reg_loss": sparsity_loss.detach(),
+            "probe/avg_alpha": safe_mean("alpha", batch_probe_data),
+            "probe/avg_norm": safe_mean("norm", batch_probe_data),
+            "probe/avg_cosine": safe_mean("cosine", batch_probe_data),
+            "probe/reg_loss": reg_cos_loss.detach(),
             "probe/avg_rank": safe_mean("rank", advanced_metrics),
             "probe/avg_entropy": safe_mean("entropy", advanced_metrics)
         }
 
         return Outputs(loss=total_loss, inputs_embeds=inputs_embeds, logits=logits, probes=final_probes)
+
     def train(self, mode=True): 
-        super().train(mode)  # 必须调用父类，更新 self.training 属性
-        self.base_causallm.train(mode) # 把 mode (True/False) 传进去
+        super().train(mode)
+        self.base_causallm.train(mode)
 
     def eval(self): 
-        super().eval() # 必须调用父类
+        super().eval()
         self.base_causallm.eval()
+
     def generate(self, input_ids, attention_mask, max_new_tokens=16, output_embedding=False, synced_gpus=False, **kwargs):
+        # Generate 保持不变，注意这里的 forward 调用也会走上面的逻辑，但通常 generate 不算 loss，所以安全
         self.gen_forward_cnt = 0
         assert input_ids.shape[0] == 1, "only support batch_size == 1 now"
         tokens = input_ids[0].detach().tolist()

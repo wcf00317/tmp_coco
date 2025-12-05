@@ -1,0 +1,52 @@
+[2025-12-05 12:25:04] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-llama-original-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'meta-llama/Llama-3.2-3B-Instruct', 'bf16': True, 'lr': 3e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratoi': 0.2}
+[2025-12-05 12:25:04] Save Directory: ./checkpoints/gsm-coconut/gsm-llama-original-20
+[2025-12-05 12:26:06] Initializing Coconut with mode: original
+[2025-12-05 12:26:58] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-llama-original-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'meta-llama/Llama-3.2-3B-Instruct', 'bf16': True, 'lr': 3e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-05 12:26:58] Save Directory: ./checkpoints/gsm-coconut/gsm-llama-original-20
+[2025-12-05 12:27:43] Initializing Coconut with mode: original
+[2025-12-05 12:28:50] {"epoch": 4, "step": 1, "loss": 5.0312, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.8945, "reg_loss": 0.0}
+[2025-12-05 12:32:50] {"epoch": 4, "step": 101, "loss": 0.3105, "avg_alpha": 0.0, "avg_norm": 76.5, "avg_cosine": 0.5391, "reg_loss": 0.0}
+[2025-12-05 12:36:56] {"epoch": 4, "step": 201, "loss": 0.2295, "avg_alpha": 0.0, "avg_norm": 77.5, "avg_cosine": 0.6094, "reg_loss": 0.0}
+[2025-12-05 12:41:11] {"epoch": 4, "step": 301, "loss": 0.2891, "avg_alpha": 0.0, "avg_norm": 78.5, "avg_cosine": 0.6211, "reg_loss": 0.0}
+[2025-12-05 12:45:19] {"epoch": 4, "step": 401, "loss": 0.2031, "avg_alpha": 0.0, "avg_norm": 77.5, "avg_cosine": 0.5898, "reg_loss": 0.0}
+[2025-12-05 12:49:25] {"epoch": 4, "step": 501, "loss": 0.2334, "avg_alpha": 0.0, "avg_norm": 81.0, "avg_cosine": 0.707, "reg_loss": 0.0}
+[2025-12-05 12:53:41] {"epoch": 4, "step": 601, "loss": 0.2891, "avg_alpha": 0.0, "avg_norm": 77.0, "avg_cosine": 0.5312, "reg_loss": 0.0}
+[2025-12-05 12:54:04] Checkpoint saved: checkpoint_4
+[2025-12-05 12:54:15] Evaluation Loss (Epoch 4): 0.32354736328125
+[2025-12-05 12:54:26] [Sample] GT: 300 | Pred: 1200
+[2025-12-05 13:02:20] Epoch 4 Accuracy: 0.6200 (Best: 0.0000)
+[2025-12-05 13:02:20] Epoch 4 CoT EM: 0.0000
+[2025-12-05 13:02:44] {"epoch": 5, "step": 604, "loss": 0.1934, "avg_alpha": 0.0, "avg_norm": 76.5, "avg_cosine": 0.5234, "reg_loss": 0.0}
+[2025-12-05 13:06:57] {"epoch": 5, "step": 704, "loss": 0.1875, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9531, "reg_loss": 0.0}
+[2025-12-05 13:11:10] {"epoch": 5, "step": 804, "loss": 0.1426, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9492, "reg_loss": 0.0}
+[2025-12-05 13:15:27] {"epoch": 5, "step": 904, "loss": 0.0918, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9492, "reg_loss": 0.0}
+[2025-12-05 13:19:31] {"epoch": 5, "step": 1000, "loss": 0.208, "avg_alpha": 0.0, "avg_norm": 91.5, "avg_cosine": 0.9492, "reg_loss": 0.0, "avg_rank": 4.9988, "avg_entropy": 2.3125}
+[2025-12-05 13:19:41] {"epoch": 5, "step": 1004, "loss": 0.1436, "avg_alpha": 0.0, "avg_norm": 91.5, "avg_cosine": 0.9492, "reg_loss": 0.0}
+[2025-12-05 13:23:59] {"epoch": 5, "step": 1104, "loss": 0.1826, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9453, "reg_loss": 0.0}
+[2025-12-05 13:28:17] {"epoch": 5, "step": 1204, "loss": 0.1738, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9453, "reg_loss": 0.0}
+[2025-12-05 13:28:39] Checkpoint saved: checkpoint_5
+[2025-12-05 13:28:50] Evaluation Loss (Epoch 5): 0.318115234375
+[2025-12-05 13:29:01] [Sample] GT: 300 | Pred: 1200
+[2025-12-05 13:36:49] Epoch 5 Accuracy: 0.6040 (Best: 0.0000)
+[2025-12-05 13:36:49] Epoch 5 CoT EM: 0.0000
+[2025-12-05 13:37:14] {"epoch": 6, "step": 1207, "loss": 0.1011, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9492, "reg_loss": 0.0}
+[2025-12-05 13:41:36] {"epoch": 6, "step": 1307, "loss": 0.1025, "avg_alpha": 0.0, "avg_norm": 91.5, "avg_cosine": 0.9492, "reg_loss": 0.0}
+[2025-12-05 13:45:52] {"epoch": 6, "step": 1407, "loss": 0.0869, "avg_alpha": 0.0, "avg_norm": 91.5, "avg_cosine": 0.9492, "reg_loss": 0.0}
+[2025-12-05 13:50:13] {"epoch": 6, "step": 1507, "loss": 0.1245, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9414, "reg_loss": 0.0}
+[2025-12-05 13:54:28] {"epoch": 6, "step": 1607, "loss": 0.1357, "avg_alpha": 0.0, "avg_norm": 91.5, "avg_cosine": 0.9492, "reg_loss": 0.0}
+[2025-12-05 13:58:46] {"epoch": 6, "step": 1707, "loss": 0.0981, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9414, "reg_loss": 0.0}
+[2025-12-05 14:03:05] {"epoch": 6, "step": 1807, "loss": 0.1797, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9453, "reg_loss": 0.0}
+[2025-12-05 14:03:27] Checkpoint saved: checkpoint_6
+[2025-12-05 14:03:38] Evaluation Loss (Epoch 6): 0.3370361328125
+[2025-12-05 14:03:48] [Sample] GT: 300 | Pred: 4800
+[2025-12-05 14:11:41] Epoch 6 Accuracy: 0.6180 (Best: 0.0000)
+[2025-12-05 14:11:41] Epoch 6 CoT EM: 0.0000
+[2025-12-05 14:12:08] {"epoch": 7, "step": 1810, "loss": 0.6562, "avg_alpha": 0.0, "avg_norm": 92.0, "avg_cosine": 0.9688, "reg_loss": 0.0}
+[2025-12-05 14:20:05] {"epoch": 7, "step": 1910, "loss": 0.3203, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9609, "reg_loss": 0.0}
+[2025-12-05 14:27:19] {"epoch": 7, "step": 2000, "loss": 0.4395, "avg_alpha": 0.0, "avg_norm": 90.5, "avg_cosine": 0.9609, "reg_loss": 0.0, "avg_rank": 3.0362, "avg_entropy": 2.0781}
+[2025-12-05 14:28:08] {"epoch": 7, "step": 2010, "loss": 0.1855, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9609, "reg_loss": 0.0}
+[2025-12-05 14:36:13] {"epoch": 7, "step": 2110, "loss": 0.2539, "avg_alpha": 0.0, "avg_norm": 90.5, "avg_cosine": 0.9648, "reg_loss": 0.0}
+[2025-12-05 14:44:18] {"epoch": 7, "step": 2210, "loss": 0.2891, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9648, "reg_loss": 0.0}
+[2025-12-05 14:52:18] {"epoch": 7, "step": 2310, "loss": 0.2539, "avg_alpha": 0.0, "avg_norm": 91.0, "avg_cosine": 0.9648, "reg_loss": 0.0}
+[2025-12-05 15:00:19] {"epoch": 7, "step": 2410, "loss": 0.1895, "avg_alpha": 0.0, "avg_norm": 90.5, "avg_cosine": 0.9648, "reg_loss": 0.0}
+[2025-12-05 15:00:44] Checkpoint saved: checkpoint_7

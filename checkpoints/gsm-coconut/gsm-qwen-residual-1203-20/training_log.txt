@@ -387,3 +387,5 @@
 [2025-12-05 09:46:30] [Sample] GT: 300 | Pred: 100
 [2025-12-05 09:54:52] Epoch 25 Accuracy: 0.1400 (Best: 0.0000)
 [2025-12-05 09:54:53] Epoch 25 CoT EM: 0.0000
+[2025-12-05 15:02:17] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-residual-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'residual', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 6, 'epochs_per_stage': 3, 'max_latent_stage': 6, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.5, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-05 15:02:17] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-residual-1203-20

@@ -1,6 +1,6 @@
 project: test
 save_path: ./checkpoints/gsm-coconut
-name: gsm-llama-original
+name: gsm-llama-original-20
 
 only_eval: False
 
@@ -29,10 +29,11 @@ save_only_improve: False
 uniform_prob: 0.0
 load_model_path: None
 seed: 0
-resume: 0
+resume: 3
 train_path: data/gsm_train.json
 val_path: data/gsm_valid.json
 reset_optimizer: True
 debug: False
 num_epochs: 25
 weight_decay: 0.01
+train_ratio: 0.2

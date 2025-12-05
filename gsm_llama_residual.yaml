@@ -1,6 +1,6 @@
 project: test
 save_path: ./checkpoints/gsm-coconut
-name: gsm-llama-residual
+name: llama+GSM8k+Residual+Cosine_Regularization
 
 only_eval: False
 
@@ -12,21 +12,21 @@ no_thoughts: False
 no_cot: False
 
 # 难度设置
-c_thought: 4
+c_thought: 6
 epochs_per_stage: 3
-max_latent_stage: 4
+max_latent_stage: 6
 pad_latent_to_max: True
 
 # 模型与训练参数
 model_id: "meta-llama/Llama-3.2-3B-Instruct"
 bf16: True
-lr: !!float "3e-5"
+lr: !!float "1e-5"
 batch_size_training: 32   # 显存吃紧，调小
 gradient_accumulation_steps: 1 # 保持总 batch size = 32
 
 # 通用设置
 save_only_improve: False
-uniform_prob: 0.0
+uniform_prob: 0.5
 load_model_path: None
 seed: 0
 resume: 0
@@ -36,3 +36,4 @@ reset_optimizer: True
 debug: False
 num_epochs: 25
 weight_decay: 0.01
+train_ratio: 0.2

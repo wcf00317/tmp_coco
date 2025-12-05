@@ -334,6 +334,7 @@ def worker(rank, world_size, args):
                 loss.backward()
 
                 if (step + 1) % configs.gradient_accumulation_steps == 0 or step == len(train_dataloader) - 1:
+                    parallel_model.clip_grad_norm_(1.0)
                     optimizer.step()
                     optimizer.zero_grad()
                     if rank == 0: pbar.update(1)
