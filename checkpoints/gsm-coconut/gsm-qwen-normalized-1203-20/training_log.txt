@@ -2,3 +2,232 @@
 [2025-12-04 02:46:53] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-normalized-1203-20
 [2025-12-04 02:47:01] Initializing Coconut with mode: normalized
 [2025-12-04 02:47:01] Running FSDP on rank = 0
+[2025-12-04 02:47:55] {"epoch": 1, "step": 1, "loss": 2.7656, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:48:23] {"epoch": 1, "step": 101, "loss": 0.1387, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:48:50] {"epoch": 1, "step": 201, "loss": 0.1157, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:49:18] {"epoch": 1, "step": 301, "loss": 0.1484, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:49:45] {"epoch": 1, "step": 401, "loss": 0.1069, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:50:12] {"epoch": 1, "step": 501, "loss": 0.1367, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:50:39] {"epoch": 1, "step": 601, "loss": 0.1299, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:50:40] {"epoch": 1, "step": 603, "loss": 0.0571, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:50:49] Checkpoint saved: checkpoint_1
+[2025-12-04 02:50:57] Evaluation Loss (Epoch 1): 0.18731689453125
+[2025-12-04 02:50:57] Eval Probes (Epoch 1): {"probe/avg_alpha": 0.0, "probe/avg_norm": 0.0, "probe/avg_cosine": 0.0, "probe/reg_loss": 0.0}
+[2025-12-04 02:51:08] [Example] Pred: 300 | GT: 300
+[2025-12-04 02:51:13] [Example] Pred: 240 | GT: 240
+[2025-12-04 02:51:17] [Example] Pred: It’s Meghan’s turn to pick up her team's coffee order.  She needs 2 drip coffees that are $2.25 each and one double shot espresso that’s $3.50.  She needs 2 lattes that are $4.00 and needs to add vanilla syrup to one of those for an additional $0.50.  She also needs 2 cold brew coffees that are $2.50 each and 1 cappuccino for $3.50.  How much is the coffee order?
+<|start-latent|><|end-latent|><<2*2.25=4.50>>
+<<4.00+0.50=4.50>>
+<<2*2.50=5.00>>
+<<4.50+5.00+3.50=13.00>> | GT: 25
+[2025-12-04 02:51:21] [Example] Pred: 10 | GT: 10
+[2025-12-04 02:51:24] [Example] Pred: 45 | GT: 45
+[2025-12-04 02:58:54] Accuracy on validation set: 312 / 500 = 0.624
+[2025-12-04 02:58:54] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 02:58:54] {'eval/acc': 0.624, 'eval/cot_em': 0.0}
+[2025-12-04 02:59:11] {"epoch": 2, "step": 604, "loss": 0.0825, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 02:59:39] {"epoch": 2, "step": 704, "loss": 0.0825, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:00:06] {"epoch": 2, "step": 804, "loss": 0.0654, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:00:33] {"epoch": 2, "step": 904, "loss": 0.0464, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:00:59] {"epoch": 2, "step": 1000, "loss": 0.106, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:01:00] {"epoch": 2, "step": 1004, "loss": 0.0718, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:01:27] {"epoch": 2, "step": 1104, "loss": 0.0801, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:01:54] {"epoch": 2, "step": 1204, "loss": 0.0928, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:01:55] {"epoch": 2, "step": 1206, "loss": 0.0952, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:02:04] Checkpoint saved: checkpoint_2
+[2025-12-04 03:02:13] Evaluation Loss (Epoch 2): 0.19305419921875
+[2025-12-04 03:02:13] Eval Probes (Epoch 2): {"probe/avg_alpha": 0.0, "probe/avg_norm": 0.0, "probe/avg_cosine": 0.0, "probe/reg_loss": 0.0}
+[2025-12-04 03:02:23] [Example] Pred: 400 | GT: 300
+[2025-12-04 03:02:27] [Example] Pred: 240 | GT: 240
+[2025-12-04 03:02:31] [Example] Pred: It’s Meghan’s turn to pick up her team's coffee order.  She needs 2 drip coffees that are $2.25 each and one double shot espresso that’s $3.50.  She needs 2 lattes that are $4.00 and needs to add vanilla syrup to one of those for an additional $0.50.  She also needs 2 cold brew coffees that are $2.50 each and 1 cappuccino for $3.50.  How much is the coffee order?
+<|start-latent|><|end-latent|><<2*2.25=4.50>>
+<<4.50+3.50=8.00>>
+<<2*4=8.00>>
+<<8.00+0.50=8.50>>
+<<2*2.50=5 | GT: 25
+[2025-12-04 03:02:35] [Example] Pred: 1 | GT: 10
+[2025-12-04 03:02:39] [Example] Pred: 45 | GT: 45
+[2025-12-04 03:10:09] Accuracy on validation set: 306 / 500 = 0.612
+[2025-12-04 03:10:09] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 03:10:09] {'eval/acc': 0.612, 'eval/cot_em': 0.0}
+[2025-12-04 03:10:27] {"epoch": 3, "step": 1207, "loss": 0.0571, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:10:54] {"epoch": 3, "step": 1307, "loss": 0.0576, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:11:22] {"epoch": 3, "step": 1407, "loss": 0.0359, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:11:49] {"epoch": 3, "step": 1507, "loss": 0.0757, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:12:16] {"epoch": 3, "step": 1607, "loss": 0.0605, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:12:43] {"epoch": 3, "step": 1707, "loss": 0.0645, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:13:10] {"epoch": 3, "step": 1807, "loss": 0.0659, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:13:10] {"epoch": 3, "step": 1809, "loss": 0.0505, "avg_alpha": 0.0, "avg_norm": 0.0, "avg_cosine": 0.0, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:13:19] Checkpoint saved: checkpoint_3
+[2025-12-04 03:13:28] Evaluation Loss (Epoch 3): 0.214111328125
+[2025-12-04 03:13:28] Eval Probes (Epoch 3): {"probe/avg_alpha": 0.0, "probe/avg_norm": 0.0, "probe/avg_cosine": 0.0, "probe/reg_loss": 0.0}
+[2025-12-04 03:13:38] [Example] Pred: 400 | GT: 300
+[2025-12-04 03:13:42] [Example] Pred: 240 | GT: 240
+[2025-12-04 03:13:45] [Example] Pred: It’s Meghan’s turn to pick up her team's coffee order.  She needs 2 drip coffees that are $2.25 each and one double shot espresso that’s $3.50.  She needs 2 lattes that are $4.00 and needs to add vanilla syrup to one of those for an additional $0.50.  She also needs 2 cold brew coffees that are $2.50 each and 1 cappuccino for $3.50.  How much is the coffee order?
+<|start-latent|><|end-latent|><<2*2.25=4.50>>
+<<2*4=8.00>>
+<<1*0.50=0.50>>
+<<2*2.50=5.00>>
+<<2.25+3.50+8+0. | GT: 25
+[2025-12-04 03:13:49] [Example] Pred: 10 | GT: 10
+[2025-12-04 03:13:53] [Example] Pred: 45 | GT: 45
+[2025-12-04 03:21:28] Accuracy on validation set: 302 / 500 = 0.604
+[2025-12-04 03:21:28] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 03:21:28] {'eval/acc': 0.604, 'eval/cot_em': 0.0}
+[2025-12-04 03:21:48] {"epoch": 4, "step": 1810, "loss": 5.375, "avg_alpha": 0.0, "avg_norm": 80.0, "avg_cosine": 0.7969, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:26:08] {"epoch": 4, "step": 1910, "loss": 0.2812, "avg_alpha": 0.0006, "avg_norm": 80.0, "avg_cosine": 0.8984, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:30:09] {"epoch": 4, "step": 2000, "loss": 0.2754, "avg_alpha": 0.0012, "avg_norm": 80.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 6.8584, "avg_entropy": 2.8125}
+[2025-12-04 03:30:37] {"epoch": 4, "step": 2010, "loss": 0.2393, "avg_alpha": 0.0012, "avg_norm": 80.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:35:23] {"epoch": 4, "step": 2110, "loss": 0.2295, "avg_alpha": 0.0097, "avg_norm": 79.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:40:08] {"epoch": 4, "step": 2210, "loss": 0.2256, "avg_alpha": 0.061, "avg_norm": 75.0, "avg_cosine": 0.8945, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:44:51] {"epoch": 4, "step": 2310, "loss": 0.2441, "avg_alpha": 0.1011, "avg_norm": 72.5, "avg_cosine": 0.8906, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:49:35] {"epoch": 4, "step": 2410, "loss": 0.1768, "avg_alpha": 0.1436, "avg_norm": 69.5, "avg_cosine": 0.8945, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:49:40] {"epoch": 4, "step": 2412, "loss": 0.1748, "avg_alpha": 0.1445, "avg_norm": 69.5, "avg_cosine": 0.8906, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:49:49] Checkpoint saved: checkpoint_4
+[2025-12-04 03:50:05] Evaluation Loss (Epoch 4): 0.3134765625
+[2025-12-04 03:50:05] Eval Probes (Epoch 4): {"probe/avg_alpha": 0.1411, "probe/avg_norm": 69.5, "probe/avg_cosine": 0.8955, "probe/reg_loss": 0.0, "probe/avg_rank": 7.363, "probe/avg_entropy": 2.9766}
+[2025-12-04 03:50:16] [Example] Pred: 100 | GT: 300
+[2025-12-04 03:50:20] [Example] Pred: 240 | GT: 240
+[2025-12-04 03:50:24] [Example] Pred: 20.75 | GT: 25
+[2025-12-04 03:50:27] [Example] Pred: 10 | GT: 10
+[2025-12-04 03:50:31] [Example] Pred: 45 | GT: 45
+[2025-12-04 03:58:09] Accuracy on validation set: 205 / 500 = 0.41
+[2025-12-04 03:58:09] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 03:58:09] {'eval/acc': 0.41, 'eval/cot_em': 0.0}
+[2025-12-04 03:58:29] {"epoch": 5, "step": 2413, "loss": 0.1592, "avg_alpha": 0.1426, "avg_norm": 69.5, "avg_cosine": 0.8984, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:03:06] {"epoch": 5, "step": 2513, "loss": 0.1641, "avg_alpha": 0.1147, "avg_norm": 71.5, "avg_cosine": 0.9883, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:07:46] {"epoch": 5, "step": 2613, "loss": 0.1318, "avg_alpha": 0.1206, "avg_norm": 71.0, "avg_cosine": 0.9805, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:12:30] {"epoch": 5, "step": 2713, "loss": 0.0737, "avg_alpha": 0.1309, "avg_norm": 70.0, "avg_cosine": 0.9727, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:17:18] {"epoch": 5, "step": 2813, "loss": 0.1128, "avg_alpha": 0.1406, "avg_norm": 69.5, "avg_cosine": 0.9727, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:22:00] {"epoch": 5, "step": 2913, "loss": 0.1016, "avg_alpha": 0.1475, "avg_norm": 69.0, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:26:10] {"epoch": 5, "step": 3000, "loss": 0.0903, "avg_alpha": 0.1514, "avg_norm": 69.0, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 5.918, "avg_entropy": 2.7344}
+[2025-12-04 04:26:48] {"epoch": 5, "step": 3013, "loss": 0.1157, "avg_alpha": 0.1504, "avg_norm": 69.0, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:26:53] {"epoch": 5, "step": 3015, "loss": 0.0535, "avg_alpha": 0.1494, "avg_norm": 69.0, "avg_cosine": 0.9609, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:27:01] Checkpoint saved: checkpoint_5
+[2025-12-04 04:27:18] Evaluation Loss (Epoch 5): 0.2681884765625
+[2025-12-04 04:27:18] Eval Probes (Epoch 5): {"probe/avg_alpha": 0.1511, "probe/avg_norm": 69.0, "probe/avg_cosine": 0.96, "probe/reg_loss": 0.0, "probe/avg_rank": 7.0578, "probe/avg_entropy": 2.6875}
+[2025-12-04 04:27:28] [Example] Pred: 4.17 | GT: 300
+[2025-12-04 04:27:32] [Example] Pred: 240 | GT: 240
+[2025-12-04 04:27:36] [Example] Pred: 13 | GT: 25
+[2025-12-04 04:27:40] [Example] Pred: 10 | GT: 10
+[2025-12-04 04:27:43] [Example] Pred: 45 | GT: 45
+[2025-12-04 04:35:21] Accuracy on validation set: 272 / 500 = 0.544
+[2025-12-04 04:35:21] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 04:35:21] {'eval/acc': 0.544, 'eval/cot_em': 0.0}
+[2025-12-04 04:35:43] {"epoch": 6, "step": 3016, "loss": 0.0796, "avg_alpha": 0.1523, "avg_norm": 69.0, "avg_cosine": 0.9609, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:40:22] {"epoch": 6, "step": 3116, "loss": 0.0918, "avg_alpha": 0.1396, "avg_norm": 69.5, "avg_cosine": 0.9727, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:45:16] {"epoch": 6, "step": 3216, "loss": 0.0615, "avg_alpha": 0.1436, "avg_norm": 69.5, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:50:03] {"epoch": 6, "step": 3316, "loss": 0.083, "avg_alpha": 0.1533, "avg_norm": 68.5, "avg_cosine": 0.9531, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:54:50] {"epoch": 6, "step": 3416, "loss": 0.0781, "avg_alpha": 0.1543, "avg_norm": 68.5, "avg_cosine": 0.957, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 04:59:39] {"epoch": 6, "step": 3516, "loss": 0.0479, "avg_alpha": 0.1611, "avg_norm": 68.0, "avg_cosine": 0.9609, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 05:04:34] {"epoch": 6, "step": 3616, "loss": 0.1865, "avg_alpha": 0.1167, "avg_norm": 71.0, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 05:04:39] {"epoch": 6, "step": 3618, "loss": 0.1592, "avg_alpha": 0.1177, "avg_norm": 71.0, "avg_cosine": 0.9609, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 05:04:47] Checkpoint saved: checkpoint_6
+[2025-12-04 05:05:05] Evaluation Loss (Epoch 6): 0.329833984375
+[2025-12-04 05:05:05] Eval Probes (Epoch 6): {"probe/avg_alpha": 0.1167, "probe/avg_norm": 71.0, "probe/avg_cosine": 0.9609, "probe/reg_loss": 0.0, "probe/avg_rank": 6.2054, "probe/avg_entropy": 2.3047}
+[2025-12-04 05:05:15] [Example] Pred: 200.04 | GT: 300
+[2025-12-04 05:05:19] [Example] Pred: 240 | GT: 240
+[2025-12-04 05:05:23] [Example] Pred: 14 | GT: 25
+[2025-12-04 05:05:26] [Example] Pred: 0 | GT: 10
+[2025-12-04 05:05:30] [Example] Pred: 45 | GT: 45
+[2025-12-04 05:13:10] Accuracy on validation set: 194 / 500 = 0.388
+[2025-12-04 05:13:10] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 05:13:10] {'eval/acc': 0.388, 'eval/cot_em': 0.0}
+[2025-12-04 05:13:35] {"epoch": 7, "step": 3619, "loss": 0.5273, "avg_alpha": 0.1187, "avg_norm": 71.0, "avg_cosine": 0.9805, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 05:22:23] {"epoch": 7, "step": 3719, "loss": 0.3203, "avg_alpha": 0.1377, "avg_norm": 69.5, "avg_cosine": 0.9883, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 05:31:27] {"epoch": 7, "step": 3819, "loss": 0.1592, "avg_alpha": 0.1436, "avg_norm": 69.5, "avg_cosine": 0.9883, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 05:40:32] {"epoch": 7, "step": 3919, "loss": 0.2578, "avg_alpha": 0.1582, "avg_norm": 68.5, "avg_cosine": 0.9883, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 05:48:01] {"epoch": 7, "step": 4000, "loss": 0.2891, "avg_alpha": 0.1631, "avg_norm": 68.0, "avg_cosine": 0.9844, "reg_loss": 0.0, "avg_rank": 3.243, "avg_entropy": 2.5}
+[2025-12-04 05:49:42] {"epoch": 7, "step": 4019, "loss": 0.1855, "avg_alpha": 0.1582, "avg_norm": 68.5, "avg_cosine": 0.9805, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 05:58:39] {"epoch": 7, "step": 4119, "loss": 0.2236, "avg_alpha": 0.1602, "avg_norm": 68.0, "avg_cosine": 0.9766, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:07:42] {"epoch": 7, "step": 4219, "loss": 0.1128, "avg_alpha": 0.1641, "avg_norm": 68.0, "avg_cosine": 0.9727, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:07:50] {"epoch": 7, "step": 4221, "loss": 0.2061, "avg_alpha": 0.1641, "avg_norm": 68.0, "avg_cosine": 0.9688, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:07:59] Checkpoint saved: checkpoint_7
+[2025-12-04 06:08:19] Evaluation Loss (Epoch 7): 0.384765625
+[2025-12-04 06:08:19] Eval Probes (Epoch 7): {"probe/avg_alpha": 0.1614, "probe/avg_norm": 68.125, "probe/avg_cosine": 0.9688, "probe/reg_loss": 0.0, "probe/avg_rank": 3.9901, "probe/avg_entropy": 2.918}
+[2025-12-04 06:08:29] [Example] Pred: 600 | GT: 300
+[2025-12-04 06:08:33] [Example] Pred: 240 | GT: 240
+[2025-12-04 06:08:36] [Example] Pred: 13.50 | GT: 25
+[2025-12-04 06:08:40] [Example] Pred: 2 | GT: 10
+[2025-12-04 06:08:44] [Example] Pred: 45 | GT: 45
+[2025-12-04 06:16:15] Accuracy on validation set: 185 / 500 = 0.37
+[2025-12-04 06:16:15] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 06:16:15] {'eval/acc': 0.37, 'eval/cot_em': 0.0}
+[2025-12-04 06:16:38] {"epoch": 8, "step": 4222, "loss": 0.124, "avg_alpha": 0.1641, "avg_norm": 68.0, "avg_cosine": 0.9727, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:25:33] {"epoch": 8, "step": 4322, "loss": 0.1377, "avg_alpha": 0.1631, "avg_norm": 68.0, "avg_cosine": 0.9766, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:34:27] {"epoch": 8, "step": 4422, "loss": 0.1787, "avg_alpha": 0.166, "avg_norm": 68.0, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:43:27] {"epoch": 8, "step": 4522, "loss": 0.103, "avg_alpha": 0.166, "avg_norm": 67.5, "avg_cosine": 0.9766, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:52:28] {"epoch": 8, "step": 4622, "loss": 0.0991, "avg_alpha": 0.1699, "avg_norm": 67.5, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:01:28] {"epoch": 8, "step": 4722, "loss": 0.125, "avg_alpha": 0.1777, "avg_norm": 67.0, "avg_cosine": 0.9688, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:10:34] {"epoch": 8, "step": 4822, "loss": 0.0884, "avg_alpha": 0.1826, "avg_norm": 66.5, "avg_cosine": 0.9688, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:10:43] {"epoch": 8, "step": 4824, "loss": 0.0698, "avg_alpha": 0.1826, "avg_norm": 66.5, "avg_cosine": 0.9688, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:10:52] Checkpoint saved: checkpoint_8
+[2025-12-04 07:11:12] Evaluation Loss (Epoch 8): 0.417236328125
+[2025-12-04 07:11:12] Eval Probes (Epoch 8): {"probe/avg_alpha": 0.1841, "probe/avg_norm": 66.5, "probe/avg_cosine": 0.9639, "probe/reg_loss": 0.0, "probe/avg_rank": 3.9496, "probe/avg_entropy": 2.7734}
+[2025-12-04 07:11:22] [Example] Pred: 8.33 | GT: 300
+[2025-12-04 07:11:26] [Example] Pred: 240 | GT: 240
+[2025-12-04 07:11:30] [Example] Pred: 18 | GT: 25
+[2025-12-04 07:11:34] [Example] Pred: 8 | GT: 10
+[2025-12-04 07:11:38] [Example] Pred: 45 | GT: 45
+[2025-12-04 07:19:15] Accuracy on validation set: 193 / 500 = 0.386
+[2025-12-04 07:19:15] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 07:19:15] {'eval/acc': 0.386, 'eval/cot_em': 0.0}
+[2025-12-04 07:19:38] {"epoch": 9, "step": 4825, "loss": 0.103, "avg_alpha": 0.1816, "avg_norm": 66.5, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:28:29] {"epoch": 9, "step": 4925, "loss": 0.1147, "avg_alpha": 0.1758, "avg_norm": 67.0, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:35:12] {"epoch": 9, "step": 5000, "loss": 0.0776, "avg_alpha": 0.1816, "avg_norm": 66.5, "avg_cosine": 0.9531, "reg_loss": 0.0, "avg_rank": 3.4494, "avg_entropy": 2.625}
+[2025-12-04 07:37:28] {"epoch": 9, "step": 5025, "loss": 0.0742, "avg_alpha": 0.1787, "avg_norm": 67.0, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:46:26] {"epoch": 9, "step": 5125, "loss": 0.1143, "avg_alpha": 0.1836, "avg_norm": 66.5, "avg_cosine": 0.9609, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:55:26] {"epoch": 9, "step": 5225, "loss": 0.0845, "avg_alpha": 0.1826, "avg_norm": 66.5, "avg_cosine": 0.9609, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:04:32] {"epoch": 9, "step": 5325, "loss": 0.084, "avg_alpha": 0.1953, "avg_norm": 66.0, "avg_cosine": 0.957, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:13:27] {"epoch": 9, "step": 5425, "loss": 0.0962, "avg_alpha": 0.1953, "avg_norm": 66.0, "avg_cosine": 0.957, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:13:36] {"epoch": 9, "step": 5427, "loss": 0.1196, "avg_alpha": 0.1914, "avg_norm": 66.0, "avg_cosine": 0.9414, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:13:45] Checkpoint saved: checkpoint_9
+[2025-12-04 08:14:05] Evaluation Loss (Epoch 9): 0.4398193359375
+[2025-12-04 08:14:05] Eval Probes (Epoch 9): {"probe/avg_alpha": 0.1943, "probe/avg_norm": 65.875, "probe/avg_cosine": 0.9521, "probe/reg_loss": 0.0, "probe/avg_rank": 4.0611, "probe/avg_entropy": 2.8477}
+[2025-12-04 08:14:15] [Example] Pred: 8.33 | GT: 300
+[2025-12-04 08:14:19] [Example] Pred: 72 | GT: 240
+[2025-12-04 08:14:23] [Example] Pred:  | GT: 25
+[2025-12-04 08:14:27] [Example] Pred: 10 | GT: 10
+[2025-12-04 08:14:30] [Example] Pred: 45 | GT: 45
+[2025-12-04 08:22:15] Accuracy on validation set: 187 / 500 = 0.374
+[2025-12-04 08:22:15] CoT match on validation set: 0 / 500 = 0.0
+[2025-12-04 08:22:15] {'eval/acc': 0.374, 'eval/cot_em': 0.0}
+[2025-12-04 08:22:41] {"epoch": 10, "step": 5428, "loss": 0.4258, "avg_alpha": 0.1953, "avg_norm": 66.0, "avg_cosine": 0.9688, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:35:12] {"epoch": 10, "step": 5528, "loss": 0.2715, "avg_alpha": 0.2148, "avg_norm": 64.5, "avg_cosine": 0.9648, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:48:18] {"epoch": 10, "step": 5628, "loss": 0.3555, "avg_alpha": 0.2197, "avg_norm": 64.0, "avg_cosine": 0.9531, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 09:01:16] {"epoch": 10, "step": 5728, "loss": 0.2793, "avg_alpha": 0.2002, "avg_norm": 65.5, "avg_cosine": 0.9492, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 09:14:26] {"epoch": 10, "step": 5828, "loss": 0.2871, "avg_alpha": 0.209, "avg_norm": 65.0, "avg_cosine": 0.9531, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 09:27:30] {"epoch": 10, "step": 5928, "loss": 0.1904, "avg_alpha": 0.2139, "avg_norm": 64.5, "avg_cosine": 0.9414, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 09:36:52] {"epoch": 10, "step": 6000, "loss": 0.3359, "avg_alpha": 0.1953, "avg_norm": 66.0, "avg_cosine": 0.9375, "reg_loss": 0.0, "avg_rank": 2.6953, "avg_entropy": 2.6406}
+[2025-12-04 09:40:33] {"epoch": 10, "step": 6028, "loss": 0.3027, "avg_alpha": 0.1973, "avg_norm": 65.5, "avg_cosine": 0.9453, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 09:40:45] {"epoch": 10, "step": 6030, "loss": 0.2051, "avg_alpha": 0.2002, "avg_norm": 65.5, "avg_cosine": 0.9414, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 09:40:54] Checkpoint saved: checkpoint_10
+[2025-12-04 09:41:17] Evaluation Loss (Epoch 10): 0.533203125
+[2025-12-04 09:41:17] Eval Probes (Epoch 10): {"probe/avg_alpha": 0.1987, "probe/avg_norm": 65.625, "probe/avg_cosine": 0.9443, "probe/reg_loss": 0.0, "probe/avg_rank": 3.0167, "probe/avg_entropy": 2.8242}
+[2025-12-04 09:41:28] [Example] Pred: 1200 | GT: 300
+[2025-12-04 09:41:31] [Example] Pred: 240 | GT: 240
+[2025-12-04 09:41:35] [Example] Pred: 22 | GT: 25
+[2025-12-04 09:41:39] [Example] Pred: 2 | GT: 10
+[2025-12-04 09:41:43] [Example] Pred: 45 | GT: 45
+[2025-12-04 10:33:51] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-normalized-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'normalized', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 0, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 10:33:51] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-normalized-1203-20
+[2025-12-04 10:34:02] Initializing Coconut with mode: normalized
+[2025-12-04 10:34:04] Running FSDP on rank = 0
+[2025-12-04 10:35:10] {"epoch": 11, "step": 1, "loss": 0.1768, "avg_alpha": 0.1953, "avg_norm": 66.0, "avg_cosine": 0.9492, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 10:46:45] {"epoch": 11, "step": 101, "loss": 0.2324, "avg_alpha": 0.1992, "avg_norm": 65.5, "avg_cosine": 0.9453, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 10:58:51] {"epoch": 11, "step": 201, "loss": 0.1963, "avg_alpha": 0.2061, "avg_norm": 65.0, "avg_cosine": 0.9414, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:11:09] {"epoch": 11, "step": 301, "loss": 0.208, "avg_alpha": 0.2021, "avg_norm": 65.5, "avg_cosine": 0.9375, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:23:14] {"epoch": 11, "step": 401, "loss": 0.1729, "avg_alpha": 0.2207, "avg_norm": 64.0, "avg_cosine": 0.9492, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:35:11] {"epoch": 11, "step": 501, "loss": 0.2002, "avg_alpha": 0.2168, "avg_norm": 64.5, "avg_cosine": 0.957, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:47:31] {"epoch": 11, "step": 601, "loss": 0.2031, "avg_alpha": 0.2217, "avg_norm": 64.0, "avg_cosine": 0.9375, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:47:42] {"epoch": 11, "step": 603, "loss": 0.0693, "avg_alpha": 0.2207, "avg_norm": 64.0, "avg_cosine": 0.9336, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:47:51] Checkpoint saved: checkpoint_11
+[2025-12-04 12:17:44] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-normalized-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'normalized', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 0, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 12:17:44] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-normalized-1203-20
+[2025-12-04 12:17:54] Initializing Coconut with mode: normalized
+[2025-12-04 12:17:56] Running FSDP on rank = 0
+[2025-12-04 12:19:09] {"epoch": 12, "step": 1, "loss": 0.1064, "avg_alpha": 0.2168, "avg_norm": 64.5, "avg_cosine": 0.9492, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 12:30:57] {"epoch": 12, "step": 101, "loss": 0.1943, "avg_alpha": 0.2148, "avg_norm": 64.5, "avg_cosine": 0.9336, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 12:43:13] {"epoch": 12, "step": 201, "loss": 0.1865, "avg_alpha": 0.2139, "avg_norm": 64.5, "avg_cosine": 0.9414, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 12:55:37] {"epoch": 12, "step": 301, "loss": 0.2305, "avg_alpha": 0.209, "avg_norm": 65.0, "avg_cosine": 0.9414, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 13:07:53] {"epoch": 12, "step": 401, "loss": 0.1064, "avg_alpha": 0.21, "avg_norm": 65.0, "avg_cosine": 0.9453, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}

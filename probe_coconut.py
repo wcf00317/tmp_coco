@@ -289,8 +289,13 @@ class Coconut(nn.Module):
         }
 
         return Outputs(loss=total_loss, inputs_embeds=inputs_embeds, logits=logits, probes=final_probes)
-    def train(self): self.base_causallm.train()
-    def eval(self): self.base_causallm.eval()
+    def train(self, mode=True): 
+        super().train(mode)  # 必须调用父类，更新 self.training 属性
+        self.base_causallm.train(mode) # 把 mode (True/False) 传进去
+
+    def eval(self): 
+        super().eval() # 必须调用父类
+        self.base_causallm.eval()
     def generate(self, input_ids, attention_mask, max_new_tokens=16, output_embedding=False, synced_gpus=False, **kwargs):
         self.gen_forward_cnt = 0
         assert input_ids.shape[0] == 1, "only support batch_size == 1 now"

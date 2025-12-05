@@ -148,3 +148,166 @@
 [2025-12-04 02:36:41] {"epoch": 11, "step": 1, "loss": 0.1943, "avg_alpha": 0.0, "avg_norm": 144.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
 [2025-12-04 02:42:26] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
 [2025-12-04 02:42:26] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 02:48:43] {"epoch": 11, "step": 101, "loss": 0.3105, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:01:07] {"epoch": 11, "step": 201, "loss": 0.21, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.8906, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:13:43] {"epoch": 11, "step": 301, "loss": 0.2988, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8906, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:26:00] {"epoch": 11, "step": 401, "loss": 0.1924, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:37:59] {"epoch": 11, "step": 501, "loss": 0.248, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:50:21] {"epoch": 11, "step": 601, "loss": 0.2158, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:50:33] {"epoch": 11, "step": 603, "loss": 0.1309, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 03:50:43] Checkpoint saved: checkpoint_11
+[2025-12-04 03:51:06] Evaluation Loss (Epoch 11): 0.546875
+[2025-12-04 03:51:06] Eval Probes (Epoch 11): {"probe/avg_alpha": 0.0, "probe/avg_norm": 142.0, "probe/avg_cosine": 0.8867, "probe/reg_loss": 0.0, "probe/avg_rank": 3.0868, "probe/avg_entropy": 1.2891}
+[2025-12-04 03:51:17] [Example] Pred: 200 | GT: 300
+[2025-12-04 03:51:21] [Example] Pred: 120 | GT: 240
+[2025-12-04 03:51:26] [Example] Pred: 18 | GT: 25
+[2025-12-04 03:51:30] [Example] Pred: 10 | GT: 10
+[2025-12-04 03:51:34] [Example] Pred: 45 | GT: 45
+[2025-12-04 05:52:03] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 05:52:03] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 05:52:15] Initializing Coconut with mode: original
+[2025-12-04 05:52:18] Running FSDP on rank = 0
+[2025-12-04 05:53:31] {"epoch": 12, "step": 1, "loss": 0.1455, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:05:09] {"epoch": 12, "step": 101, "loss": 0.2656, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:17:12] {"epoch": 12, "step": 201, "loss": 0.1494, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:29:20] {"epoch": 12, "step": 301, "loss": 0.1855, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.8906, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:41:20] {"epoch": 12, "step": 401, "loss": 0.1553, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.8828, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 06:53:05] {"epoch": 12, "step": 501, "loss": 0.1631, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:05:16] {"epoch": 12, "step": 601, "loss": 0.2402, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:05:27] {"epoch": 12, "step": 603, "loss": 0.1279, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.8867, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:05:36] Checkpoint saved: checkpoint_12
+[2025-12-04 07:06:00] Evaluation Loss (Epoch 12): 0.59228515625
+[2025-12-04 07:06:00] Eval Probes (Epoch 12): {"probe/avg_alpha": 0.0, "probe/avg_norm": 142.0, "probe/avg_cosine": 0.8857, "probe/reg_loss": 0.0, "probe/avg_rank": 3.1328, "probe/avg_entropy": 1.6719}
+[2025-12-04 07:06:09] [Example] Pred: 8.33 | GT: 300
+[2025-12-04 07:06:10] [Example] Pred: 480 | GT: 240
+[2025-12-04 07:06:15] [Example] Pred: 19.75 | GT: 25
+[2025-12-04 07:06:16] [Example] Pred: 10 | GT: 10
+[2025-12-04 07:06:17] [Example] Pred: 45 | GT: 45
+[2025-12-04 07:22:46] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 07:22:46] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 07:22:57] Initializing Coconut with mode: original
+[2025-12-04 07:22:59] Running FSDP on rank = 0
+[2025-12-04 07:24:19] {"epoch": 13, "step": 1, "loss": 0.3281, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:39:02] {"epoch": 13, "step": 101, "loss": 0.3887, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.9219, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 07:55:02] {"epoch": 13, "step": 201, "loss": 0.2871, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:11:26] {"epoch": 13, "step": 301, "loss": 0.2676, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:27:30] {"epoch": 13, "step": 401, "loss": 0.25, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:43:31] {"epoch": 13, "step": 501, "loss": 0.1465, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:59:38] {"epoch": 13, "step": 601, "loss": 0.2637, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 08:59:55] {"epoch": 13, "step": 603, "loss": 0.3711, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 09:00:06] Checkpoint saved: checkpoint_13
+[2025-12-04 09:00:32] Evaluation Loss (Epoch 13): 0.627685546875
+[2025-12-04 09:00:32] Eval Probes (Epoch 13): {"probe/avg_alpha": 0.0, "probe/avg_norm": 143.0, "probe/avg_cosine": 0.918, "probe/reg_loss": 0.0, "probe/avg_rank": 2.679, "probe/avg_entropy": 1.7227}
+[2025-12-04 09:00:41] [Example] Pred: 8.33 | GT: 300
+[2025-12-04 09:00:43] [Example] Pred: 480 | GT: 240
+[2025-12-04 09:00:44] [Example] Pred: 21 | GT: 25
+[2025-12-04 09:00:45] [Example] Pred: 10 | GT: 10
+[2025-12-04 09:00:47] [Example] Pred: 45 | GT: 45
+[2025-12-04 09:34:30] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 09:34:30] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 09:34:41] Initializing Coconut with mode: original
+[2025-12-04 09:34:43] Running FSDP on rank = 0
+[2025-12-04 09:35:59] {"epoch": 14, "step": 1, "loss": 0.1406, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 09:50:49] {"epoch": 14, "step": 101, "loss": 0.293, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 10:06:25] {"epoch": 14, "step": 201, "loss": 0.1885, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9219, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 10:22:10] {"epoch": 14, "step": 301, "loss": 0.209, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 10:37:40] {"epoch": 14, "step": 401, "loss": 0.2002, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 10:53:00] {"epoch": 14, "step": 501, "loss": 0.0757, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:08:45] {"epoch": 14, "step": 601, "loss": 0.2168, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:09:00] {"epoch": 14, "step": 603, "loss": 0.2598, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 11:09:09] Checkpoint saved: checkpoint_14
+[2025-12-04 12:17:41] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 12:17:41] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 12:28:04] Initializing Coconut with mode: original
+[2025-12-04 12:28:06] Running FSDP on rank = 0
+[2025-12-04 12:29:21] {"epoch": 15, "step": 1, "loss": 0.052, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 12:44:38] {"epoch": 15, "step": 101, "loss": 0.2109, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 13:00:38] {"epoch": 15, "step": 201, "loss": 0.1738, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 15:00:01] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 15:00:01] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 15:00:18] Initializing Coconut with mode: original
+[2025-12-04 15:00:20] Running FSDP on rank = 0
+[2025-12-04 15:01:36] {"epoch": 15, "step": 1, "loss": 0.052, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 15:09:05] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 15:09:05] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 15:09:16] Initializing Coconut with mode: original
+[2025-12-04 15:09:18] Running FSDP on rank = 0
+[2025-12-04 15:10:40] {"epoch": 15, "step": 1, "loss": 0.052, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 15:24:56] {"epoch": 15, "step": 101, "loss": 0.2109, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 15:39:50] {"epoch": 15, "step": 201, "loss": 0.1738, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 15:55:01] {"epoch": 15, "step": 301, "loss": 0.2041, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9219, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 16:09:56] {"epoch": 15, "step": 401, "loss": 0.1338, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 16:24:41] {"epoch": 15, "step": 501, "loss": 0.0496, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 16:39:50] {"epoch": 15, "step": 601, "loss": 0.2734, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 16:40:04] {"epoch": 15, "step": 603, "loss": 0.3066, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.918, "reg_loss": 0.0, "avg_rank": 0.0, "avg_entropy": 0.0}
+[2025-12-04 16:40:13] Checkpoint saved: checkpoint_15
+[2025-12-04 16:40:40] Evaluation Loss (Epoch 15): 0.778076171875
+[2025-12-04 16:40:40] Eval Probes (Epoch 15): {"probe/avg_alpha": 0.0, "probe/avg_norm": 142.0, "probe/avg_cosine": 0.9189, "probe/reg_loss": 0.0, "probe/avg_rank": 2.6483, "probe/avg_entropy": 1.9844}
+[2025-12-04 16:59:47] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-04 16:59:47] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-04 16:59:58] Initializing Coconut with mode: original
+[2025-12-04 17:01:16] {"epoch": 16, "step": 1, "loss": 0.1807, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.918, "reg_loss": 0.0}
+[2025-12-04 17:13:56] {"epoch": 16, "step": 101, "loss": 0.165, "avg_alpha": 0.0, "avg_norm": 143.0, "avg_cosine": 0.918, "reg_loss": 0.0}
+[2025-12-04 17:27:06] {"epoch": 16, "step": 201, "loss": 0.1021, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9219, "reg_loss": 0.0}
+[2025-12-04 17:40:13] {"epoch": 16, "step": 301, "loss": 0.377, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9062, "reg_loss": 0.0}
+[2025-12-04 17:53:17] {"epoch": 16, "step": 401, "loss": 0.2812, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 18:06:27] {"epoch": 16, "step": 501, "loss": 0.061, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 18:19:57] {"epoch": 16, "step": 601, "loss": 0.2158, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 18:20:22] Checkpoint saved: checkpoint_16
+[2025-12-04 18:20:40] Evaluation Loss (Epoch 16): 0.814208984375
+[2025-12-04 18:20:51] [Sample] GT: 300 | Pred: 1000
+[2025-12-04 18:29:01] Epoch 16 Accuracy: 0.2360 (Best: 0.0000)
+[2025-12-04 18:29:01] Epoch 16 CoT EM: 0.0000
+[2025-12-04 18:29:32] {"epoch": 17, "step": 604, "loss": 0.1465, "avg_alpha": 0.0, "avg_norm": 142.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 18:43:11] {"epoch": 17, "step": 704, "loss": 0.1182, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-04 18:56:54] {"epoch": 17, "step": 804, "loss": 0.0737, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 19:10:30] {"epoch": 17, "step": 904, "loss": 0.0608, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 19:23:34] {"epoch": 17, "step": 1000, "loss": 0.0894, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9141, "reg_loss": 0.0, "avg_rank": 2.3254, "avg_entropy": 0.918}
+[2025-12-04 19:24:09] {"epoch": 17, "step": 1004, "loss": 0.1279, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-04 19:38:31] {"epoch": 17, "step": 1104, "loss": 0.1367, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-04 19:52:49] {"epoch": 17, "step": 1204, "loss": 0.1523, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-04 19:53:13] Checkpoint saved: checkpoint_17
+[2025-12-04 19:53:30] Evaluation Loss (Epoch 17): 0.9189453125
+[2025-12-04 19:53:41] [Sample] GT: 300 | Pred: 100
+[2025-12-04 20:01:32] Epoch 17 Accuracy: 0.2180 (Best: 0.0000)
+[2025-12-04 20:01:32] Epoch 17 CoT EM: 0.0000
+[2025-12-04 20:02:03] {"epoch": 18, "step": 1207, "loss": 0.0762, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-04 20:16:16] {"epoch": 18, "step": 1307, "loss": 0.064, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 20:30:28] {"epoch": 18, "step": 1407, "loss": 0.0261, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 20:44:49] {"epoch": 18, "step": 1507, "loss": 0.0542, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 20:59:04] {"epoch": 18, "step": 1607, "loss": 0.0674, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-04 21:13:18] {"epoch": 18, "step": 1707, "loss": 0.0947, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 21:27:30] {"epoch": 18, "step": 1807, "loss": 0.0238, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 21:27:55] Checkpoint saved: checkpoint_18
+[2025-12-04 21:28:12] Evaluation Loss (Epoch 18): 0.933349609375
+[2025-12-04 21:28:24] [Sample] GT: 300 | Pred: 800
+[2025-12-04 21:36:37] Epoch 18 Accuracy: 0.2280 (Best: 0.0000)
+[2025-12-04 21:36:37] Epoch 18 CoT EM: 0.0000
+[2025-12-04 21:37:09] {"epoch": 19, "step": 1810, "loss": 0.0369, "avg_alpha": 0.0, "avg_norm": 141.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 21:51:14] {"epoch": 19, "step": 1910, "loss": 0.084, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-04 22:04:06] {"epoch": 19, "step": 2000, "loss": 0.1533, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0, "avg_rank": 2.3673, "avg_entropy": 1.1875}
+[2025-12-04 22:05:35] {"epoch": 19, "step": 2010, "loss": 0.1108, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 22:19:52] {"epoch": 19, "step": 2110, "loss": 0.0708, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 22:34:13] {"epoch": 19, "step": 2210, "loss": 0.0933, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 22:48:27] {"epoch": 19, "step": 2310, "loss": 0.0505, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-04 23:02:44] {"epoch": 19, "step": 2410, "loss": 0.0796, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 23:03:07] Checkpoint saved: checkpoint_19
+[2025-12-04 23:03:25] Evaluation Loss (Epoch 19): 1.04443359375
+[2025-12-04 23:03:36] [Sample] GT: 300 | Pred: 400
+[2025-12-04 23:11:33] Epoch 19 Accuracy: 0.2240 (Best: 0.0000)
+[2025-12-04 23:11:33] Epoch 19 CoT EM: 0.0000
+[2025-12-04 23:12:04] {"epoch": 20, "step": 2413, "loss": 0.0552, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 23:26:28] {"epoch": 20, "step": 2513, "loss": 0.0649, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9062, "reg_loss": 0.0}
+[2025-12-04 23:40:56] {"epoch": 20, "step": 2613, "loss": 0.0693, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-04 23:55:22] {"epoch": 20, "step": 2713, "loss": 0.0266, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-05 00:09:54] {"epoch": 20, "step": 2813, "loss": 0.0518, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-05 00:24:08] {"epoch": 20, "step": 2913, "loss": 0.0474, "avg_alpha": 0.0, "avg_norm": 140.0, "avg_cosine": 0.9102, "reg_loss": 0.0}
+[2025-12-05 00:36:29] {"epoch": 20, "step": 3000, "loss": 0.0688, "avg_alpha": 0.0, "avg_norm": 139.0, "avg_cosine": 0.9102, "reg_loss": 0.0, "avg_rank": 2.2646, "avg_entropy": 1.2188}
+[2025-12-05 00:38:23] {"epoch": 20, "step": 3013, "loss": 0.0374, "avg_alpha": 0.0, "avg_norm": 139.0, "avg_cosine": 0.9141, "reg_loss": 0.0}
+[2025-12-05 00:38:47] Checkpoint saved: checkpoint_20
+[2025-12-05 00:39:04] Evaluation Loss (Epoch 20): 1.18212890625
+[2025-12-05 00:39:15] [Sample] GT: 300 | Pred: 1200
+[2025-12-05 02:02:11] Config Loaded: {'project': 'test', 'save_path': './checkpoints/gsm-coconut', 'name': 'gsm-qwen-original-1203-20', 'only_eval': False, 'coconut': True, 'decoupling_mode': 'original', 'cot': False, 'no_thoughts': False, 'no_cot': False, 'c_thought': 4, 'epochs_per_stage': 3, 'max_latent_stage': 4, 'pad_latent_to_max': True, 'model_id': 'Qwen/Qwen2.5-1.5B-Instruct', 'bf16': True, 'lr': 5e-05, 'batch_size_training': 32, 'gradient_accumulation_steps': 1, 'save_only_improve': False, 'uniform_prob': 0.0, 'load_model_path': 'None', 'seed': 0, 'resume': 3, 'train_path': 'data/gsm_train.json', 'val_path': 'data/gsm_valid.json', 'reset_optimizer': True, 'debug': False, 'num_epochs': 25, 'weight_decay': 0.01, 'train_ratio': 0.2}
+[2025-12-05 02:02:11] Save Directory: ./checkpoints/gsm-coconut/gsm-qwen-original-1203-20
+[2025-12-05 02:02:22] Initializing Coconut with mode: original
+[2025-12-05 02:03:37] {"epoch": 21, "step": 1, "loss": 0.0378, "avg_alpha": 0.0, "avg_norm": 138.0, "avg_cosine": 0.9102, "reg_loss": 0.0}

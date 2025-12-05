@@ -1,12 +1,13 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
-
+from datetime import timedelta
 import torch
 import torch.distributed
 import torch.optim as optim
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
+from torch.distributed.fsdp import StateDictType, FullStateDictConfig # [新增] 用于安全保存
 import torch.distributed as dist
 from torch.utils.data.distributed import DistributedSampler
 from torch.distributed.fsdp.wrap import transformer_auto_wrap_policy
@@ -36,7 +37,6 @@ import torch.multiprocessing as mp
 try:
     from transformers.models.qwen2.modeling_qwen2 import Qwen2DecoderLayer
 except ImportError:
-    # 兼容旧版本 transformers，防止报错
     Qwen2DecoderLayer = None
 
 def setup_logger(save_dir, rank):
@@ -62,6 +62,7 @@ def setup_logger(save_dir, rank):
 
 
 def worker(rank, world_size, args):
+    # 环境变量设置
     os.environ["RANK"] = str(rank)
     os.environ["LOCAL_RANK"] = str(rank)
     os.environ["WORLD_SIZE"] = str(world_size)
@@ -70,6 +71,7 @@ def worker(rank, world_size, args):
 
     torch.cuda.set_device(rank)
 
+    # 初始化进程组
     init_file = "/tmp/coconut_dist_lock_fixed"
     if os.name == 'nt':
         init_method = f"file:///{init_file}"
@@ -83,24 +85,22 @@ def worker(rank, world_size, args):
             backend="nccl",
             init_method=init_method,
             world_size=world_size,
-            rank=rank
+            rank=rank,
+            timeout=timedelta(minutes=60)
         )
-        if rank == 0:
-            print(">>> Dist backend:", dist.get_backend())
     except Exception as e:
         print(f"[Rank {rank}] NCCL init failed ({e}), trying GLOO...")
         dist.init_process_group(
             backend="gloo",
             init_method=init_method,
             world_size=world_size,
-            rank=rank
+            rank=rank,
+            timeout=timedelta(minutes=60)
         )
 
+    # 加载配置
     with open(args.config_file) as f:
         config_dict = yaml.safe_load(f)
-
-    if rank == 0:
-        print("Config:", config_dict)
 
     configs = Config(config_dict)
     set_seed(configs.seed)
@@ -113,15 +113,12 @@ def worker(rank, world_size, args):
     if rank == 0:
         logger.info(f"Config Loaded: {config_dict}")
         logger.info(f"Save Directory: {save_dir}")
+    
     torch.distributed.barrier()
-    cur_ckpts = os.listdir(save_dir)
-
+    
+    # 断点续训逻辑
+    cur_ckpts = os.listdir(save_dir) if os.path.exists(save_dir) else []
     if len(cur_ckpts) > 0 and not configs.only_eval:
-        if rank == 0:
-            print(
-                f"Warning: found previous run and gonna resume from that. the inputted `resume` argument is ignored!"
-            )
-
         checkpoints = [f for f in cur_ckpts if f.startswith("checkpoint_")]
         checkpoints.sort(key=lambda x: int(x.split("_")[1]))
 
@@ -129,19 +126,11 @@ def worker(rank, world_size, args):
         if latest_checkpoint:
             configs.resume = int(latest_checkpoint.split("_")[1])
             load_dir = os.path.join(configs.save_path, configs.name, latest_checkpoint)
-
             configs.load_model_path = load_dir
-            print(f"Loading from previous run epoch_{configs.resume}!")
+            if rank == 0:
+                print(f"Loading from previous run epoch_{configs.resume}!")
 
-    elif configs.resume != 0:
-        if configs.load_model_path == "None":
-            print(
-                f"Warning: you want to skip the first {configs.resume} but you are not loading any existing checkpoint!"
-            )
-        print(
-            f"Loading from {configs.load_model_path} and skip the first {configs.resume} epochs"
-        )
-
+    # 模型与 Tokenizer 加载
     model = AutoModelForCausalLM.from_pretrained(configs.model_id, attn_implementation="eager")
     tokenizer = AutoTokenizer.from_pretrained(configs.model_id)
     tokenizer.pad_token = tokenizer.eos_token
@@ -153,36 +142,20 @@ def worker(rank, world_size, args):
     end_id = tokenizer.convert_tokens_to_ids("<|end-latent|>")
 
     loaded = False
-
     if configs.load_model_path != "None":
         saved_weights = torch.load(
             configs.load_model_path, map_location=torch.device(rank)
         )
-
-        if configs.coconut and not any(
-                [k.startswith("base_causallm") for k in saved_weights.keys()]
-        ):
+        if configs.coconut and not any([k.startswith("base_causallm") for k in saved_weights.keys()]):
             loaded = True
-            print(model.load_state_dict(saved_weights, strict=False))
-
-        elif not configs.coconut and any(
-                [k.startswith("base_causallm") for k in saved_weights.keys()]
-        ):
-            raise ValueError("Cannot load coconut model weights into a causallm model")
-
-        elif configs.coconut and any(
-                [k.startswith("base_causallm") for k in saved_weights.keys()]
-        ):
-            pass
-
-        else:
-            loaded = True
-            print(model.load_state_dict(saved_weights, strict=False))
+            print(f"[Rank {rank}] Loaded weights directly into base model.")
+            model.load_state_dict(saved_weights, strict=False)
 
     if not (configs.cot or configs.no_thoughts or configs.no_cot):
         model.resize_token_embeddings(len(tokenizer))
         embeddings = model.get_input_embeddings()
         target_id = tokenizer.convert_tokens_to_ids("<<")
+        # 初始化特殊 token 的 embedding
         for token_id in [latent_id, start_id, end_id]:
             target_embedding = embeddings.weight.data[target_id]
             embeddings.weight.data[token_id] = target_embedding
@@ -200,32 +173,20 @@ def worker(rank, world_size, args):
         model = Coconut(model, latent_id, start_id, end_id, tokenizer.eos_token_id, decoupling_mode=d_mode)
 
     if configs.load_model_path != "None" and not loaded:
+        print(f"[Rank {rank}] Loaded weights into wrapper model.")
         model.load_state_dict(saved_weights, strict=False)
-
-    if rank == 0:
-        logger.info(f"Running FSDP on rank = {rank}")
-
-    if configs.load_model_path != "None" and not loaded:
-        print(model.load_state_dict(saved_weights, strict=False))
 
     print(f"Running FSDP on rank = {rank}, world size = {world_size}")
     model = model.to(rank)
 
-    # [新增/替换] 动态构建 FSDP 包裹策略
-    transformer_layer_cls_set = {
-        LlamaDecoderLayer,
-    }
-
-    # 动态添加 Qwen2
+    # FSDP Wrap Policy
+    transformer_layer_cls_set = {LlamaDecoderLayer}
     if Qwen2DecoderLayer is not None:
         transformer_layer_cls_set.add(Qwen2DecoderLayer)
 
-    # 如果你也想支持 GPT2 的 FSDP 切分（虽然 GPT2 通常不需要），可以取消下面注释
-    # transformer_layer_cls_set.add(GPT2Block)
-
     llama_auto_wrap_policy = functools.partial(
         transformer_auto_wrap_policy,
-        transformer_layer_cls=transformer_layer_cls_set,  # 使用上面定义的集合
+        transformer_layer_cls=transformer_layer_cls_set,
     )
 
     if configs.bf16:
@@ -240,13 +201,9 @@ def worker(rank, world_size, args):
 
     del model
 
-    if rank == 0:
-        print(parallel_model)
-
+    # 数据集准备
     question_val = [d["question"] for d in json.load(open(configs.val_path))]
-    answers_val = [
-        d["answer"].replace(",", "").strip() for d in json.load(open(configs.val_path))
-    ]
+    answers_val = [d["answer"].replace(",", "").strip() for d in json.load(open(configs.val_path))]
     cot_val = ["\n".join(d["steps"]) for d in json.load(open(configs.val_path))]
 
     base_dataset_valid = get_dataset(
@@ -254,23 +211,15 @@ def worker(rank, world_size, args):
     )
 
     if not configs.only_eval:
-        ratio = getattr(configs, "train_ratio")
         base_dataset_train = get_dataset(
             configs.train_path,
             tokenizer,
             max_size=5000 if configs.debug else 100000000,
-            data_ratio=ratio  # 传入参数
+            data_ratio=getattr(configs, "train_ratio")
         )
 
-    if "gsm" in configs.val_path:
-        max_new_tokens = 64
-    else:
-        max_new_tokens = 128
-
-    total_train_steps = 0
-
-    # [修改] 移除了 wandb 初始化逻辑
-
+    max_new_tokens = 64 if "gsm" in configs.val_path else 128
+    
     if configs.reset_optimizer:
         optimizer = None
     else:
@@ -281,14 +230,17 @@ def worker(rank, world_size, args):
         )
 
     best_acc = 0
-
+    total_train_steps = 0
     collator = MyCollator(tokenizer, latent_id=latent_id, label_pad_token_id=-100)
 
+    # ================= 训练循环 =================
     for epoch in range(configs.resume, configs.num_epochs):
 
         scheduled_stage = (
             0 if (configs.cot or configs.no_cot) else epoch // configs.epochs_per_stage
         )
+        
+        # 验证集 Dataset (Generation)
         dataset_gen_val = get_question_latent_dataset(
             scheduled_stage,
             base_dataset_valid,
@@ -308,8 +260,8 @@ def worker(rank, world_size, args):
             sampler=DistributedSampler(dataset_gen_val, shuffle=False),
         )
 
+        # ------------------ Training Phase ------------------
         if not configs.only_eval:
-
             dataset_train = get_cot_latent_dataset(
                 scheduled_stage,
                 base_dataset_train,
@@ -331,6 +283,7 @@ def worker(rank, world_size, args):
                 sampler=DistributedSampler(dataset_train, shuffle=True),
             )
 
+            # Loss Validation Loader
             dataset_loss_val = get_cot_latent_dataset(
                 scheduled_stage,
                 base_dataset_valid,
@@ -353,226 +306,171 @@ def worker(rank, world_size, args):
 
             if configs.reset_optimizer:
                 del optimizer
-
                 optimizer = optim.AdamW(
                     parallel_model.parameters(),
                     lr=configs.lr,
                     weight_decay=configs.weight_decay,
                 )
 
-            parallel_model.module.train()
-
-            total_length = len(train_dataloader) // configs.gradient_accumulation_steps
-            pbar = tqdm(
-                colour="blue",
-                desc=f"Training Epoch: {epoch + 1}",
-                total=total_length,
-                dynamic_ncols=True,
-            )
+            parallel_model.train()
+            
+            if rank == 0:
+                total_length = len(train_dataloader) // configs.gradient_accumulation_steps
+                pbar = tqdm(
+                    colour="blue",
+                    desc=f"Training Epoch: {epoch + 1}",
+                    total=total_length,
+                    dynamic_ncols=True,
+                )
 
             for step, batch in enumerate(train_dataloader):
-
-                # [修改] 移除了 text_table 填充代码
-
                 total_train_steps += 1
-                batch = {
-                    key: batch[key].to(rank) for key in batch.keys() if key != "idx"
-                }
+                batch = {key: batch[key].to(rank) for key in batch.keys() if key != "idx"}
 
-                # [新增] 计算开关：每 1000 步计算一次 Rank/Entropy
                 is_probe_step = (total_train_steps % 1000 == 0)
-
-                # [修改] 传入参数
                 outputs = parallel_model(**batch, compute_probes=is_probe_step)
-
+                
                 loss = outputs.loss / configs.gradient_accumulation_steps
                 loss.backward()
 
-                if (step + 1) % configs.gradient_accumulation_steps == 0 or step == len(
-                        train_dataloader
-                ) - 1:
+                if (step + 1) % configs.gradient_accumulation_steps == 0 or step == len(train_dataloader) - 1:
                     optimizer.step()
                     optimizer.zero_grad()
-                    pbar.update(1)
+                    if rank == 0: pbar.update(1)
 
-                # [修改] 如果是 probe step 也强制打印，否则看不到结果
-                if rank == 0 and (step % 100 == 0 or step == len(train_dataloader) - 1 or is_probe_step):
+                # Logging
+                if rank == 0 and (step % 100 == 0 or is_probe_step):
                     current_loss = loss.detach().float().item() * configs.gradient_accumulation_steps
-
-                    log_data = {
-                        "epoch": epoch + 1,
-                        "step": total_train_steps,
-                        "loss": round(current_loss, 4)
-                    }
-
-                    if hasattr(outputs, "probes") and outputs.probes is not None:
+                    log_data = {"epoch": epoch + 1, "step": total_train_steps, "loss": round(current_loss, 4)}
+                    if hasattr(outputs, "probes") and outputs.probes:
                         for k, v in outputs.probes.items():
                             val = v.item() if isinstance(v, torch.Tensor) else v
-                            key_name = k.replace("probe/", "")
-                            # 跳过 0 值 (Rank/Entropy 在非采样步是 0)
-                            #if ("rank" in key_name or "entropy" in key_name) and val == 0: continue
-
-                            log_data[key_name] = round(val, 4) if isinstance(val, float) else val
-
+                            if "rank" in k or "entropy" in k: 
+                                if val != 0: log_data[k.replace("probe/", "")] = round(val, 4)
+                            else:
+                                log_data[k.replace("probe/", "")] = round(val, 4)
                     logger.info(json.dumps(log_data))
+                
+                if rank == 0:
+                    pbar.set_description(f"Epoch {epoch + 1} | Loss: {loss.item() * configs.gradient_accumulation_steps:.4f}")
 
-                pbar.set_description(
-                    f"Training Epoch: {epoch + 1}/{configs.num_epochs}, batch {step}/{len(train_dataloader)} "
-                    f"completed (loss: {round(float(loss.detach().float() * configs.gradient_accumulation_steps), 4)}"
-                )
-            pbar.close()
+            if rank == 0: pbar.close()
             dist.barrier()
 
-            if (
-                    not configs.save_only_improve
-                    and not configs.debug
-                    and not configs.only_eval
-            ):
-                states = parallel_model.state_dict()
+            # Save Latest Checkpoint
+            if not configs.save_only_improve and not configs.debug:
+                full_state_dict_config = FullStateDictConfig(offload_to_cpu=True, rank0_only=True)
+                with FSDP.state_dict_type(parallel_model, StateDictType.FULL_STATE_DICT, full_state_dict_config):
+                    states = parallel_model.state_dict()
+                
                 if rank == 0:
-                    torch.save(
-                        states, os.path.join(save_dir, f"checkpoint_{epoch + 1}")
-                    )
+                    torch.save(states, os.path.join(save_dir, f"checkpoint_{epoch + 1}"))
                     logger.info(f"Checkpoint saved: checkpoint_{epoch + 1}")
-
+                    del states
                 dist.barrier()
-                del states
                 gc.collect()
-                torch.cuda.empty_cache()
 
-            # val loss
-            total_loss = 0
-
-            # [新增] 验证集指标累积
-            val_probes_accum = {}
-            val_steps = 0
-
+            # Val Loss Calculation
+            total_loss = torch.tensor(0.0, device=rank)
             with torch.no_grad():
-                parallel_model.module.eval()
-                for step, batch in enumerate(valid_loss_dataloader):
+                parallel_model.eval()
+                for batch in valid_loss_dataloader:
+                    batch = {k: v.to(rank) for k, v in batch.items() if k != "idx"}
+                    outputs = parallel_model(**batch, compute_probes=False)
+                    total_loss += outputs.loss
 
-                    batch = {
-                        key: batch[key].to(rank) for key in batch.keys() if key != "idx"
-                    }
+            dist.all_reduce(total_loss, op=dist.ReduceOp.SUM)
+            if rank == 0:
+                # 这里的 len 需要注意是全局还是局部，简化起见这里用近似值
+                eval_loss = total_loss.item() / (len(valid_loss_dataloader) * world_size)
+                logger.info(f"Evaluation Loss (Epoch {epoch + 1}): {eval_loss}")
 
-                    # [修改] 验证集全程开启 Probes
-                    outputs = parallel_model(**batch, compute_probes=True)
-                    loss = outputs.loss
-                    dist.all_reduce(loss, op=dist.ReduceOp.SUM)
-                    total_loss += loss.item() / world_size
+        # ------------------ Generation Validation Phase ------------------
+        # [关键修复]：移除 if rank == 0，所有卡必须参与 Generate 避免死锁
+        dist.barrier()
+        
+        local_cor = torch.tensor(0.0, device=rank)
+        local_cor_cot = torch.tensor(0.0, device=rank)
+        local_total = torch.tensor(0.0, device=rank)
 
-                    # [新增] 缩进正确的 Probe 统计
-                    if hasattr(outputs, "probes") and outputs.probes is not None:
-                        if rank == 0:
-                            for k, v in outputs.probes.items():
-                                val = v.item() if isinstance(v, torch.Tensor) else v
-                                if ("rank" in k or "entropy" in k) and val == 0: continue
-
-                                if k not in val_probes_accum: val_probes_accum[k] = 0.0
-                                val_probes_accum[k] += val
-                            val_steps += 1
-
-                if rank == 0:
-                    eval_loss = total_loss / len(valid_loss_dataloader)
-                    logger.info(f"Evaluation Loss (Epoch {epoch + 1}): {eval_loss}")
-
-                    # [新增] 打印平均验证集 Probe
-                    if val_steps > 0:
-                        avg_val_probes = {k: round(v / val_steps, 4) for k, v in val_probes_accum.items()}
-                        logger.info(f"Eval Probes (Epoch {epoch + 1}): {json.dumps(avg_val_probes)}")
-
-        # val generation accuracy
-        total_length = len(valid_gen_dataloader)
-
-        pbar = tqdm(
-            colour="blue", desc=f"Test Accuracy", total=total_length, dynamic_ncols=True
-        )
-        cor, cor_cot, total = (
-            torch.tensor(0, device=rank),
-            torch.tensor(0, device=rank),
-            torch.tensor(0, device=rank),
-        )
+        if rank == 0:
+            pbar = tqdm(colour="blue", desc="Test Accuracy", total=len(valid_gen_dataloader)*world_size)
 
         with torch.no_grad():
-            parallel_model.module.eval()
+            parallel_model.eval()
             for idx, batch in enumerate(valid_gen_dataloader):
                 test_idx = batch["idx"][0]
-
                 batch = {
-                    k: v.to(rank)
-                    for k, v in batch.items()
-                    if v != None and k not in ["idx", "position_ids"]
+                    k: v.to(rank) for k, v in batch.items() 
+                    if v is not None and k not in ["idx", "position_ids"]
                 }
 
-                assert len(batch["input_ids"]) == 1
-                answer = answers_val[test_idx.cpu().item()]
-                answer_cot = cot_val[test_idx.cpu().item()]
-                question = question_val[test_idx.cpu().item()]
-
-                total += 1
-
-                outputs = parallel_model.module.generate(
+                # FSDP 要求所有 rank 同时调用 generate
+                outputs = parallel_model.generate(
                     **batch,
                     max_new_tokens=max_new_tokens,
-                    synced_gpus=not configs.only_eval,
+                    synced_gpus=True, 
                 )
 
+                # 后处理与统计 (Local)
                 text_output = tokenizer.decode(outputs[0], skip_special_tokens=True)
-                answer_output = text_output.split("#")[-1].replace(",", "").strip()
-                cot_output = (
-                    ("\n".join(text_output.split("\n")[1:])).split("#")[0].strip()
-                )
+                
+                # 容错解析：如果找不到分隔符，使用整个文本的最后部分
+                if "#" in text_output:
+                    answer_output = text_output.split("#")[-1].replace(",", "").strip()
+                    cot_output = ("\n".join(text_output.split("\n")[1:])).split("#")[0].strip()
+                else:
+                    answer_output = text_output.strip().split()[-1] if text_output.strip() else ""
+                    cot_output = ""
 
-                if idx < 5 and rank == 0:
-                    logger.info(f"[Example] Pred: {answer_output} | GT: {answer}")
+                answer = answers_val[test_idx.cpu().item()]
+                answer_cot = cot_val[test_idx.cpu().item()]
 
-                cor += answer_output == answer
-                cor_cot += cot_output == answer_cot
+                if answer_output == answer:
+                    local_cor += 1
+                if cot_output == answer_cot:
+                    local_cor_cot += 1
+                local_total += 1
 
-                pbar.update(1)
-                pbar.set_description(
-                    f"Test accuracy: {round(float(cor.detach().float() / total.detach().float()), 2)}"
-                )
+                # 仅 Rank 0 打印样例
+                if idx < 1 and rank == 0:
+                    logger.info(f"[Sample] GT: {answer} | Pred: {answer_output}")
 
-            pbar.close()
+                if rank == 0: pbar.update(world_size)
 
-        dist.all_reduce(cor_cot, op=dist.ReduceOp.SUM)
-        dist.all_reduce(cor, op=dist.ReduceOp.SUM)
-        dist.all_reduce(total, op=dist.ReduceOp.SUM)
+        if rank == 0: pbar.close()
 
-        cor_cot = cor_cot.item()
-        cor = cor.item()
-        total = total.item()
+        # [关键修复]：汇总所有卡的统计结果
+        dist.all_reduce(local_cor, op=dist.ReduceOp.SUM)
+        dist.all_reduce(local_cor_cot, op=dist.ReduceOp.SUM)
+        dist.all_reduce(local_total, op=dist.ReduceOp.SUM)
+
+        global_acc = (local_cor / local_total).item() if local_total.item() > 0 else 0.0
+        global_cot_acc = (local_cor_cot / local_total).item() if local_total.item() > 0 else 0.0
+
         if rank == 0:
-            logger.info(f"Accuracy on validation set: {cor} / {total} = {cor / total}")
-            logger.info(f"CoT match on validation set: {cor_cot} / {total} = {cor_cot / total}")
-        sys.stdout.flush()
-
-        if rank == 0:
-            logger.info({"eval/acc": cor / total, "eval/cot_em": cor_cot / total})
+            logger.info(f"Epoch {epoch+1} Accuracy: {global_acc:.4f} (Best: {best_acc:.4f})")
+            logger.info(f"Epoch {epoch+1} CoT EM: {global_cot_acc:.4f}")
 
         if configs.only_eval:
             break
 
         dist.barrier()
-        if (
-                cor / total > best_acc
-                and configs.save_only_improve
-                and not configs.debug
-                and not configs.only_eval
-        ):
-            states = parallel_model.state_dict()
+
+        # [关键修复]：使用同步后的 global_acc 判断是否保存，并使用安全保存上下文
+        if (global_acc > best_acc and configs.save_only_improve and not configs.debug):
+            full_state_dict_config = FullStateDictConfig(offload_to_cpu=True, rank0_only=True)
+            with FSDP.state_dict_type(parallel_model, StateDictType.FULL_STATE_DICT, full_state_dict_config):
+                states = parallel_model.state_dict()
 
             if rank == 0:
                 torch.save(states, os.path.join(save_dir, f"checkpoint_{epoch + 1}"))
-                logger.info(f"New best model saved (Acc: {cor / total})")
-
-            best_acc = cor / total
-
+                logger.info(f"New best model saved! Acc: {global_acc:.4f}")
+                del states
+            
+            best_acc = global_acc
             dist.barrier()
-            del states
             gc.collect()
-            torch.cuda.empty_cache()
 
     dist.destroy_process_group()
 
@@ -589,7 +487,6 @@ if __name__ == "__main__":
     if os.path.exists(lock_path):
         try:
             os.remove(lock_path)
-            print(f"Cleaned up stale lock file: {lock_path}")
         except:
             pass
 
